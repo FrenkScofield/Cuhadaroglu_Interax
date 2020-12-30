@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System; 
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.DependencyModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata;  
 
 public partial class CMSDBContext : DbContext
 {
@@ -44,8 +39,8 @@ public partial class CMSDBContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("Host=109.228.254.40;Database=cmsdb;Username=postgres;Password=123_*1", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
-
+           optionsBuilder.UseSqlServer("server=94.73.146.4;Database=u6827488_interal;User Id=u6827488_interal;Password=Admin123_*1Admin123_*1", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
+           //   optionsBuilder.UseSqlServer("server=.;Database=u6827488_interal;trusted_connection=true;", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
         }
     }
 
@@ -60,9 +55,17 @@ public partial class CMSDBContext : DbContext
                 .Invoke(this, new object[] { modelBuilder, entityType });
         }
 
-        modelBuilder.Entity<Spec>().HasMany(a => a.SpecAttrs).WithOne(b => b.Spec);
+        modelBuilder.Entity<Spec>().HasMany(a => a.SpecAttrs).WithOne(b => b.Spec).OnDelete(DeleteBehavior.NoAction);
 
 
+
+    //    modelBuilder.Entity<Card>()
+    //.HasRequired(c => c.Stage)
+    //.WithMany()
+    //.WillCascadeOnDelete(false);
+
+
+        //.WillCascadeOnDelete(false);
 
         modelBuilder.Entity<ContentPage>().HasOne(a => a.ThumbImage).WithOne(b => b.ThumbImage).HasForeignKey<Documents>(b => b.ThumbImageId);
 
@@ -76,7 +79,15 @@ public partial class CMSDBContext : DbContext
 
         modelBuilder.Entity<ContentPage>().HasMany(a => a.ContentPageChilds).WithOne(b => b.Parent);
 
-        modelBuilder.Entity<Spec>().HasMany(a => a.SpecChilds).WithOne(b => b.Parent);
+        modelBuilder.Entity<Spec>().HasMany(a => a.SpecChilds).WithOne(b => b.Parent).OnDelete(DeleteBehavior.NoAction);
+
+
+        var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+    .SelectMany(t => t.GetForeignKeys())
+    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+        foreach (var fk in cascadeFKs)
+            fk.DeleteBehavior = DeleteBehavior.Restrict;
 
 
         //modelBuilder.Entity<User>().HasData(new User

@@ -11,12 +11,14 @@ public partial class ContentTypes : BaseModel
         ContentPages = new HashSet<ContentPage>();
         SpecContentTypes = new HashSet<SpecContentType>();
     }
-     
-
-
+      
     [DisplayName("İçerik Tipi")]
     [Required()]
     public string Name { get; set; }
+
+    [DisplayName("Açıklama")]
+    [Required()]
+    public string Description { get; set; }
 
     [DisplayName("İçerikler")]
     public virtual ICollection<ContentPage> ContentPages { get; set; }

@@ -10,6 +10,7 @@ public partial class SpecAttr : BaseModel
     {
     }
 
+    [ForeignKey("SpecId")]
     [Required]
     [DisplayName("Spec")]
     public int SpecId { get; set; }

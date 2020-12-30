@@ -45,8 +45,31 @@ public enum EventType : int
     [Description("tip2")]
     tip2 = 2,
 
+} 
+public enum ContentPageType
+{
+    [Description("Slider")]
+    Slider = 1,
+    [Description("Kategori")]
+    Kategori = 2,
+    [Description("Sayfa")]
+    Sayfa = 3,
+    [Description("Blog")]
+    Blog = 4 
 }
-
-
+public enum ProductsType
+{
+    [Description("Ürün")]
+    Urun = 1,
+    [Description("Slider")]
+    Slider = 2
+}
+public enum AttributesType
+{
+    [Description("Filtre")]
+    Filtre = 1,
+    [Description("Kategori")]
+    Kategori = 2
+}
 
 

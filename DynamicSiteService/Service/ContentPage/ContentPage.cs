@@ -47,7 +47,31 @@ public partial class ContentPage : BaseModel
     [Column(Order = 1)]
     [DisplayName("Dış Url")]
     public string ExternalLink { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("interal")]
+    public bool? IsInteral { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("interax")]
+    public bool? IsInterax { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("interwall")]
+    public bool? IsInterwall { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("intersecure")]
+    public bool? IsIntersecure { get; set; }
 
+    [Column(Order = 3)]
+    [DisplayName("Bayi")]
+    public bool? IsBayi { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("Bireysel")]
+    public bool? IsBireysel { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("Endustri")]
+    public bool? IsEndustri { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("Mimar")]
+    public bool? IsMimar { get; set; }
 
 
     //2. Sayfa İçeriği
@@ -101,7 +125,6 @@ public partial class ContentPage : BaseModel
     [Column(Order = 2)]
     [DisplayName("Video Link")]
     public string VideoLink { get; set; }
-
 
 
 

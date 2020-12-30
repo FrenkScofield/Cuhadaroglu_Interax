@@ -10,9 +10,12 @@ public partial class SpecContentValue : BaseModel
     {
     }
 
+    [ForeignKey("SpecId")]
     [DisplayName("Spec")]
     public int SpecId { get; set; }
     public virtual Spec Spec { get; set; }
+
+    [ForeignKey("ContentPageId")]
 
     [DisplayName("İçerik ID")]
     public int ContentPageId { get; set; }

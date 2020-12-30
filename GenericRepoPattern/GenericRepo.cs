@@ -70,7 +70,7 @@ public class GenericRepo<C, T> : IGenericRepo<T> where T : class, IBaseModel whe
         {
             var query = _context.Set<T>() as IQueryable<T>;
 
-
+            //query = query.Where(o=>o.LangId == sessionInfo._BaseModel.LangId);
 
             if (AsNoTracking)
                 query = query.AsNoTracking();

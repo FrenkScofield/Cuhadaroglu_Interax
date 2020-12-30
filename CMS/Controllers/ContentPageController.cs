@@ -158,22 +158,22 @@ namespace CMS.Controllers
             return Json(result);
         }
 
-        [HttpPost]
-        public JsonResult InsertOrUpdate(ContentPage postmodel)
-        {
-            try
-            {
-                var result = _IContentPageService.InsertOrUpdate(postmodel);
-                return Json(result.ResultRow);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
-
+      [HttpPost]
+      public JsonResult InsertOrUpdate(ContentPage postmodel)
+      {
+          try
+          {
+              var result = _IContentPageService.InsertOrUpdate(postmodel);
+              return Json(result.ResultRow);
+          }
+          catch (Exception ex)
+          {
+    
+              throw ex;
+          }
+    
+      }
+    
         [HttpPost]
         public JsonResult ImportDocumentsSingle()
         {

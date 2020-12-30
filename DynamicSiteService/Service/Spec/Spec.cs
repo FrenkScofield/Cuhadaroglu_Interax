@@ -14,8 +14,11 @@ public partial class Spec : BaseModel
 
     }
 
+    [ForeignKey("ParentId")]
     [DisplayName("Üst Spec")]
     public int? ParentId { get; set; }
+
+
     public virtual Spec Parent { get; set; }
 
     [DisplayName("Ad")]

@@ -49,8 +49,12 @@ namespace CMS
 
 
             //services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>();
-            services.AddEntityFrameworkNpgsql().AddDbContext<CMSDBContext>(opt =>
-            opt.UseNpgsql(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
+            //services.AddEntityFrameworkNpgsql().AddDbContext<CMSDBContext>(opt =>
+            //opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
+
+            services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>(opt =>
+           opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
+
 
 
             services.AddScoped(typeof(IBaseSession), typeof(BaseSession));

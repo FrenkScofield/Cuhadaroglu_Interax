@@ -1,0 +1,483 @@
+﻿@{
+    var content = ViewBag.currContent as ContentPage;
+    int LanguageID = (int)ViewBag.LanguageID;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="" />
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+
+    <!-- PAGE TITLE HERE -->
+    <title>Interal - Cuhadaroğlu</title>
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/bootstrap.min.css">
+    <!-- FONTAWESOME STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/fontawesome/css/font-awesome.min.css" />
+    <!-- OWL CAROUSEL STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/owl.carousel.min.css">
+    <!-- MAGNIFIC POPUP STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/magnific-popup.min.css">
+    <!-- LOADER STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/loader.min.css">
+    <!-- FLATICON STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/flaticon.min.css">
+    <!-- MAIN STYLE SHEET -->
+    <!-- MAIN STYLE SHEET -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/css/style.css">
+
+    <!-- Color Theme Change Css -->
+    <link rel="stylesheet" class="skin" type="text/css" href="/assets-site/css/skin/skin-2.css">
+
+
+    <!-- REVOLUTION SLIDER CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/plugins/revolution/revolution/css/settings.css">
+    <!-- REVOLUTION NAVIGATION STYLE -->
+    <link rel="stylesheet" type="text/css" href="/assets-site/plugins/revolution/revolution/css/navigation.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <div class="page-wraper">
+
+        <!-- HEADER START -->
+        <header class="site-header header-style-1 nav-wide">
+            <div class="top-bar bg-gray">
+                <div class="container">
+                    <div class="d-flex justify-content-end">
+                        <ul class="list-unstyled e-p-bx">
+                            <li><span>Mail us:</span> info@interal.com</li>
+                            <li><span>Call us:</span>(0212) 224-2020</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="sticky-header main-bar-wraper navbar-expand-lg">
+                <div class="main-bar header-left-gray-block bg-white">
+                    <div class="container clearfix">
+                        <div class="logo-header">
+                            <div class="logo-header-inner logo-header-one">
+                                <a href="index.html">
+                                    <img src="/assets-site/images/logo-1.png" alt="" />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- NAV Toggle Button -->
+                        <button data-target=".header-nav" data-toggle="collapse" type="button" class="navbar-toggler collapsed">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <!-- EXTRA NAV -->
+                        <div class="extra-nav">
+                            <div class="extra-cell">
+                                <a href="#search">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+                            <div class="extra-cell">
+                                <div class="contact-slide-show"><a href="javascript:;" class="get-in-touch-btn from-top">Bayi</a></div>
+                            </div>
+                        </div>
+                        <!-- EXTRA Nav -->
+                        <!-- MAIN NAVIGATION -->
+                        <div class="header-nav nav-dark navbar-collapse collapse justify-content-start collapse">
+                            <ul class=" nav navbar-nav">
+                                <li>
+                                    <a href="javascript:;">Hakkımızda</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Cuhadaroğlu</a></li>
+                                        <li><a href="#">Taahhüt</a></li>
+                                        <li><a href="#">ARGE</a></li>
+                                        <li><a href="#">Kalite</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:;">Ürünler</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Açılım Tipleri</a></li>
+                                        <li><a href="#">Sürme Sistemleri</a></li>
+                                        <li><a href="#">Kapı Pencere Sistemleri</a></li>
+                                        <li><a href="#">Giydirme Cephe Sistemleri</a></li>
+                                        <li><a href="#">Yardımcı Sistemler</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:;">Referanslar</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Villa</a></li>
+                                        <li><a href="#">AVM</a></li>
+                                        <li><a href="#">Konut</a></li>
+                                        <li><a href="#">Karma</a></li>
+                                        <li><a href="#">Yüksek Katlı</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:;">Destek Hizmetleri</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Bilgi Bankası</a></li>
+                                        <li><a href="#">Servisler</a></li>
+                                        <li><a href="#">Dökümanlar</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="contact-1.html">İletisim</a></li>
+
+                            </ul>
+                        </div>
+
+                        <!-- CONTACT -->
+                        <div class="contact-slide-hide" style="background-image:url(images/background/v2.jpg)">
+                            <div class="contact-nav">
+                                <a href="javascript:void(0)" class="contact_close">&times;</a>
+                                <div class="contact-nav-form">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12">
+
+                                            <div class=" contact-nav-info">
+
+                                                <div class="sx-icon-box-wraper left p-b30">
+                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-phone"></i></div>
+                                                    <div class="icon-content">
+                                                        <h6 class="m-t0">Phone number</h6>
+                                                        <p>(0212) 224-2020</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sx-icon-box-wraper left p-b30">
+                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-envelope"></i></div>
+                                                    <div class="icon-content">
+                                                        <h6 class="m-t0">Email address</h6>
+                                                        <p>info@interal.com</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sx-icon-box-wraper left p-b30">
+                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-map-marker"></i></div>
+                                                    <div class="icon-content">
+                                                        <h6 class="m-t0">Address info</h6>
+                                                        <p>Yakupoğlu Mah. No:6-8201 Beylikdüzü, İstanbul, Turkey</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="full-social-bg">
+                                                    <ul>
+                                                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                                        <li><a href="#" class="google"><i class="fa fa-google"></i></a></li>
+                                                        <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                                        <li><a href="#" class="tumblr"><i class="fa fa-tumblr"></i></a></li>
+                                                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                                        <li><a href="#" class="youtube"><i class="fa fa-youtube"></i></a></li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-xl-6 col-lg-6 col-md-12 ">
+                                            <div class="contact-nav-field shadow-lg p-a30 bg-white" style="background-image:url(images/background/bg-map.png)">
+                                                <form class="cons-contact-form2 form-transparent" method="post" action="form-handler2.php">
+
+                                                    <div class="input input-animate">
+                                                        <label for="name">Name</label>
+                                                        <input type="text" name="username" id="name" required>
+                                                        <span class="spin"></span>
+                                                    </div>
+
+                                                    <div class="input input-animate">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" name="email" id="email" required>
+                                                        <span class="spin"></span>
+                                                    </div>
+
+                                                    <div class="input input-animate">
+                                                        <label for="Phone">Phone</label>
+                                                        <input type="text" name="phone" id="Phone" required>
+                                                        <span class="spin"></span>
+                                                    </div>
+
+                                                    <div class="input input-animate">
+                                                        <label for="message">Textarea</label>
+                                                        <textarea name="message" id="message" required></textarea>
+                                                        <span class="spin"></span>
+                                                    </div>
+
+                                                    <div class="text-left p-t10">
+                                                        <button type="submit" class="site-button-secondry btn-half ">
+                                                            <span>  Submit Now</span>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <!-- SITE SEARCH -->
+                        <div id="search">
+                            <span class="close"></span>
+                            <form role="search" id="searchform" action="/search" method="get" class="radius-xl">
+                                <div class="input-group">
+                                    <input value="" name="q" type="search" placeholder="Type to search" />
+                                    <span class="input-group-btn"><button type="button" class="search-btn"><i class="fa fa-search arrow-animation"></i></button></span>
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- HEADER END -->
+        <!-- CONTENT START -->
+        <div class="page-content">
+
+            @RenderBody()
+
+        </div>
+        <!-- FOOTER START -->
+        <footer class="site-footer footer-large  footer-dark	footer-wide">
+
+            <!-- FOOTER BLOCKES START -->
+            <div class="footer-top overlay-wraper">
+                <div class="overlay-main"></div>
+                <div class="container">
+                    <div class="row">
+                        <!-- ABOUT COMPANY -->
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget_about">
+                                <!--<h4 class="widget-title">About Company</h4>-->
+                                <div class="logo-footer clearfix p-b15">
+                                    <a href="index.html"><img src="images/logo-1.png" alt=""></a>
+                                </div>
+                                <p>Interal for interior and architecture purpose. Today we can tell you, thanks to your passion.</p>
+
+                                <ul class="social-icons  sx-social-links">
+                                    <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                                    <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- RESENT POST -->
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget recent-posts-entry-date">
+                                <h5 class="widget-title">Resent Post</h5>
+                                <div class="widget-post-bx">
+                                    <div class="widget-post clearfix">
+                                        <div class="sx-post-date text-center text-uppercase text-white">
+                                            <strong class="p-date">15</strong>
+                                            <span class="p-month">Oct</span>
+                                            <span class="p-year">2019</span>
+                                        </div>
+                                        <div class="sx-post-info">
+                                            <div class="sx-post-header">
+                                                <h6 class="post-title"><a href="blog-single.html">On these beams, you’re secure and safe.</a></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="widget-post clearfix">
+                                        <div class="sx-post-date text-center text-uppercase text-white">
+                                            <strong class="p-date">17</strong>
+                                            <span class="p-month">Oct</span>
+                                            <span class="p-year">2019</span>
+                                        </div>
+                                        <div class="sx-post-info">
+                                            <div class="sx-post-header">
+                                                <h6 class="post-title"><a href="blog-single.html">We’ll be a sensation for your living area</a></h6>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-post clearfix">
+                                        <div class="sx-post-date text-center text-uppercase text-white">
+                                            <strong class="p-date">18</strong>
+                                            <span class="p-month">Oct</span>
+                                            <span class="p-year">2019</span>
+                                        </div>
+                                        <div class="sx-post-info">
+                                            <div class="sx-post-header">
+                                                <h6 class="post-title"><a href="blog-single.html">solution for new way of constructions</a></h6>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- USEFUL LINKS -->
+                        <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
+                            <div class="widget widget_services inline-links">
+                                <h5 class="widget-title">Linkler</h5>
+                                <ul>
+                                    <li><a href="about-1.html">Hakkımızda</a></li>
+                                    <li><a href="services-1.html">Ürünler</a></li>
+                                    <li><a href="project-grid.html">Referanslar</a></li>
+                                    <li><a href="blog-grid.html">Blog</a></li>
+                                    <li><a href="contact-1.html">İletişim</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- CONTACT US -->
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget_address_outer">
+                                <h5 class="widget-title">Bize Ulaşın</h5>
+                                <ul class="widget_address">
+                                    <li>Yakuplu Mah. Hürriyet Bulvarı, No6-8 Beylikdüzü, Istanbul, Turkey</li>
+                                    <li>info@interal.com</li>
+                                    <li>(+90)212 224-2020</li>
+                                    <li>(+90)212 224-2020</li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="call-to-action-wrap">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-6">
+                                <div class="call-to-action-left">
+                                    <h5 class="text-uppercase m-b10 m-t0">Subscribe to our newsletter!</h5>
+                                    <span>Never Miss Anything From Interal By Signing Up To Our Newsletter.</span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-6">
+                                <div class="call-to-action-right">
+                                    <div class="widget_newsletter">
+                                        <div class="newsletter-bx">
+                                            <form role="search" method="post">
+                                                <div class="input-group">
+                                                    <input name="news-letter" class="form-control" placeholder="ENTER YOUR EMAIL" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="submit" class="site-button"><i class="fa fa-paper-plane-o"></i></button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER COPYRIGHT -->
+            <div class="footer-bottom overlay-wraper">
+                <div class="overlay-main"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="sx-footer-bot-left">
+                            <span class="copyrights-text">© 2020 Cuhadaroğlu. Designed By Hybrid.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- FOOTER END -->
+        <!-- BUTTON TOP START -->
+        <button class="scroltop"><span class="fa fa-angle-up  relative" id="btn-vibrate"></span></button>
+
+    </div>
+
+    <!-- LOADING AREA START ===== -->
+    <div class="loading-area">
+        <div class="loading-box"></div>
+        <div class="loading-pic">
+            <div class="cssload-spinner">
+                <div class="cssload-cube cssload-cube0"></div>
+                <div class="cssload-cube cssload-cube1"></div>
+                <div class="cssload-cube cssload-cube2"></div>
+                <div class="cssload-cube cssload-cube3"></div>
+                <div class="cssload-cube cssload-cube4"></div>
+                <div class="cssload-cube cssload-cube5"></div>
+                <div class="cssload-cube cssload-cube6"></div>
+                <div class="cssload-cube cssload-cube7"></div>
+                <div class="cssload-cube cssload-cube8"></div>
+                <div class="cssload-cube cssload-cube9"></div>
+                <div class="cssload-cube cssload-cube10"></div>
+                <div class="cssload-cube cssload-cube11"></div>
+                <div class="cssload-cube cssload-cube12"></div>
+                <div class="cssload-cube cssload-cube13"></div>
+                <div class="cssload-cube cssload-cube14"></div>
+                <div class="cssload-cube cssload-cube15"></div>
+            </div>
+        </div>
+    </div>
+    <!-- LOADING AREA  END ====== -->
+    <!-- JAVASCRIPT  FILES ========================================= -->
+    <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
+    <script src="/assets-site/js/popper.min.js"></script><!-- POPPER.MIN JS -->
+    <script src="/assets-site/js/bootstrap.min.js"></script><!-- BOOTSTRAP.MIN JS -->
+    <script src="/assets-site/js/magnific-popup.min.js"></script><!-- MAGNIFIC-POPUP JS -->
+    <script src="/assets-site/js/waypoints.min.js"></script><!-- WAYPOINTS JS -->
+    <script src="/assets-site/js/counterup.min.js"></script><!-- COUNTERUP JS -->
+    <script src="/assets-site/js/waypoints-sticky.min.js"></script><!-- sticky header JS -->
+    <script src="/assets-site/js/isotope.pkgd.min.js"></script><!-- MASONRY  -->
+    <script src="/assets-site/js/owl.carousel.min.js"></script><!-- OWL  SLIDER  -->
+    <script src="/assets-site/js/jquery.owl-filter.js"></script>
+    <script src="/assets-site/js/stellar.min.js"></script><!-- PARALLAX BG IMAGE   -->
+    <script src="/assets-site/js/custom.js"></script><!-- CUSTOM FUCTIONS  -->
+    <script src="/assets-site/js/jquery.bgscroll.js"></script><!-- BACKGROUND SCROLL -->
+    <script src="/assets-site/js/theia-sticky-sidebar.js"></script><!--sticky content-->
+    <!-- REVOLUTION JS FILES -->
+
+    <script src="/assets-site/plugins/revolution/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/assets-site/plugins/revolution/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+    <script src="/assets-site/plugins/revolution/revolution/js/extensions/revolution-plugin.js"></script>
+
+    <!-- REVOLUTION SLIDER SCRIPT FILES -->
+    <script src="/assets-site/js/rev-script-1.js"></script>
+
+
+
+</body>
+
+</html>
