@@ -6419,7 +6419,7 @@ label {
 
 input[type=checkbox],
 input[type=radio] {
-	opacity: 0;
+	opacity: 1;
 	margin-left: 1px !important;
 }
 
@@ -9470,7 +9470,7 @@ padding:7px 0px;
 -------------------------------------*/
 
 .sx-bnr-inr {
-	height: 500px;
+	height: 250px;
 	background-position: center center;
 	display: table;
 	width: 100%;
@@ -10798,7 +10798,7 @@ ol.commentlist li::after {
 /*------------------------------------- 
 	Product block
 -------------------------------------*/
-
+.product-block{margin-top:20px;}
 .product-block p {
 	margin-bottom: 0px;
 }

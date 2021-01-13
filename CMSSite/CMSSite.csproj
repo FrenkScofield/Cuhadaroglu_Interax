@@ -33,8 +33,6 @@
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Shared\Components\ContentView\" />
-    <Folder Include="Views\Shared\Components\MenuView\" />
     <Folder Include="Views\Shared\Components\SectionView\" />
     <Folder Include="wwwroot\assets-site\site\App_Data\" />
   </ItemGroup>

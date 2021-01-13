@@ -1,6 +1,13 @@
 ﻿@{
     var content = ViewBag.currContent as ContentPage;
+    var Pages = ViewBag.Pages as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
+    List<ContentPage> Blogs = new List<ContentPage>();
+    if (Pages != null)
+    {
+        Blogs = Pages.Where(x => x.ContentTypesId == 2).ToList();
+    }
+   string currState= (string.IsNullOrEmpty(ViewBag.currState)?"Bayi": ViewBag.currState) as string;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +60,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
-
+    <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
 </head>
 
 <body>
@@ -98,59 +105,60 @@
                                 </a>
                             </div>
                             <div class="extra-cell">
-                                <div class="contact-slide-show"><a href="javascript:;" class="get-in-touch-btn from-top">Bayi</a></div>
+                                <div class="contact-slide-show"><a href="javascript:;" class="get-in-touch-btn from-top">@currState.Replace("\"", "")</a></div>
                             </div>
                         </div>
                         <!-- EXTRA Nav -->
                         <!-- MAIN NAVIGATION -->
                         <div class="header-nav nav-dark navbar-collapse collapse justify-content-start collapse">
-                            <ul class=" nav navbar-nav">
-                                <li>
-                                    <a href="javascript:;">Hakkımızda</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Cuhadaroğlu</a></li>
-                                        <li><a href="#">Taahhüt</a></li>
-                                        <li><a href="#">ARGE</a></li>
-                                        <li><a href="#">Kalite</a></li>
-                                    </ul>
-                                </li>
+                            @if (Pages != null)
+                            {
+                                <ul class=" nav navbar-nav">
 
-                                <li>
-                                    <a href="javascript:;">Ürünler</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Açılım Tipleri</a></li>
-                                        <li><a href="#">Sürme Sistemleri</a></li>
-                                        <li><a href="#">Kapı Pencere Sistemleri</a></li>
-                                        <li><a href="#">Giydirme Cephe Sistemleri</a></li>
-                                        <li><a href="#">Yardımcı Sistemler</a></li>
+                                    @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(x => x.ContentOrderNo))
+                                    {
+                                        <li>
+                                            @if (string.IsNullOrEmpty(item.ExternalLink))
+                                            {
+                                                <a href="@(item.IsClick == false ? "javascript:void(0)":(item.TemplateType==TemplateType.Sayfa?item.ContentPageChilds.FirstOrDefault(b=>b.IsDeleted==null).Link: item.Link))">@item.Name</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@item.ExternalLink" target="@(item.ExternalLink.StartsWith("http")?"_blank":"")">@item.Name</a>
+                                            }
+                                            @{
+                                                var subItems = Pages.Where(x => x.ContentPageId == item.Id && x.IsHeaderMenu == true).OrderBy(x => x.ContentOrderNo).ThenBy(m => m.Id);
+                                            }
 
-                                    </ul>
-                                </li>
+                                            @if (Pages.Any(x => x.ContentPageId == item.Id && x.Id != item.Id && x.IsHeaderMenu == true))
+                                            {
+                                                if (Pages.Any(a => a.Id == subItems.FirstOrDefault().ContentPageId))
+                                                {
+                                                    <ul class="sub-menu">
+                                                        @foreach (var itemSub in subItems)
+                                                        {
+                                                            <li>
+                                                                @if (string.IsNullOrEmpty(itemSub.ExternalLink))
+                                                                {
+                                                                    <a href="/@itemSub.Link">@itemSub.Name</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="@itemSub.ExternalLink" target="@(itemSub.ExternalLink.StartsWith("http")?"_blank":"")">@itemSub.Name</a>
+                                                                }
+                                                            </li>
 
-                                <li>
-                                    <a href="javascript:;">Referanslar</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Villa</a></li>
-                                        <li><a href="#">AVM</a></li>
-                                        <li><a href="#">Konut</a></li>
-                                        <li><a href="#">Karma</a></li>
-                                        <li><a href="#">Yüksek Katlı</a></li>
+                                                        }
+                                                    </ul>
+                                                }
 
-                                    </ul>
-                                </li>
+                                            }
 
-                                <li>
-                                    <a href="javascript:;">Destek Hizmetleri</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Bilgi Bankası</a></li>
-                                        <li><a href="#">Servisler</a></li>
-                                        <li><a href="#">Dökümanlar</a></li>
-                                    </ul>
-                                </li>
+                                        </li>
+                                    }
 
-                                <li><a href="contact-1.html">İletisim</a></li>
-
-                            </ul>
+                                </ul>
+                            }
                         </div>
 
                         <!-- CONTACT -->
@@ -159,89 +167,72 @@
                                 <a href="javascript:void(0)" class="contact_close">&times;</a>
                                 <div class="contact-nav-form">
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-6 col-md-12">
 
-                                            <div class=" contact-nav-info">
+                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Bayi">
 
-                                                <div class="sx-icon-box-wraper left p-b30">
-                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-phone"></i></div>
-                                                    <div class="icon-content">
-                                                        <h6 class="m-t0">Phone number</h6>
-                                                        <p>(0212) 224-2020</p>
-                                                    </div>
+                                            <div class="number-block-one animate-in-to-top">
+                                                <img src="/assets-site/images/pic1.jpg" alt="" />
+                                                <div class="figcaption bg-white text-center p-a20">
+                                                    <h4 class="m-a0">Bayi</h4>
                                                 </div>
-
-                                                <div class="sx-icon-box-wraper left p-b30">
-                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-envelope"></i></div>
-                                                    <div class="icon-content">
-                                                        <h6 class="m-t0">Email address</h6>
-                                                        <p>info@interal.com</p>
-                                                    </div>
+                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                                    <span></span>
                                                 </div>
+                                            </div>
 
-                                                <div class="sx-icon-box-wraper left p-b30">
-                                                    <div class="icon-xs inline-icon m-b20 scale-in-center"><i class="fa fa-map-marker"></i></div>
-                                                    <div class="icon-content">
-                                                        <h6 class="m-t0">Address info</h6>
-                                                        <p>Yakupoğlu Mah. No:6-8201 Beylikdüzü, İstanbul, Turkey</p>
-                                                    </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Bireysel">
+
+                                            <div class="number-block-one animate-in-to-top">
+                                                <img src="/assets-site/images/pic2.jpg" alt="" />
+                                                <div class="figcaption bg-white text-center p-a20">
+                                                    <h4 class="m-a0">Bireysel</h4>
                                                 </div>
-
-                                                <div class="full-social-bg">
-                                                    <ul>
-                                                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" class="google"><i class="fa fa-google"></i></a></li>
-                                                        <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
-                                                        <li><a href="#" class="tumblr"><i class="fa fa-tumblr"></i></a></li>
-                                                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                        <li><a href="#" class="youtube"><i class="fa fa-youtube"></i></a></li>
-                                                    </ul>
+                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                                    <span></span>
                                                 </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Endustri">
+
+                                            <div class="number-block-one animate-in-to-top">
+                                                <img src="/assets-site/images/pic3.jpg" alt="" />
+                                                <div class="figcaption bg-white text-center p-a20">
+                                                    <h4 class="m-a0">Endustri</h4>
+                                                </div>
+                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                                    <span></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Mimar">
+
+                                            <div class="number-block-one animate-in-to-top">
+                                                <img src="/assets-site/images/pic4.jpg" alt="" />
+                                                <div class="figcaption bg-white text-center p-a20">
+                                                    <h4 class="m-a0">Mimar</h4>
+                                                </div>
+                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                                    <span></span>
+                                                </div>
                                             </div>
 
                                         </div>
 
-
-                                        <div class="col-xl-6 col-lg-6 col-md-12 ">
-                                            <div class="contact-nav-field shadow-lg p-a30 bg-white" style="background-image:url(images/background/bg-map.png)">
-                                                <form class="cons-contact-form2 form-transparent" method="post" action="form-handler2.php">
-
-                                                    <div class="input input-animate">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" name="username" id="name" required>
-                                                        <span class="spin"></span>
-                                                    </div>
-
-                                                    <div class="input input-animate">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" name="email" id="email" required>
-                                                        <span class="spin"></span>
-                                                    </div>
-
-                                                    <div class="input input-animate">
-                                                        <label for="Phone">Phone</label>
-                                                        <input type="text" name="phone" id="Phone" required>
-                                                        <span class="spin"></span>
-                                                    </div>
-
-                                                    <div class="input input-animate">
-                                                        <label for="message">Textarea</label>
-                                                        <textarea name="message" id="message" required></textarea>
-                                                        <span class="spin"></span>
-                                                    </div>
-
-                                                    <div class="text-left p-t10">
-                                                        <button type="submit" class="site-button-secondry btn-half ">
-                                                            <span>  Submit Now</span>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
+                                <script>
 
+                                    $(".contentTypes").click(function () {
+
+                                        $.post("/Base/ChangeType", { ID: $(this).data("id") }, function (data) {
+                                            window.location.reload();
+                                        });
+                                        return false;
+                                    });
+                                </script>
 
                             </div>
                         </div>
@@ -295,69 +286,52 @@
                                 </ul>
                             </div>
                         </div>
+                        @if (Blogs.Count() > 0)
+                        {
+                            <!-- RESENT POST -->
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="widget recent-posts-entry-date">
+                                    <h5 class="widget-title">Son Yazılar</h5>
+                                    <div class="widget-post-bx">
 
-                        <!-- RESENT POST -->
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="widget recent-posts-entry-date">
-                                <h5 class="widget-title">Resent Post</h5>
-                                <div class="widget-post-bx">
-                                    <div class="widget-post clearfix">
-                                        <div class="sx-post-date text-center text-uppercase text-white">
-                                            <strong class="p-date">15</strong>
-                                            <span class="p-month">Oct</span>
-                                            <span class="p-year">2019</span>
-                                        </div>
-                                        <div class="sx-post-info">
-                                            <div class="sx-post-header">
-                                                <h6 class="post-title"><a href="blog-single.html">On these beams, you’re secure and safe.</a></h6>
+                                        @foreach (var item in Blogs.Take(3).OrderByDescending(x => x.CreaDate))
+                                        {
+                                            <div class="widget-post clearfix">
+                                                <div class="sx-post-date text-center text-uppercase text-white">
+                                                    <strong class="p-date">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Day.ToString())</strong>
+                                                    <span class="p-month">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.ToString("MMMM").Substring(0, 3).ToUpper())</span>
+                                                    <span class="p-year">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Year.ToString())</span>
+                                                </div>
+                                                <div class="sx-post-info">
+                                                    <div class="sx-post-header">
+                                                        <h6 class="post-title"><a href="/@item.Link">@item.Name</a></h6>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+
+
+
                                     </div>
-                                    <div class="widget-post clearfix">
-                                        <div class="sx-post-date text-center text-uppercase text-white">
-                                            <strong class="p-date">17</strong>
-                                            <span class="p-month">Oct</span>
-                                            <span class="p-year">2019</span>
-                                        </div>
-                                        <div class="sx-post-info">
-                                            <div class="sx-post-header">
-                                                <h6 class="post-title"><a href="blog-single.html">We’ll be a sensation for your living area</a></h6>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="widget-post clearfix">
-                                        <div class="sx-post-date text-center text-uppercase text-white">
-                                            <strong class="p-date">18</strong>
-                                            <span class="p-month">Oct</span>
-                                            <span class="p-year">2019</span>
-                                        </div>
-                                        <div class="sx-post-info">
-                                            <div class="sx-post-header">
-                                                <h6 class="post-title"><a href="blog-single.html">solution for new way of constructions</a></h6>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
+                        }
 
-                        <!-- USEFUL LINKS -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
-                            <div class="widget widget_services inline-links">
-                                <h5 class="widget-title">Linkler</h5>
-                                <ul>
-                                    <li><a href="about-1.html">Hakkımızda</a></li>
-                                    <li><a href="services-1.html">Ürünler</a></li>
-                                    <li><a href="project-grid.html">Referanslar</a></li>
-                                    <li><a href="blog-grid.html">Blog</a></li>
-                                    <li><a href="contact-1.html">İletişim</a></li>
-                                </ul>
+                        @if (Pages != null)
+                        {
+                            <!-- USEFUL LINKS -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
+                                <div class="widget widget_services inline-links">
+                                    <h5 class="widget-title">Linkler</h5>
+                                    <ul>
+                                        @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(o => o.ContentOrderNo))
+                                        {
+                                            <li><a href="/@item.Link">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        }
 
                         <!-- CONTACT US -->
                         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -451,7 +425,8 @@
     </div>
     <!-- LOADING AREA  END ====== -->
     <!-- JAVASCRIPT  FILES ========================================= -->
-    <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
+
+    <link href="~/assets-site/css/custom.css" rel="stylesheet" />
     <script src="/assets-site/js/popper.min.js"></script><!-- POPPER.MIN JS -->
     <script src="/assets-site/js/bootstrap.min.js"></script><!-- BOOTSTRAP.MIN JS -->
     <script src="/assets-site/js/magnific-popup.min.js"></script><!-- MAGNIFIC-POPUP JS -->

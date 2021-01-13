@@ -15,16 +15,21 @@ using Newtonsoft.Json.Converters;
 using Kendo.Mvc.UI;
 using System.Reflection.Metadata;
 using Kendo.Mvc.Extensions;
+using System.Web;
 
 namespace CMS.Controllers
 {
     public class ContentPageController : Controller
     {
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IHostingEnvironment _IHostingEnvironment;
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IContentPageService _IContentPageService;
         IDocumentsService _IDocumentsService;
 
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         public ContentPageController(IHostingEnvironment _IHostingEnvironment, IContentPageService _IContentPageService, IDocumentsService _IDocumentsService)
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         {
             this._IContentPageService = _IContentPageService;
             this._IDocumentsService = _IDocumentsService;
@@ -163,7 +168,10 @@ namespace CMS.Controllers
       {
           try
           {
-              var result = _IContentPageService.InsertOrUpdate(postmodel);
+                postmodel.Description = HttpUtility.HtmlDecode(postmodel.Description); 
+                postmodel.ContentData = HttpUtility.HtmlDecode(postmodel.ContentData);
+                postmodel.ContentShort = HttpUtility.HtmlDecode(postmodel.ContentShort);
+                var result = _IContentPageService.InsertOrUpdate(postmodel);
               return Json(result.ResultRow);
           }
           catch (Exception ex)

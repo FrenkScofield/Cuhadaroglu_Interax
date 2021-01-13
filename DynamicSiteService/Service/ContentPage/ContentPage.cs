@@ -14,52 +14,40 @@ public partial class ContentPage : BaseModel
         SpecContentValue = new HashSet<SpecContentValue>();
     }
 
-
     //1. Sayfa Yapısı
     //[Display(Description ="", Order = 1)]
-    [Column(Order = 1)]
-    [DisplayName("Üst Kategori")]
-    public int? ContentPageId { get; set; }
 
     [Column(Order = 1)]
     [DisplayName("Başlık")]
-    [Required()] 
+    [Required()]
     public string Name { get; set; }
 
     [Column(Order = 1)]
-    [DisplayName("Şablon Tipi")]
-    [Required()]
-    public TemplateType TemplateType { get; set; }
+    [DisplayName("Üst Kategori")]
+    public int? ContentPageId { get; set; }
 
     [Column(Order = 1)]
     [DisplayName("İçerik Tipi")]
     [Required()]
     public int ContentTypesId { get; set; }
     public virtual ContentTypes ContentTypes { get; set; }
+    [Column(Order = 1)]
+    [DisplayName("Şablon Tipi")]
+    [Required()]
+    public TemplateType TemplateType { get; set; }
 
 
     [Column(Order = 1)]
     [DisplayName("Sayfa Url")]
     [Required()]
     public string Link { get; set; }
-
+   
 
     [Column(Order = 1)]
     [DisplayName("Dış Url")]
     public string ExternalLink { get; set; }
-    [Column(Order = 3)]
-    [DisplayName("interal")]
-    public bool? IsInteral { get; set; }
-    [Column(Order = 3)]
-    [DisplayName("interax")]
-    public bool? IsInterax { get; set; }
-    [Column(Order = 3)]
-    [DisplayName("interwall")]
-    public bool? IsInterwall { get; set; }
-    [Column(Order = 3)]
-    [DisplayName("intersecure")]
-    public bool? IsIntersecure { get; set; }
-
+ 
+     
     [Column(Order = 3)]
     [DisplayName("Bayi")]
     public bool? IsBayi { get; set; }
@@ -72,9 +60,8 @@ public partial class ContentPage : BaseModel
     [Column(Order = 3)]
     [DisplayName("Mimar")]
     public bool? IsMimar { get; set; }
+     
 
-
-    //2. Sayfa İçeriği
     [Column(Order = 2)]
     [DisplayName("Ön Görsel")]
     public Documents ThumbImage { get; set; }
@@ -103,11 +90,12 @@ public partial class ContentPage : BaseModel
     [DisplayName("Button Link")]
     public string ButtonLink { get; set; }
 
+
+    //2. Sayfa İçeriği
     [Column(Order = 2)]
     [DataType("text")]
     [DisplayName("Açıklama")]
     public string Description { get; set; }
-
 
     [Column(Order = 2)]
     [DataType("text")]
@@ -125,36 +113,9 @@ public partial class ContentPage : BaseModel
     [Column(Order = 2)]
     [DisplayName("Video Link")]
     public string VideoLink { get; set; }
-
-
-
-    //3. Sayfa Ayarları
-    [Column(Order = 3)]
-    [DisplayName("Üst Menü")]
-    public bool? IsHeaderMenu { get; set; }
-
-    [Column(Order = 3)]
-    [DisplayName("Alt Menü")]
-    public bool? IsFooterMenu { get; set; }
-
-    [Column(Order = 3)]
-    [DisplayName("Tıklanabilir")]
-    public bool? IsClick { get; set; }
-
-    [Column(Order = 3)]
-    [DisplayName("Yan Menü")]
-    public bool? IsSideMenu { get; set; }
-
-    [Column(Order = 3)]
-    [DisplayName("Hamburger Menü")]
-    public bool? IsHamburgerMenu { get; set; }
-
     [Column(Order = 3)]
     [DisplayName("Form Tipi")]
     public int? FormTypeId { get; set; }
-
-    [DisplayName("Form Tipi")]
-    public virtual FormType FormType { get; set; }
 
     [Column(Order = 3)]
     [DisplayName("Galeri")]
@@ -164,19 +125,27 @@ public partial class ContentPage : BaseModel
     [DisplayName("Harita")]
     public bool? IsMap { get; set; }
 
-    [Column(Order = 3)]
-    [DisplayName("Aktiflik Durumu")]
-    public bool? IsActive { get; set; }
+
+    //3. Sayfa Ayarları
 
     [Column(Order = 3)]
-    [DisplayName("Yayına Alma Durumu")]
-    public bool? IsPublish { get; set; }
-
-
+    [DisplayName("Üst Menü")]
+    public bool? IsHeaderMenu { get; set; }
 
     [Column(Order = 3)]
-    [DisplayName("İçerik Sırası")]
-    public int? ContentOrderNo { get; set; }
+    [DisplayName("Alt Menü")]
+    public bool? IsFooterMenu { get; set; }
+
+    [Column(Order = 3)]
+    [DisplayName("Hamburger Menü")]
+    public bool? IsHamburgerMenu { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("Yan Menü")]
+    public bool? IsSideMenu { get; set; }
+
+    [Column(Order = 3)]
+    [DisplayName("Tıklanabilir")]
+    public bool? IsClick { get; set; }
 
 
 
@@ -191,6 +160,46 @@ public partial class ContentPage : BaseModel
     [Column(Order = 3)]
     [DisplayName("Meta Description")]
     public string MetaDescription { get; set; }
+
+    [Column(Order = 3)]
+    [DisplayName("İçerik Sırası")]
+    public int? ContentOrderNo { get; set; }
+
+
+    [Column(Order = 3)]
+    [DisplayName("interal")]
+    public bool? IsInteral { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("interax")]
+    public bool? IsInterax { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("interwall")]
+    public bool? IsInterwall { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("intersecure")]
+    public bool? IsIntersecure { get; set; }
+  
+
+    [Column(Order = 3)]
+    [DisplayName("Aktiflik Durumu")]
+    public bool? IsActive { get; set; }
+
+    [Column(Order = 3)]
+    [DisplayName("Yayına Alma Durumu")]
+    public bool? IsPublish { get; set; }
+
+
+
+
+
+    [DisplayName("Form Tipi")]
+    public virtual FormType FormType { get; set; }
+
+
+ 
+
+
+
 
     [Column(Order = 3)]
     [DisplayName("Galeri")]
@@ -221,6 +230,7 @@ public partial class ContentPage : BaseModel
     [DisplayName("Dil")]
     [Required()] public int LangId { get; set; }
     public virtual Lang Lang { get; set; }
+
 
 
     public virtual ICollection<SpecContentValue> SpecContentValue { get; set; }

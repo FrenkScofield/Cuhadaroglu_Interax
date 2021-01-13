@@ -33,6 +33,18 @@ public enum TemplateType : int
     DikeySayfa = 5,
     [Description("Yatay Sayfa")]
     YataySayfa = 6,
+    [Description("Proje Listeleme")]
+    ProjeListeleme = 7,
+    [Description("Proje Detay")]
+    ProjeDetay = 8,
+    [Description("Blog Listeleme")]
+    BlogListeleme = 9,
+    [Description("Blog Detay")]
+    BlogDetay = 10,
+    [Description("Ürün Detay")]
+    UrunDetay = 11,
+    [Description("Ürün Listeleme")]
+    UrunListeleme = 12
 }
 
 
@@ -45,7 +57,7 @@ public enum EventType : int
     [Description("tip2")]
     tip2 = 2,
 
-} 
+}
 public enum ContentPageType
 {
     [Description("Slider")]
@@ -55,7 +67,7 @@ public enum ContentPageType
     [Description("Sayfa")]
     Sayfa = 3,
     [Description("Blog")]
-    Blog = 4 
+    Blog = 4
 }
 public enum ProductsType
 {

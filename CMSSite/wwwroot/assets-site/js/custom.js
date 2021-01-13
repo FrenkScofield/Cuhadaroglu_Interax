@@ -1,4 +1,4 @@
-/* =====================================
+﻿/* =====================================
 All JavaScript fuctions Start
 ======================================*/
 
@@ -440,7 +440,7 @@ function home_projects_filter(){
 		margin:30,
 		nav:true,
 		dots: false,
-		navText: ['Prev', 'Next'],
+		navText: ['Geri', 'İleri'],
 		responsive:{
 			0:{
 				items:1,
@@ -915,7 +915,11 @@ function home_projects_filter(){
 	
 //________Switcher panal slide function END	________//	
 
-
+ 
+		$(".contentTypes").click(function () {
+			$(this).data("id");
+                                    })
+                      
 
 
 })(jQuery);

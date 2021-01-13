@@ -1,35 +1,21 @@
 ﻿@{
     Layout = "_Layout";
-    var Pages = ViewBag.Pages as List<ContentPage>;
+    var Pages = ViewBag.contentPages as List<ContentPage>;
     int LanguageID = ViewBag.LanguageID;
     var content = ViewBag.currContent as ContentPage;
 
     string currState = ViewBag.currState;
-    bool isBayi = false;
-    bool isEndustri = false;
-    bool isMimar = false;
-    bool isBireysel = false;
-    switch (currState)
-    {
-        case "bayi":
-            isBayi = true;
-            break;
-        case "endustri":
-            isEndustri = true;
-            break;
-        case "mimar":
-            isMimar = true;
-            break;
-        case "bireysel":
-            isBireysel = true;
-            break;
-        default:
-            isBayi = true;
-            break;
-    }
-    ContentPage homeIntro = Pages.FirstOrDefault(x => x.Id == 7 && x.IsDeleted == null && x.IsBayi == isBayi && x.IsEndustri == isEndustri && x.IsMimar == isMimar && x.IsBireysel == isBireysel);
 
+    ContentPage homeIntro = Pages.FirstOrDefault(x => x.Id == 13);
+    var Projects = Pages.Where(x => x.ContentTypesId == 5).ToList();
+    var Sliders = Pages.Where(x => x.ContentTypesId == 4).ToList();
+    var Blogs = Pages.Where(x => x.ContentTypesId == 2).ToList();
+    var Categories = Pages.Where(x => x.ContentTypesId == 3).Take(3).OrderBy(o => o.ContentOrderNo).ToList();
 
+    //   var ProjectFilters = Pages.Where(x => x.ContentTypesId == 5).ToList();
+    // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0));
+
+    var x = "asd";
 }
 <!-- SLIDER START -->
 <div id="rev_slider_26_1_wrapper" class="rev_slider_wrapper fullscreen-container home-rev-slider" data-alias="mask-showcase" data-source="gallery">
@@ -37,86 +23,65 @@
     <div id="rev_slider_26_1" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.4.1">
         <ul>
             <!-- SLIDE 1 -->
-            @foreach (var item in Pages.Where(x => x.ContentTypesId == 4 && x.IsDeleted == null))
+            @*HardCodedContent*@
+            @if (Sliders.Count() > 0)
             {
+                foreach (var item in Sliders)
+                {
+                    <li data-index="rs-@item.Id" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" data-rotate="0" data-saveperformance="off" data-title="" data-param1="1" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                        <!-- MAIN IMAGE -->
+                        <img src="@(item.Picture!=null?item.Picture.Link:"defaultImage")" data-bgcolor='#f8f8f8' style='' alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+                        <!-- LAYER 1  right image overlay dark-->
+                        <div class="tp-caption tp-shape tp-shapewrapper  rs-parallaxlevel-tobggroup"
+                             id="slide-@item.Id"
+                             data-x="['right','right','right','center']" data-hoffset="['0','0','0','0']"
+                             data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
+                             data-fontweight="['100','100','400','400']"
+                             data-width="['full','full','full','full']"
+                             data-height="['full','full','full','full']"
+                             data-whitespace="nowrap"
+                             data-type="shape"
+                             data-basealign="slide"
+                             data-responsive_offset="off"
+                             data-responsive="off"
+                             data-frames='[{"from":"opacity:0;","speed":1500,"to":"o:1;","delay":150,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1500,"to":"opacity:0;","ease":"Power2.easeInOut"}]'
+                             data-textAlign="['left','left','left','left']"
+                             data-paddingtop="[0,0,0,0]"
+                             data-paddingright="[0,0,0,0]"
+                             data-paddingbottom="[0,0,0,0]"
+                             data-paddingleft="[0,0,0,0]"
+                             style="z-index: 6;background-color:rgba(0,0,0,0.7);">
+                        </div>
 
-
-
-                <li data-index="rs-@item.Id" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="@item.ThumbImage" data-rotate="0" data-saveperformance="off" data-title="" data-param1="1" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                    <!-- MAIN IMAGE -->
-                    <img src="/assets-site/images/main-slider/slider1/slide3.jpg" data-bgcolor='#f8f8f8' style='' alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
-                    <!-- LAYER 1  right image overlay dark-->
-                    <div class="tp-caption tp-shape tp-shapewrapper  rs-parallaxlevel-tobggroup"
-                         id="slide-@item.Id"
-                         data-x="['right','right','right','center']" data-hoffset="['0','0','0','0']"
-                         data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
-                         data-fontweight="['100','100','400','400']"
-                         data-width="['full','full','full','full']"
-                         data-height="['full','full','full','full']"
-                         data-whitespace="nowrap"
-                         data-type="shape"
-                         data-basealign="slide"
-                         data-responsive_offset="off"
-                         data-responsive="off"
-                         data-frames='[{"from":"opacity:0;","speed":1500,"to":"o:1;","delay":150,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1500,"to":"opacity:0;","ease":"Power2.easeInOut"}]'
-                         data-textAlign="['left','left','left','left']"
-                         data-paddingtop="[0,0,0,0]"
-                         data-paddingright="[0,0,0,0]"
-                         data-paddingbottom="[0,0,0,0]"
-                         data-paddingleft="[0,0,0,0]"
-                         style="z-index: 6;background-color:rgba(0,0,0,0.7);">
-                    </div>
-
-                    <!-- LAYER 3  Thin text title-->
-                    <div class="tp-caption   tp-resizeme slider-tag-line"
-                         id="slide-72-layer-3"
-                         data-x="['left','left','center','center']" data-hoffset="['50','50','0','0']"
-                         data-y="['top','top','top','top']" data-voffset="['150','150','150','100']"
-                         data-fontsize="['22',22','20','16']"
-                         data-lineheight="['26','26','26','22']"
-                         data-width="['700','600','600','380']"
-                         data-height="none"
-                         data-whitespace="nowrap"
-                         data-type="text"
-                         data-responsive_offset="on"
-                         data-frames='[{"delay":300,"speed":750,"sfxcolor":"#fff","sfx_effect":"blockfromleft","frame":"0","from":"z:0;","to":"o:1;","ease":"Power3.easeInOut"},
-                                {"delay":"wait","speed":500,"sfxcolor":"#ffffff","sfx_effect":"blocktoleft","frame":"999","to":"z:0;","ease":"Power4.easeOut"}]'
-                         data-textAlign="['left','left','center','center']"
-                         data-paddingtop="[0,0,0,0]"
-                         data-paddingright="[0,0,0,0]"
-                         data-paddingbottom="[0,0,0,0]"
-                         data-paddingleft="[0,0,0,0]"
-                         style="z-index: 10; font-weight:500; letter-spacing:10px; color: #fff;font-family: 'Poppins', sans-serif; text-transform:uppercase"></div>
-
-                    <!-- LAYER 4  Bold Title-->
-                    <div class="tp-caption   tp-resizeme"
-                         id="slide-72-layer-4"
-                         data-x="['left','left','center','center']" data-hoffset="['46','46','0','0']"
-                         data-y="['top','top','top','top']" data-voffset="['190','190','190','150']"
-                         data-fontsize="['64','54','44','34']"
-                         data-lineheight="['80','70','60','50']"
-                         data-width="['700','600','500','380']"
-                         data-height="none"
-                         data-whitespace="normal"
-                         data-type="text"
-                         data-responsive_offset="on"
-                         data-frames='[{"delay":200,"speed":750,"sfxcolor":"#fff","sfx_effect":"blockfromleft","frame":"0","from":"z:0;","to":"o:1;","ease":"Power3.easeInOut"},
-                                {"delay":"wait","speed":500,"sfxcolor":"#ffffff","sfx_effect":"blocktoleft","frame":"999","to":"z:0;","ease":"Power4.easeOut"}]'
-                         data-textAlign="['left','left','center','center']"
-                         data-paddingtop="[0,0,0,0]"
-                         data-paddingright="[0,0,0,0]"
-                         data-paddingbottom="[0,0,0,0]"
-                         data-paddingleft="[0,0,0,0]"
-                         style="z-index: 10;white-space: normal;font-weight: 800; color: #fff;font-family: 'Poppins', sans-serif;">@item.Name</div>
-
-                        <!-- LAYER 5  Paragraph-->
-                        <div class="tp-caption   tp-resizeme"
-                             id="slide-72-layer-5"
+                        <!-- LAYER 3  Thin text title-->
+                        <div class="tp-caption   tp-resizeme slider-tag-line"
+                             id="slide-72-layer-3"
                              data-x="['left','left','center','center']" data-hoffset="['50','50','0','0']"
-                             data-y="['middle','middle','middle','middle']" data-voffset="['30','60','50','70']"
-                             data-fontsize="['18','18','18','16']"
-                             data-lineheight="['30','30','30','30']"
-                             data-width="['600','600','500','380']"
+                             data-y="['top','top','top','top']" data-voffset="['150','150','150','100']"
+                             data-fontsize="['22',22','20','16']"
+                             data-lineheight="['26','26','26','22']"
+                             data-width="['700','600','600','380']"
+                             data-height="none"
+                             data-whitespace="nowrap"
+                             data-type="text"
+                             data-responsive_offset="on"
+                             data-frames='[{"delay":300,"speed":750,"sfxcolor":"#fff","sfx_effect":"blockfromleft","frame":"0","from":"z:0;","to":"o:1;","ease":"Power3.easeInOut"},
+                                {"delay":"wait","speed":500,"sfxcolor":"#ffffff","sfx_effect":"blocktoleft","frame":"999","to":"z:0;","ease":"Power4.easeOut"}]'
+                             data-textAlign="['left','left','center','center']"
+                             data-paddingtop="[0,0,0,0]"
+                             data-paddingright="[0,0,0,0]"
+                             data-paddingbottom="[0,0,0,0]"
+                             data-paddingleft="[0,0,0,0]"
+                             style="z-index: 10; font-weight:500; letter-spacing:10px; color: #fff;font-family: 'Poppins', sans-serif; text-transform:uppercase"></div>
+
+                        <!-- LAYER 4  Bold Title-->
+                        <div class="tp-caption   tp-resizeme"
+                             id="slide-72-layer-4"
+                             data-x="['left','left','center','center']" data-hoffset="['46','46','0','0']"
+                             data-y="['top','top','top','top']" data-voffset="['190','190','190','150']"
+                             data-fontsize="['64','54','44','34']"
+                             data-lineheight="['80','70','60','50']"
+                             data-width="['700','600','500','380']"
                              data-height="none"
                              data-whitespace="normal"
                              data-type="text"
@@ -128,28 +93,50 @@
                              data-paddingright="[0,0,0,0]"
                              data-paddingbottom="[0,0,0,0]"
                              data-paddingleft="[0,0,0,0]"
-                             style="z-index: 10; white-space: normal; color: #fff; font-family: 'Poppins', sans-serif;">@item.Description</div>
+                             style="z-index: 10;white-space: normal;font-weight: 800; color: #fff;font-family: 'Poppins', sans-serif;">@item.Name</div>
 
-                            <!-- LAYER 6  Read More-->
-                            <div class="tp-caption rev-btn  tp-resizeme"
-                                 id="slide-72-layer-6"
+                            <!-- LAYER 5  Paragraph-->
+                            <div class="tp-caption   tp-resizeme"
+                                 id="slide-72-layer-5"
                                  data-x="['left','left','center','center']" data-hoffset="['50','50','0','0']"
-                                 data-y="['middle','middle','middle','middle']" data-voffset="['120','140','140','150']"
-                                 data-width="none"
+                                 data-y="['middle','middle','middle','middle']" data-voffset="['30','60','50','70']"
+                                 data-fontsize="['18','18','18','16']"
+                                 data-lineheight="['30','30','30','30']"
+                                 data-width="['600','600','500','380']"
                                  data-height="none"
-                                 data-whitespace="nowrap"
-                                 data-type="button"
+                                 data-whitespace="normal"
+                                 data-type="text"
                                  data-responsive_offset="on"
-                                 data-frames='[{"from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;",
-                                "speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeInOut"},
-                                {"delay":"wait","speed":500,"to":"y:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power1.easeIn"}]'
+                                 data-frames='[{"delay":200,"speed":750,"sfxcolor":"#fff","sfx_effect":"blockfromleft","frame":"0","from":"z:0;","to":"o:1;","ease":"Power3.easeInOut"},
+                                {"delay":"wait","speed":500,"sfxcolor":"#ffffff","sfx_effect":"blocktoleft","frame":"999","to":"z:0;","ease":"Power4.easeOut"}]'
                                  data-textAlign="['left','left','center','center']"
                                  data-paddingtop="[0,0,0,0]"
                                  data-paddingright="[0,0,0,0]"
                                  data-paddingbottom="[0,0,0,0]"
                                  data-paddingleft="[0,0,0,0]"
-                                 style="z-index:9; line-height:30px;"><a href="Javascript:;" class="site-button btn-half"><span> @item.ContentShort</span></a></div>
-
+                                 style="z-index: 10; white-space: normal; color: #fff; font-family: 'Poppins', sans-serif;">@item.Description</div>
+                                @if (!string.IsNullOrEmpty(item.ExternalLink))
+                                {
+                                    <!-- LAYER 6  Read More-->
+                                    <div class="tp-caption rev-btn  tp-resizeme"
+                                         id="slide-72-layer-6"
+                                         data-x="['left','left','center','center']" data-hoffset="['50','50','0','0']"
+                                         data-y="['middle','middle','middle','middle']" data-voffset="['120','140','140','150']"
+                                         data-width="none"
+                                         data-height="none"
+                                         data-whitespace="nowrap"
+                                         data-type="button"
+                                         data-responsive_offset="on"
+                                         data-frames='[{"from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;",
+                                "speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeInOut"},
+                                {"delay":"wait","speed":500,"to":"y:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power1.easeIn"}]'
+                                         data-textAlign="['left','left','center','center']"
+                                         data-paddingtop="[0,0,0,0]"
+                                         data-paddingright="[0,0,0,0]"
+                                         data-paddingbottom="[0,0,0,0]"
+                                         data-paddingleft="[0,0,0,0]"
+                                         style="z-index:9; line-height:30px;"><a href="@(item.ExternalLink)" class="site-button btn-half"><span> @item.ContentShort</span></a></div>
+                                    }
                                 <!-- Border left Part -->
                                 <div class="tp-caption tp-shape tp-shapewrapper "
                                      id="slide-72-layer-8"
@@ -194,6 +181,7 @@
                             </li>
 
                         }
+                    }
         </ul>
         <div class="tp-bannertimer"></div>
         <!-- left side social bar-->
@@ -208,61 +196,65 @@
     </div>
 </div>
 <!-- SLIDER END -->
-<!-- ABOUT COMPANY START -->
-<div class="section-full mobile-page-padding p-t80 p-b80 bg-white bg-no-repeat bg-bottom-left" style="background-image:url(images/background/bg-4.png)">
-    <div class="container">
-        <!-- TITLE START -->
-        <div class="section-head">
-            <div class="sx-separator-outer separator-left">
-                <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                    <h3 class="sep-line-one">@homeIntro.Name</h3>
-                </div>
-            </div>
-        </div>
-        <!-- TITLE END -->
 
-        <div class="section-content">
-            <div class="row">
-
-                <div class="col-lg-5 col-md-12 col-sm-12">
-                    <div class="about-home-left">
-                        <h3 class="m-t0 sx-tilte">@homeIntro.ContentShort</h3>
-                        <p>@homeIntro.Description</p>
-                        <div class="text-left">
-                            <a href="javascript:;" class="site-button-secondry btn-half"><span>Devamı</span></a>
-                        </div>
+@if (homeIntro != null)
+{
+    <!-- ABOUT COMPANY START -->
+    <div class="section-full mobile-page-padding p-t80 p-b80 bg-white bg-no-repeat bg-bottom-left" style="background-image:url(images/background/bg-4.png)">
+        <div class="container">
+            <!-- TITLE START -->
+            <div class="section-head">
+                <div class="sx-separator-outer separator-left">
+                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                        <h3 class="sep-line-one">@homeIntro.Name</h3>
                     </div>
                 </div>
+            </div>
+            <!-- TITLE END -->
 
-                <div class="col-lg-7 col-md-12 col-sm-12">
-                    <div class="about-home-right">
-                        <div class="owl-carousel about-home number-slider owl-btn-vertical-center">
+            <div class="section-content">
+                <div class="row">
 
-                            @foreach (var item in homeIntro.Gallery.ToList())
-                            {
-                                <!-- COLUMNS 1 -->
-                                <div class="item ">
-                                    <div class="sx-img-effect zoom-slow">
-                                        <a href="javascript:void(0);"><img src="@item.Link" alt="@item.Alt"></a>
+                    <div class="col-lg-5 col-md-12 col-sm-12">
+                        <div class="about-home-left">
+                            <h3 class="m-t0 sx-tilte">@homeIntro.ContentShort</h3>
+                            <p>@homeIntro.Description</p>
+                            <div class="text-left">
+                                <a href="javascript:;" class="site-button-secondry btn-half"><span>Devamı</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 col-md-12 col-sm-12">
+                        <div class="about-home-right">
+                            <div class="owl-carousel about-home number-slider owl-btn-vertical-center">
+
+                                @foreach (var item in homeIntro.Gallery.ToList())
+                                {
+                                    <!-- COLUMNS 1 -->
+                                    <div class="item ">
+                                        <div class="sx-img-effect zoom-slow">
+                                            <a href="javascript:void(0);"><img src="@item.Link" alt="@item.Alt"></a>
+                                        </div>
                                     </div>
-                                </div>
 
-                            }
+                                }
 
 
-                        </div>
-                        <div class="about-home-before">
-                            <img src="/assets-site/images/about-slider/1y.jpg" alt="">
+                            </div>
+                            <div class="about-home-before">
+                                <img src="@(homeIntro.Picture!=null?homeIntro.Picture.Link:"defaultImage")" alt="">
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
-
-
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
+}
 <!-- ABOUT COMPANY END -->
 <!-- WHAT WE DO START -->
 <div class="section-full  mobile-page-padding bg-white  p-t80 p-b30 bg-repeat overflow-hide" style="background-image:url(images/background/bg-5.png);">
@@ -280,364 +272,53 @@
         <!-- TITLE END -->
         <div class="section-content">
             <div class="row number-block-one-outer justify-content-center">
-                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                @{ var i = 0;}
+                @foreach (var item in Categories)
+                {
+                    i++;
+                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
 
-                    <div class="number-block-one animate-in-to-top">
-                        <img src="/assets-site/images/pic5.jpg" alt="" />
-                        <div class="figcaption bg-white text-center p-a20">
-                            <h4 class="m-a0">Tasarım</h4>
+                        <div class="number-block-one animate-in-to-top">
+                            <img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
+                            <div class="figcaption bg-white text-center p-a20">
+                                <h4 class="m-a0">@item.Name</h4>
+                            </div>
+                            <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                <span>0@(i)</span>
+                            </div>
                         </div>
-                        <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                            <span>01</span>
-                        </div>
+
                     </div>
+                }
 
-                </div>
 
-                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
 
-                    <div class="number-block-one animate-in-to-top">
-                        <img src="/assets-site/images/pic2.jpg" alt="" />
-                        <div class="figcaption bg-white text-center p-a20">
-                            <h4 class="m-a0">Güvenlik</h4>
-                        </div>
-                        <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                            <span>02</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
-
-                    <div class="number-block-one animate-in-to-top">
-                        <img src="/assets-site/images/pic3.jpg" alt="" />
-                        <div class="figcaption bg-white text-center p-a20">
-                            <h4 class="m-a0">Yalıtım</h4>
-                        </div>
-                        <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                            <span>03</span>
-                        </div>
-                    </div>
-
-                </div>
 
             </div>
 
 
-            <div class="large-title-block full-content bg-gray">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 col-sm-12">
-                        <div class="large-title">
-                            <h3 class="m-tb0">We present the idea with impressive details.</h3>
+            @*     <div class="large-title-block full-content bg-gray">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="large-title">
+                                <h3 class="m-tb0">We present the idea with impressive details.</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12	col-sm-12">
-                        <div class="large-title-info">
-                            <p>Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.</p>
-                            <div class="text-left">
-                                <a href="javascript:;" class="site-button-link">Daha Fazla</a>
+                        <div class="col-lg-6 col-md-12	col-sm-12">
+                            <div class="large-title-info">
+                                <p>Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.</p>
+                                <div class="text-left">
+                                    <a href="javascript:;" class="site-button-link">Daha Fazla</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            *@
         </div>
     </div>
 </div>
 <!-- WHAT WE DO END -->
-<!-- TESTIMONIAL START -->
-<div class="section-full container-fluid">
-
-    <div class="section-content">
-        <div class="row">
-
-            <div class="col-xl-6 col-lg-6 col-md-12 bg-gray bg-cover bg-no-repeat" style="background-image:url(images/background/bg-8.jpg)">
-                <div class="sx-left-part mobile-page-padding">
-                    <!-- TITLE START -->
-                    <div class="section-head">
-                        <div class="sx-separator-outer separator-left">
-                            <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                                <h3 class="sep-line-one">Infographic</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TITLE END -->
-                    <div class="counter-blocks">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 m-b30">
-                                <div class="sx-count  text-black sx-icon-box-wraper bg-repeat  bg-white p-a30" style="background-image:url(images/background/bg-5.png)">
-                                    <h2 class="st-count-number sx-text-primary text-left"><span class="counter">24</span></h2>
-                                    <h4 class="m-tb0">Years of Experience</h4>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 m-b30">
-                                <div class="sx-count text-black sx-icon-box-wraper bg-repeat  bg-white p-a30" style="background-image:url(images/background/bg-5.png)">
-                                    <h2 class="st-count-number sx-text-primary text-left"><span class="counter">340</span></h2>
-                                    <h4 class="m-tb0">Project Taken</h4>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 m-b30">
-                                <div class="sx-count text-black sx-icon-box-wraper bg-repeat  bg-white p-a30" style="background-image:url(images/background/bg-5.png)">
-                                    <h2 class="st-count-number sx-text-primary text-left"><span class="counter">86</span></h2>
-                                    <h4 class="m-tb0">Countries</h4>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 m-b30">
-                                <div class="sx-count text-black sx-icon-box-wraper bg-repeat  bg-white p-a30" style="background-image:url(images/background/bg-5.png)">
-                                    <h2 class="st-count-number sx-text-primary text-left"><span class="counter">36</span><span>K</span></h2>
-                                    <h4 class="m-tb0">Happy Consumers</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-6 col-lg-6 col-md-12 bg-white bg-repeat" style="background-image:url(images/background/bg-12.jpg)">
-
-                <div class="sx-right-part mobile-page-padding  p-t80 p-b50">
-                    <!-- TITLE START -->
-                    <div class="section-head">
-                        <div class="sx-separator-outer separator-left">
-                            <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                                <h3 class="sep-line-one">Testimonial</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TITLE END -->
-                    <!-- TESTIMONIAL START -->
-                    <div class="owl-carousel testimonial-home number-slider">
-                        <div class="item">
-                            <div class="testimonial-2  hover-animation-1">
-                                <div class="testimonial-detail clearfix">
-                                    <div class="testimonial-pic shadow scale-in-center"><img src="/assets-site/images/testimonials/pic1.jpg" width="100" height="100" alt=""></div>
-                                    <h4 class="testimonial-name">Cemal Süreyya</h4>
-                                    <span class="testimonial-position">Architect</span>
-                                    <span class="fa fa-quote-right"></span>
-                                </div>
-                                <div class="testimonial-text bg-white  shadow-sm">
-
-                                    <p>“Amazing fast and reliable customer support! The team of developers are willing to go mile for customer service! Thanks! which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of me.”</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-2  hover-animation-1">
-                                <div class="testimonial-detail clearfix">
-                                    <div class="testimonial-pic shadow scale-in-center"><img src="/assets-site/images/testimonials/pic2.jpg" width="100" height="100" alt=""></div>
-                                    <h4 class="testimonial-name">Yaşar Kemal</h4>
-                                    <span class="testimonial-position">Architect</span>
-                                    <span class="fa fa-quote-right"></span>
-                                </div>
-                                <div class="testimonial-text bg-white  shadow-sm">
-                                    <p>“Amazing fast and reliable customer support! The team of developers are willing to go mile for customer service! Thanks! which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of me.”</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-2 hover-animation-1">
-                                <div class="testimonial-detail clearfix">
-                                    <div class="testimonial-pic shadow scale-in-center"><img src="/assets-site/images/testimonials/pic3.jpg" width="100" height="100" alt=""></div>
-                                    <h4 class="testimonial-name">Orhan Veli Kanık</h4>
-                                    <span class="testimonial-position">Interior designer</span>
-                                    <span class="fa fa-quote-right"></span>
-                                </div>
-                                <div class="testimonial-text bg-white  shadow-sm">
-                                    <p>“Great theme, just what we were looking for. Easy to install, easy to navigate. Well documented. Really enjoyed the support. which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of me.”</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-2  hover-animation-1">
-                                <div class="testimonial-detail clearfix">
-                                    <div class="testimonial-pic shadow scale-in-center"><img src="/assets-site/images/testimonials/pic4.jpg" width="100" height="100" alt=""></div>
-                                    <h4 class="testimonial-name">Peyami Safa</h4>
-                                    <span class="testimonial-position">Architect</span>
-                                    <span class="fa fa-quote-right"></span>
-                                </div>
-                                <div class="testimonial-text bg-white  shadow-sm">
-
-                                    <p>“Great theme, just what we were looking for. Easy to install, easy to navigate. Well documented. Really enjoyed the support. which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of me.”</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-2 hover-animation-1">
-                                <div class="testimonial-detail clearfix">
-                                    <div class="testimonial-pic shadow scale-in-center"><img src="/assets-site/images/testimonials/pic3.jpg" width="100" height="100" alt=""></div>
-                                    <h4 class="testimonial-name">Rıfat Ilgaz</h4>
-                                    <span class="testimonial-position">CEO, Intearch</span>
-                                    <span class="fa fa-quote-right"></span>
-                                </div>
-                                <div class="testimonial-text bg-white shadow-sm">
-
-                                    <p>“Great theme, just what we were looking for. Easy to install, easy to navigate. Well documented. Really enjoyed the support. which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of me.”</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </div>
-    </div>
-
-</div>
-<!-- TESTIMONIAL  END -->
-<!-- OUR SERVICES START -->
-<div class="section-full mobile-page-padding p-t80  p-b50 bg-gray">
-    <div class="section-content">
-        <div class="container">
-            <!-- TITLE START -->
-            <div class="section-head">
-                <div class="sx-separator-outer separator-left">
-                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                        <h3 class="sep-line-one ">Ürün ve Servisler</h3>
-                    </div>
-                </div>
-            </div>
-            <!-- TITLE END -->
-            <div class="row">
-
-                <!-- Block one -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper  icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">01</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-sketch"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Plans and Projects</h4>
-                                <p>We provide a range of architectural 3D modeling services to our customers to aid the design, planning and...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Block Two -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">02</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-stairs"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Interior</h4>
-                                <p>Analysis and planning services that help both the client and architects to work out the forthcoming project...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Block Three -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">03</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-window"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Exterior</h4>
-                                <p>We offer comprehensive Architectural Engineering Services including Interior design, Master planning, 3D modeling...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Block Four -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">04</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-skyline"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Architecture</h4>
-                                <p>Project management is the process by which our team plans and executes your project. We will develop it...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Block Five -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">05</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-bed"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Space Management</h4>
-                                <p>Our team also provides consultations on all architectural issues, even if you need specific info about working...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Block Six -->
-                <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
-
-                    <div class="sx-icon-box-wraper icon-count-2-outer">
-                        <div class="icon-count-2 bg-white">
-                            <span class="icon-count-number">06</span>
-                            <div class="icon-xl inline-icon m-b5 scale-in-center">
-                                <span class="icon-cell"><i class="flaticon-door"></i></span>
-                            </div>
-                            <div class="icon-content">
-                                <h4 class="sx-tilte">Decoration</h4>
-                                <p>We combine Interior and Exterior Design services and often provide them as a single solution. It helps us...</p>
-                                <div class="text-left">
-                                    <a href="#" class="site-button-link">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="hilite-title text-left p-l50 text-uppercase">
-        <strong>Services</strong>
-    </div>
-</div>
-<!-- OUR SERVICES  END -->
 <!-- PROJECTS START -->
 <div class="section-full mobile-page-padding  p-t80 p-b50 bg-white">
     <div class="section-content">
@@ -646,7 +327,7 @@
             <div class="section-head">
                 <div class="sx-separator-outer separator-center">
                     <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                        <h3 class="sep-line-one">Referanslar</h3>
+                        <h3 class="sep-line-one">Projeler</h3>
                     </div>
                 </div>
             </div>
@@ -654,227 +335,90 @@
         </div>
 
         <div class=" filter-carousal-1-outer relative z-index1">
-            <div class="container">
-                <!-- TITLE START -->
-                <div class="text-center clearfix filter-pos-right shadow m-b30">
-                    <ul class="btn-filter-wrap">
-                        <li class="btn-filter btn-active" data-filter="*">All</li>
-                        <li class="btn-filter" data-filter=".col-one">Konut</li>
-                        <li class="btn-filter" data-filter=".col-two">AVM</li>
-                        <li class="btn-filter" data-filter=".col-three">Residans</li>
-                        <li class="btn-filter" data-filter=".col-four">Karma</li>
-                    </ul>
-                </div>
-            </div>
             <!-- TITLE END -->
             <div class="filter-carousal-1  container-fluid p-b30">
                 <!-- IMAGE CAROUSEL START -->
                 <div class="section-content ">
                     <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
-                        <!-- COLUMNS 1 -->
-                        <div class="item fadingcol col-one overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic1.jpg" alt="">
+                        @foreach (var item in Projects)
+                        {
+                            <!-- COLUMNS 1 -->
+                            <div class="item fadingcol col-one overflow-hide">
+                                <div class="sx-box   image-hover-block">
+                                    <div class="sx-thum-bx">
+                                        <img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="">
+                                    </div>
+                                    <div class="sx-info  p-t20 text-white">
+                                        <h4 class="sx-tilte"><a href="@item.Link">@item.Name</a></h4>
+                                        <p class="m-b0"></p>
+                                    </div>
+                                    @*<a class="mfp-link" href="@item.Link">
+                                            <i class="fa fa-arrows-alt"></i>
+                                        </a>*@
                                 </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic1.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
                             </div>
-                        </div>
-                        <!-- COLUMNS 2 -->
-                        <div class="item fadingcol col-two overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic2.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic2.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 3 -->
-                        <div class="item fadingcol col-three overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic3.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic3.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 4 -->
-                        <div class="item fadingcol col-four overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic4.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic4.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 5 -->
-                        <div class="item fadingcol col-three overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic5.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic5.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 6 -->
-                        <div class="item fadingcol col-two overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic6.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic6.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- COLUMNS 7 -->
-                        <div class="item fadingcol col-one overflow-hide">
-                            <div class="sx-box   image-hover-block">
-                                <div class="sx-thum-bx">
-                                    <img src="/assets-site/images/projects/portrait/pic7.jpg" alt="">
-                                </div>
-                                <div class="sx-info  p-t20 text-white">
-                                    <h4 class="sx-tilte"><a href="#">Chair Furniture</a></h4>
-                                    <p class="m-b0">Muscat, Sultanate of Oman</p>
-                                </div>
-                                <a class="mfp-link" href="/assets-site/images/projects/portrait/pic7.jpg">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </a>
-                            </div>
-                        </div>
+                            <!-- COLUMNS 2 -->
+                        }
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <!-- PROJECTS  END -->
-<!-- OUR CLIENTS -->
-<div class="section-full  mobile-page-padding bg-gray  p-t80 p-b10 bg-repeat" style="background-image:url(images/background/bg-12.jpg);">
-
+<!-- OUR BLOG START -->
+<div class="section-full mobile-page-padding bg-white p-t80 p-b50 mobile-page-padding">
     <div class="container">
 
         <!-- TITLE START -->
         <div class="section-head">
-            <div class="sx-separator-outer separator-left">
+            <div class="sx-separator-outer separator-center">
                 <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                    <h3 class="sep-line-one">Our Clients</h3>
+                    <h3 class="sep-line-one">Blog</h3>
                 </div>
             </div>
         </div>
         <!-- TITLE END -->
+        <!-- IMAGE CAROUSEL START -->
         <div class="section-content">
-            <div class="client-grid m-b40">
+            <div class="row justify-content-center">
+                @foreach (var item in Blogs)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="blog-post blog-grid date-style-2">
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6 m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo1.png" alt="">
-                            <div>
-                                <span>View More</span>
+                            <div class="sx-post-media sx-img-effect img-reflection">
+                                <a href="javascript:void(0);"><img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:item.Name)"></a>
                             </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6 m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo2.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo3.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo4.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo5.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo6.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo7.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6  m-b30">
-                        <a href="javascript:;" class="client-logo-pic">
-                            <img src="/assets-site/images/client-logo/logo8.png" alt="">
-                            <div>
-                                <span>View More</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
 
+                            <div class="sx-post-info p-t30">
+                                <!--<div class="sx-post-meta ">
+                                    <ul>
+                                        @*//TODO start Date*@
+                                        <li class="post-date"><strong>@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Day.ToString())</strong> <span>@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.ToString("MMMM").Substring(0, 3).ToUpper())</span> </li>
+                                    </ul>
+                                </div>
+                                                                  -->
+                                <div class="sx-post-title ">
+                                    <h4 class="post-title"><a href="javascript:void(0);">@item.Name</a></h4>
+                                </div>
+
+                                <div class="sx-post-readmore">
+                                    <a href="@item.Link" title="READ MORE" rel="bookmark" class="site-button-link">Devamı</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
 
             </div>
         </div>
     </div>
-
     <div class="hilite-title text-left p-l50 text-uppercase">
-        <strong>Clients</strong>
+        <strong>Blog</strong>
     </div>
 </div>
-<!-- OUR CLIENTS END -->
+<!-- OUR BLOG END -->

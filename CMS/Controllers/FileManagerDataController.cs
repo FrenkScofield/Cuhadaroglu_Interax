@@ -12,7 +12,9 @@ namespace CMS.Controllers
 {
     public class FileManagerDataController : Controller
     {
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         protected readonly IHostingEnvironment HostingEnvironment;
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         protected readonly IContentPageService _IContentPageService;
         protected readonly IDocumentsService _IDocumentsService;
         private readonly FileContentBrowser directoryBrowser;
@@ -34,7 +36,9 @@ namespace CMS.Controllers
             }
         }
 
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         public FileManagerDataController(IHostingEnvironment hostingEnvironment, IContentPageService _IContentPageService, IDocumentsService _IDocumentsService)
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         {
             this._IContentPageService = _IContentPageService;
             this._IDocumentsService = _IDocumentsService;
@@ -449,7 +453,9 @@ namespace CMS.Controllers
 
     public class FileContentBrowser
     {
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         public virtual IHostingEnvironment HostingEnvironment { get; set; }
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         public IEnumerable<FileManagerEntry> GetFiles(string path, string filter)
         {
             var directory = new DirectoryInfo(path);

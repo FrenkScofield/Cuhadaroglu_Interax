@@ -17,12 +17,16 @@ namespace CMS.Controllers
     {
         ILangService _ILangService;
         IUserService _IUserService;
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IHostingEnvironment _IHostingEnvironment;
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IServiceConfigService _IServiceConfigService;
         IHttpContextAccessor _IHttpContextAccessor;
 
         public BaseController(
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
             IHostingEnvironment _IHostingEnvironment,
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
             IServiceConfigService _IServiceConfigService,
             IHttpContextAccessor _IHttpContextAccessor,
             ILangService _ILangService,
@@ -51,6 +55,7 @@ namespace CMS.Controllers
 
             ViewBag.pageTitle = "Dashboard";
 
+       
 
 
             var menus = _IServiceConfigService.Where().Result.ToList();
@@ -70,7 +75,9 @@ namespace CMS.Controllers
                 //&& !o.ToStr().Contains("_")
                 //).Distinct().OrderBy(o => o).ToList();
             }
+#pragma warning disable CS0168 // ex' değişkeni ifade edilir ancak hiçbir zaman kullanılmaz
             catch (Exception ex)
+#pragma warning restore CS0168 // ex' değişkeni ifade edilir ancak hiçbir zaman kullanılmaz
             {
                 //throw ex;
             }

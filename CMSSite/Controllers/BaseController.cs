@@ -193,7 +193,7 @@ namespace CMSSite.Controllers
             #region dynamicContent
             var link = HttpContext.Request.Path.Value.Trim().ToStr();
             List<ContentPage> contentPages = new List<ContentPage>();
-
+        
             int langID = 0;
             if (_httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != null)
             {
@@ -232,8 +232,34 @@ namespace CMSSite.Controllers
                     ViewBag.LanguageID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID");
                 }
             }
+            var currState = _httpContextAccessor.HttpContext.Session.GetString("currState"); 
+            
+            ViewBag.currState = currState;
+            bool isBayi = false;
+            bool isEndustri = false;
+            bool isMimar = false;
+            bool isBireysel = false;
+            switch (currState)
+            {
+                case "Bayi":
+                    isBayi = true;
+                    break;
+                case "Endustri":
+                    isEndustri = true;
+                    break;
+                case "Mimar":
+                    isMimar = true;
+                    break;
+                case "Bireysel":
+                    isBireysel = true;
+                    break;
+                default:
+                    isBayi = true;
+                    break;
+            }
+         
 
-            contentPages = _IContentPageService.Where(o => o.LangId == langID, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList(); 
+            contentPages = _IContentPageService.Where(x => x.LangId == langID&& x.IsDeleted == null && (x.IsBayi == isBayi || x.IsEndustri == isEndustri || x.IsMimar == isMimar || x.IsBireysel == isBireysel) && x.IsInteral==true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList(); 
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
             //if (_httpContextAccessor.HttpContext.Session.Get("contentPages") == null)
             //{
@@ -249,14 +275,14 @@ namespace CMSSite.Controllers
             // ViewBag.IsHeaderMenu = contentPages.Where(o => o.IsHeaderMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
             // ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
             ViewBag.contentPages = contentPages.ToList();
-            ViewBag.Pages = contentPages;
+            ViewBag.Pages = contentPages.ToList();
             //   ViewBag.fikirler = _IFikirService.Where(o => o.FikirStatus != FikirDurumu.Ondegerlendirme,
             //      true, false,
             //      o => o.AtananDepartman, o => o.AtananKullanici, o => o.FikirBegen).Result.ToList();
 
 
-          
-             var config = _ISiteConfigService.Where().Result.FirstOrDefault();
+
+            var config = _ISiteConfigService.Where().Result.FirstOrDefault();
             _httpContextAccessor.HttpContext.Session.Set("config", config);
             var _user = _IUserService.Where(o => (o.Name == "admin"), true, false).Result.FirstOrDefault();
             _httpContextAccessor.HttpContext.Session.Set("_user", _user);
@@ -274,34 +300,34 @@ namespace CMSSite.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult ChangeMod(string SpecID)
+        public IActionResult ChangeType(string ID)
         { 
-            string currState = "bayi";
-            if (_httpContextAccessor.HttpContext.Session.GetInt32("currState") != null)
+            string currState = "Bayi";
+            if (_httpContextAccessor.HttpContext.Session.GetString("currState") != null)
             {
-                currState = _httpContextAccessor.HttpContext.Session.GetString("currState");
+                currState = _httpContextAccessor.HttpContext.Session.GetString("currState"); 
             }
-            //_httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);  
-
-            switch (SpecID)
+            //_httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);   
+            switch (ID)
             {
-                case "bayi":
-                    ViewBag.currState = "bayi";
+                case "Bayi":
+                    currState = "Bayi";
                     break;
-                case "endustri":
-                    ViewBag.currState = "endustri";
+                case "Endustri":
+                    currState = "Endustri";
                     break;
-                case "mimar":
-                    ViewBag.currState = "mimar";
+                case "Mimar":
+                    currState = "Mimar";
                     break;
-                case "bireysel":
-                    ViewBag.currState = "bireysel";
+                case "Bireysel":
+                    currState = "Bireysel";
                     break;
                 default:
-                    ViewBag.currState = "bayi";
+                    currState= "Bayi";
                     break;
             }
-            _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
+            ViewBag.currState = currState;
+            _httpContextAccessor.HttpContext.Session.Set("currState", currState);
             return Json("");
         } 
         [HttpPost]

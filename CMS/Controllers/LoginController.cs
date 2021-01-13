@@ -17,12 +17,16 @@ namespace CMS.Controllers
         ILangService _ILangService;
         IContentTypesService _IContentTypesService;
         IHttpContextAccessor _httpContextAccessor;
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IHostingEnvironment _IHostingEnvironment;
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IFormTypeService _IFormTypeService;
         public LoginController(
          IUserService _IUserService,
          IHttpContextAccessor _IHttpContextAccessor,
+#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
          IHostingEnvironment _IHostingEnvironment,
+#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
          IContentTypesService _IContentTypesService,
          ILangService _ILangService,
          IFormTypeService _IFormTypeService

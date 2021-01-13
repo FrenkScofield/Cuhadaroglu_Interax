@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-
+using System.Web;
 
 public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IContentPageService
 {
@@ -24,6 +24,9 @@ public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IConte
         //    res.ResultType.MessageList.Add("Duplicate");
         //    res.ResultRow = modelControl;
         //}
+        model.Description = HttpUtility.HtmlDecode(model.Description);
+        model.ContentData = HttpUtility.HtmlDecode(model.ContentData);
+        model.ContentShort = HttpUtility.HtmlDecode(model.ContentShort);
         if (false)
         {
 
@@ -32,6 +35,7 @@ public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IConte
         {
             if (model.Id > 0)
             {
+            
                 res.ResultRow = Update(model);
             }
             else
