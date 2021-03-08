@@ -3,10 +3,6 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Web;
 
 
 public static class SessionRequest
@@ -68,7 +64,7 @@ public static class SessionRequest
     }
     //public static Kullanici _User { get; set; }
 
-   
+
 
 
 }

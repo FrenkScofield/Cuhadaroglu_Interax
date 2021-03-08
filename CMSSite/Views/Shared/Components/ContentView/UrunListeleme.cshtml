@@ -1,14 +1,18 @@
 ﻿@{
     Layout = "_Layout";
     var content = ViewBag.content as ContentPage;
-    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    var Pages = ViewBag.Pages as List<ContentPage>;
+    var subPages = ViewBag.subPages as List<ContentPage>;
+
     var categories = ViewBag.categories as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
     // int[] specList = new int[] { 16, 17, 64, 63 };
     var Specs = ViewBag.Specs as List<Spec>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
-    var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).ToList();
+    var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
     List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
+    List<int> currSpecList = ViewBag.currSpecList as List<int>;
+    int parentCheck = 0;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
 <!-- SECTION CONTENT START -->
@@ -35,9 +39,15 @@
                     <!-- FILTERS -->
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Filtreler</h4>
-                        @foreach (var item in subSpecs)
+                        @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)))
                         {
-                            <label> <input type="checkbox" name="chk_@item.Id" value="@item.Id" class="filterSpecs" checked="checked" /> &nbsp;@item.Name</label>
+                            if (item.ParentId != parentCheck)
+                            {
+                                <h5 class="widget-title">@item.Parent.Name</h5>
+                            }
+                            <p> <input type="checkbox" name="chk_@item.Id" value="@item.Id" class="filterSpecs" /> &nbsp;@item.Name</p>
+
+                            parentCheck = item.ParentId ?? 0;
                         }
 
                     </div>
@@ -61,10 +71,10 @@
             <div class="col-lg-8 col-md-12 col-sm-12">
                 <div class="news-listing">
 
-                    @foreach (var item in contentPages)
+                    @foreach (var item in subPages)
                     {
 
-                        <div class="blog-post blog-lg date-style-3 block-shadow @( String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && subSpecList.Contains(x.SpecId)).Select(s=>s.SpecId).ToArray())  )">
+                        <div class="blog-post blog-lg date-style-3 block-shadow @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && x.ContentValue=="true").Select(s=>"chk_"+s.SpecId).ToArray())  )">
 
 
                             <div class="sx-post-info  bg-white">
@@ -75,8 +85,13 @@
                                     </div>*@
                                 <div class="sx-post-text">
                                     <div class="row">
-                                        <div class="col-md-4"><img src="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" style="width:100%;" /></div>
+                                        <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
                                         <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-15">
+                                                    @Html.Raw(item.ContentShort)
+                                                </div>
+                                            </div>
                                             @foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
                                             {
                                                 <div class="row">
@@ -100,27 +115,34 @@
                                             <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
                                         </ul>
                                     </div>
-                                </div>  
-                            </div> 
-                        </div> 
-                    } 
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
-</div> 
-<script> 
-    var sections = $('.blog-post');
-    function updateFilter() { 
-        var checked = $(".filterSpecs:checked"); 
-        if (checked.length) {
+</div>
+<script>
+    $(document).ready(function () {
+        var sections = $('.blog-post');
+        function updateFilter() {
+            debugger;
             sections.hide();
-            checked.each(function () { 
-                $("." + $(this).val()).show();
-            });
-        } else {
-            sections.show();
+            var checked = $(".filterSpecs:checked");
+            console.log(checked.lengt);
+            if (checked.length) {
+                checked.each(function () {
+                    console.log($(this).val());
+                    $(".chk_" + $(this).val()).show();
+                });
+            }
+            else {
+                sections.show();
+            }
         }
-    }
-    $(".filterSpecs").click(updateFilter); 
+        $(".filterSpecs").click(updateFilter);
+
+    })
 </script>

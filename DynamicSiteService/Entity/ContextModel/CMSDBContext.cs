@@ -77,6 +77,14 @@ public partial class CMSDBContext : DbContext
 
         modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.Gallery);
 
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Documents).WithOne(b => b.TechnicalProperty);
+
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.CadData);
+
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Documents).WithOne(b => b.BIMFile);
+
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.TechnicalDocument);
+
         modelBuilder.Entity<ContentPage>().HasMany(a => a.ContentPageChilds).WithOne(b => b.Parent);
 
         modelBuilder.Entity<Spec>().HasMany(a => a.SpecChilds).WithOne(b => b.Parent).OnDelete(DeleteBehavior.NoAction);

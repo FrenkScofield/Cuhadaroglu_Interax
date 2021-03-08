@@ -209,6 +209,22 @@ public partial class ContentPage : BaseModel
     [DisplayName("Dökümanlar")]
     public virtual ICollection<Documents> Documents { get; set; }
 
+                          
+    [Column(Order = 3)]
+    [DisplayName("Ürün Teknik Özellikler")]
+    public virtual ICollection<Documents> TechnicalProperties { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("CAD Verileri")]
+    public virtual ICollection<Documents> CadDatas { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("BİM Dosyaları")]
+    public virtual ICollection<Documents> BIMFiles { get; set; }
+    [Column(Order = 3)]
+    [DisplayName("Teknik Dökümanlar")]
+    public virtual ICollection<Documents> TechnicalDocuments { get; set; }
+
+
+
     [Column(Order = 3)]
     [DisplayName("Alt Liste")]
     public virtual ICollection<ContentPage> ContentPageChilds { get; set; }

@@ -1,22 +1,22 @@
 ﻿@{
     Layout = "_Layout";
-    var Pages = ViewBag.contentPages as List<ContentPage>;
+    var Pages = ViewBag.Pages as List<ContentPage>;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
     int LanguageID = ViewBag.LanguageID;
-    var content = ViewBag.currContent as ContentPage;
-
-    string currState = ViewBag.currState;
-
-    ContentPage homeIntro = Pages.FirstOrDefault(x => x.Id == 13);
+    var content = ViewBag.currContent as ContentPage; 
+    string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string; 
+    ContentPage homeIntro = contentPages.FirstOrDefault(x => x.ContentPageId == 12);
     var Projects = Pages.Where(x => x.ContentTypesId == 5).ToList();
-    var Sliders = Pages.Where(x => x.ContentTypesId == 4).ToList();
-    var Blogs = Pages.Where(x => x.ContentTypesId == 2).ToList();
-    var Categories = Pages.Where(x => x.ContentTypesId == 3).Take(3).OrderBy(o => o.ContentOrderNo).ToList();
-
+    var Sliders = contentPages.Where(x => x.ContentTypesId == 4  ).ToList(); 
+    var Categories = Pages.Where(x => x.ContentPageId == 2).Take(3).OrderBy(o => o.ContentOrderNo).ToList();  
+    var Blogs = Pages.Where(x => x.ContentPageId == 16).ToList();
     //   var ProjectFilters = Pages.Where(x => x.ContentTypesId == 5).ToList();
-    // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0));
-
+    // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0)); 
     var x = "asd";
+
 }
+ 
+
 <!-- SLIDER START -->
 <div id="rev_slider_26_1_wrapper" class="rev_slider_wrapper fullscreen-container home-rev-slider" data-alias="mask-showcase" data-source="gallery">
     <!-- START REVOLUTION SLIDER 5.4.1 fullscreen mode -->
@@ -28,9 +28,9 @@
             {
                 foreach (var item in Sliders)
                 {
-                    <li data-index="rs-@item.Id" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" data-rotate="0" data-saveperformance="off" data-title="" data-param1="1" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                    <li data-index="rs-@item.Id" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" data-rotate="0" data-saveperformance="off" data-title="" data-param1="1" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                         <!-- MAIN IMAGE -->
-                        <img src="@(item.Picture!=null?item.Picture.Link:"defaultImage")" data-bgcolor='#f8f8f8' style='' alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+                        <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.Picture!=null?item.Picture.Link:"defaultImage")" data-bgcolor='#f8f8f8' style='' alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
                         <!-- LAYER 1  right image overlay dark-->
                         <div class="tp-caption tp-shape tp-shapewrapper  rs-parallaxlevel-tobggroup"
                              id="slide-@item.Id"
@@ -191,12 +191,10 @@
                 <li><a href="#" class="sx-title-swip" data-hover="Twitter">Twitter</a></li>
                 <li><a href="#" class="sx-title-swip" data-hover="Facebook">Facebook</a></li>
             </ul>
-        </div>
-
+        </div> 
     </div>
 </div>
-<!-- SLIDER END -->
-
+<!-- SLIDER END --> 
 @if (homeIntro != null)
 {
     <!-- ABOUT COMPANY START -->
@@ -205,7 +203,7 @@
             <!-- TITLE START -->
             <div class="section-head">
                 <div class="sx-separator-outer separator-left">
-                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(/images/background/cross-line2.png)">
                         <h3 class="sep-line-one">@homeIntro.Name</h3>
                     </div>
                 </div>
@@ -234,7 +232,7 @@
                                     <!-- COLUMNS 1 -->
                                     <div class="item ">
                                         <div class="sx-img-effect zoom-slow">
-                                            <a href="javascript:void(0);"><img src="@item.Link" alt="@item.Alt"></a>
+                                            <a href="javascript:void(0);"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt"></a>
                                         </div>
                                     </div>
 
@@ -243,7 +241,7 @@
 
                             </div>
                             <div class="about-home-before">
-                                <img src="@(homeIntro.Picture!=null?homeIntro.Picture.Link:"defaultImage")" alt="">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(homeIntro.Picture!=null?homeIntro.Picture.Link:"defaultImage")" alt="">
                             </div>
                         </div>
                     </div>
@@ -265,7 +263,7 @@
         <div class="section-head">
             <div class="sx-separator-outer separator-left">
                 <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                    <h3 class="sep-line-one">What We Offer</h3>
+                    <h3 class="sep-line-one">Sistemlerimiz</h3>
                 </div>
             </div>
         </div>
@@ -276,28 +274,22 @@
                 @foreach (var item in Categories)
                 {
                     i++;
-                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
-
+                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30"> 
                         <div class="number-block-one animate-in-to-top">
-                            <img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
-                            <div class="figcaption bg-white text-center p-a20">
-                                <h4 class="m-a0">@item.Name</h4>
-                            </div>
-                            <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                <span>0@(i)</span>
-                            </div>
-                        </div>
-
+                            <a href="/@item.Link">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
+                                <div class="figcaption bg-white text-center p-a20">
+                                    <h4 class="m-a0">@item.Name</h4>
+                                </div>
+                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                    <span>0@(i)</span>
+                                </div>
+                            </a>
+                        </div> 
                     </div>
-                }
-
-
-
-
-            </div>
-
-
-            @*     <div class="large-title-block full-content bg-gray">
+                }  
+            </div>  
+            @*     <div class="large-title-block full-content bg-gray">s
                     <div class="row">
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div class="large-title">
@@ -320,7 +312,7 @@
 </div>
 <!-- WHAT WE DO END -->
 <!-- PROJECTS START -->
-<div class="section-full mobile-page-padding  p-t80 p-b50 bg-white">
+<div class="section-full mobile-page-padding  p-t80 p-b50 bg-white" id="proContent">
     <div class="section-content">
         <div class="container">
             <!-- TITLE START -->
@@ -341,23 +333,18 @@
                 <div class="section-content ">
                     <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
                         @foreach (var item in Projects)
-                        {
-                            <!-- COLUMNS 1 -->
+                        { 
                             <div class="item fadingcol col-one overflow-hide">
                                 <div class="sx-box   image-hover-block">
                                     <div class="sx-thum-bx">
-                                        <img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="">
+                                        <img src="@(item.ThumbImage!=null?"http://interalcms.zonagency.com/fileupload/UserFiles/Folders/"+item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:item.Name)">
                                     </div>
                                     <div class="sx-info  p-t20 text-white">
-                                        <h4 class="sx-tilte"><a href="@item.Link">@item.Name</a></h4>
+                                        <h4 class="sx-tilte"><a href="/@item.Link">@item.Name</a></h4>
                                         <p class="m-b0"></p>
-                                    </div>
-                                    @*<a class="mfp-link" href="@item.Link">
-                                            <i class="fa fa-arrows-alt"></i>
-                                        </a>*@
+                                    </div> 
                                 </div>
-                            </div>
-                            <!-- COLUMNS 2 -->
+                            </div> 
                         }
                     </div>
                 </div>
@@ -382,13 +369,13 @@
         <!-- IMAGE CAROUSEL START -->
         <div class="section-content">
             <div class="row justify-content-center">
-                @foreach (var item in Blogs)
+                @foreach (var item in Blogs.Take(6))
                 {
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="blog-post blog-grid date-style-2">
 
                             <div class="sx-post-media sx-img-effect img-reflection">
-                                <a href="javascript:void(0);"><img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:item.Name)"></a>
+                                <a href="/@item.Link"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:item.Name)"></a>
                             </div>
 
                             <div class="sx-post-info p-t30">
@@ -400,11 +387,11 @@
                                 </div>
                                                                   -->
                                 <div class="sx-post-title ">
-                                    <h4 class="post-title"><a href="javascript:void(0);">@item.Name</a></h4>
+                                    <h4 class="post-title"><a href="/@item.Link">@item.Name</a></h4>
                                 </div>
 
                                 <div class="sx-post-readmore">
-                                    <a href="@item.Link" title="READ MORE" rel="bookmark" class="site-button-link">Devamı</a>
+                                    <a href="/@item.Link" title="READ MORE" rel="bookmark" class="site-button-link">Devamı</a>
                                 </div>
 
                             </div>

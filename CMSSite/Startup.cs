@@ -46,7 +46,7 @@ namespace CMSSite
             services.AddScoped(typeof(IGenericRepo<IBaseModel>), typeof(GenericRepo<CMSDBContext, IBaseModel>));
             #endregion
 
-           // services.AddScoped(typeof(ISendMail), typeof(SendMail));//Kullanýcaðýnýz servis projesinden en az birtane servisi çaðýrmalýsýnýz.
+            // services.AddScoped(typeof(ISendMail), typeof(SendMail));//Kullanýcaðýnýz servis projesinden en az birtane servisi çaðýrmalýsýnýz.
 
             var allprops = AppDomain.CurrentDomain.GetAssemblies();
             var props = allprops.Where(o => o.GetName().Name.Contains("DynamicSiteService"))
@@ -68,8 +68,8 @@ namespace CMSSite
             else
             {
                 //app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-                app.UseHttpsRedirection();
+                //  app.UseHsts();
+                // app.UseHttpsRedirection();
             }
 
             app.UseStaticFiles();
@@ -90,6 +90,11 @@ namespace CMSSite
                  );
 
 
+                routes.MapRoute(
+                   "Login",
+                   "Login",
+                     new { controller = "Base", action = "Login" }
+                            );
 
                 routes.MapRoute(
                    name: "BaseContent",

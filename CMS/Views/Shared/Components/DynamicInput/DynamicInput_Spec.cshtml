@@ -23,47 +23,44 @@
 {
 <div class="row mt-2 mb-2">
     @foreach (var item2 in item.SpecChilds)
-    {
-<div class="col-@Html.Raw(item.SpecChilds.Count>0 ? (12 /item.SpecChilds.Count).ToStr()  : "12")">
-    <label>@item2.Name</label>
-    @switch (item2.SpecType)
-    {
-        case SpecType.check:
-            {
-<span class="switch">
-    <label>
-        @if (item2.SpecContentValue?.FirstOrDefault()?.ContentValue == "true")
-        {
+    {@*<div class="col-@Html.Raw(item.SpecChilds.Count > 0 ? ( 12 / item.SpecChilds.Count).ToStr()  : "12" )">*@
+                                        <div class="col-2">
+                                            <label>@item2.Name</label>
+                                            @switch (item2.SpecType)
+                                            {
+                                                case SpecType.check:
+                                                    {
+        <span class="switch">
+            <label>
+                @if (item2.SpecContentValue?.FirstOrDefault(x => x.ContentPageId == ContentPageId && x.SpecId == item2.Id)?.ContentValue == "true")
+                {
 <input checked="checked" ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_check" id="check_@item2.Name" name="check_@item2.Name" type="checkbox"> }
 else
 {
 <input ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_check" id="check_@item2.Name" name="check_@item2.Name" type="checkbox">}
-        <span></span>
-    </label>
-</span> 
-    }
-break;
+                <span></span>
+            </label>
+        </span> }
+    break;
 case SpecType.list://drop
-{
+    {
 <select ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_list" class="form-control form-control-solid form-control-lg" id="list_@item2.Name" name="list_@item2.Name">
     <option value="">Seçiniz</option>
     @foreach (var attr in item2.SpecAttrs)
     {
-        if (item2.SpecContentValue?.FirstOrDefault()?.ContentValue == attr.AttrValue)
+        if (item2.SpecContentValue.Where(x => x.ContentPageId == ContentPageId && x.SpecId == item2.Id)?.FirstOrDefault()?.ContentValue == attr.AttrValue)
         {
-<option selected="selected" value="@attr.AttrValue">@attr.AttrValue</option>
- }
-else
-{
-<option value="@attr.AttrValue">@attr.AttrValue</option>
-}
-}
+<option selected="selected" value="@attr.AttrValue">@attr.AttrValue</option> }
+                                                    else
+                                                    {
+<option value="@attr.AttrValue">@attr.AttrValue</option>}
+                                                }
 </select> }
 
 break;
 case SpecType.text:
 {
-<input ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_text" id="text_@item2.Name" name="text_@item2.Name" value="@Html.Raw(item2.SpecContentValue?.FirstOrDefault()?.ContentValue)" class=" form-control form-control-solid form-control-lg" /> }
+<input ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_text" id="text_@item2.Name" name="text_@item2.Name" value="@Html.Raw(item2.SpecContentValue?.Where(x=>x.ContentPageId==ContentPageId && x.SpecId==item2.Id).FirstOrDefault()?.ContentValue)" class=" form-control form-control-solid form-control-lg" /> }
 break;
 case SpecType.editor:
 { @(Html.Kendo().Editor()
@@ -95,7 +92,7 @@ case SpecType.editor:
                                                       ).Value(item2.SpecContentValue?.FirstOrDefault()?.ContentValue))}
 break;
 }
-</div>}
+                                        </div>}
 </div>}
 }
 break;

@@ -26,7 +26,6 @@ public partial class Documents : BaseModel
 
     public string data_class { get; set; }
 
-
     public int? DocumentId { get; set; }
     public ContentPage Document { get; set; }
 
@@ -46,6 +45,18 @@ public partial class Documents : BaseModel
     public int? PictureId { get; set; }
     public ContentPage Picture { get; set; }
 
+
+    public int? TechnicalPropertyId { get; set; }
+    public ContentPage TechnicalProperty { get; set; }
+
+    public int? CadDataId { get; set; }
+    public ContentPage CadData { get; set; }
+
+    public int? BIMFileId { get; set; }
+    public ContentPage BIMFile { get; set; }
+
+    public int? TechnicalDocumentId { get; set; }
+    public ContentPage TechnicalDocument { get; set; }
 
 
 }

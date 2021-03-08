@@ -240,6 +240,18 @@ namespace DynamicSiteService.Migrations
                     b.Property<int?>("BannerImageId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ContentPageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentPageId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentPageId2")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentPageId3")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreaDate")
                         .HasColumnType("datetime2");
 
@@ -299,6 +311,14 @@ namespace DynamicSiteService.Migrations
                     b.HasIndex("BannerImageId")
                         .IsUnique()
                         .HasFilter("[BannerImageId] IS NOT NULL");
+
+                    b.HasIndex("ContentPageId");
+
+                    b.HasIndex("ContentPageId1");
+
+                    b.HasIndex("ContentPageId2");
+
+                    b.HasIndex("ContentPageId3");
 
                     b.HasIndex("DocumentId");
 
@@ -1230,6 +1250,22 @@ namespace DynamicSiteService.Migrations
                     b.HasOne("ContentPage", "BannerImage")
                         .WithOne("BannerImage")
                         .HasForeignKey("Documents", "BannerImageId");
+
+                    b.HasOne("ContentPage", null)
+                        .WithMany("BIMFiles")
+                        .HasForeignKey("ContentPageId");
+
+                    b.HasOne("ContentPage", null)
+                        .WithMany("CadData")
+                        .HasForeignKey("ContentPageId1");
+
+                    b.HasOne("ContentPage", null)
+                        .WithMany("TechnicalDocuments")
+                        .HasForeignKey("ContentPageId2");
+
+                    b.HasOne("ContentPage", null)
+                        .WithMany("TechnicalProperties")
+                        .HasForeignKey("ContentPageId3");
 
                     b.HasOne("ContentPage", "Document")
                         .WithMany("Documents")

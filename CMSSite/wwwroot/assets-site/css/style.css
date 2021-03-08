@@ -555,7 +555,7 @@ table {
 }
 
 .overflow-hide {
-	overflow: hidden;
+	overflow: hidden; 
 }
 
 .overflow-auto {
@@ -6640,11 +6640,15 @@ input[type=radio]:checked+label:before {
 }
 
 .widget-title {
-	margin: 0 0 25px;
+	margin: 29px 0 15px;
+}
+.widget p {
+	line-height: 24px !important;
+	margin-bottom: 5px !important;
 }
 
 .widget-title {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 .recent-posts-entry ul {
@@ -9489,13 +9493,12 @@ padding:7px 0px;
 
 .sx-bnr-inr-entry {
 	display: table-cell;
-	vertical-align: bottom;
+	vertical-align: middle;
 	text-align: left;
 	position: relative;
 	z-index: 1;
-	vertical-align:bottom;
 	width:100%;
-	padding-bottom:30px;
+	padding-bottom:0px;
 }
 
 .sx-bnr-inr-entry .banner-title-outer {
@@ -11892,6 +11895,7 @@ display:block;
 }
 
 .contact-nav {
+
 	padding-top: 70px;
 	display: flex;
 	align-content: center;
@@ -11909,15 +11913,24 @@ display:block;
 	padding: 45px;
 }
 
-.contact-nav .contact_close {
-	position: absolute;
+	.contact-nav .contact_close {
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		width: 50px;
+		border: none;
+		text-align: center;
+		font-size: 36px;
+		z-index: 23123123;
+		background: #fff;
+		/*	position: absolute;
 	right: 20px;
 	top: 20px;
 	width: 100%;
 	border: none;
 	text-align: right;
-	font-size: 36px;
-}
+	font-size: 36px;*/
+	}
 
 @media only screen and (max-width:540px) {
 	.contact-slide-hide {
@@ -15123,6 +15136,85 @@ background-position: 0px !important;
 	padding: 5px 12px;
 	font-size: 10px;
 }
+}
+
+
+
+
+.get-in-touch-btn-custom {
+	position: relative;
+	padding: 15px 15px;
+	font-size: 14px;
+	color: #000;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: all 600ms cubic-bezier(0.77, 0, 0.175, 1);
+	cursor: pointer;
+	user-select: none;
+	display: inline-block;
+	font-weight: 600;
+	border: 1px solid #eef1f2;
+}
+
+	.get-in-touch-btn-custom:before,
+	.get-in-touch-btn-custom:after {
+		content: '';
+		position: absolute;
+		transition: inherit;
+		z-index: -1;
+	}
+
+	.get-in-touch-btn-custom:hover {
+		color: #fff;
+		transition-delay: .6s;
+	}
+
+		.get-in-touch-btn-custom:hover:before {
+			transition-delay: 0s;
+		}
+
+		.get-in-touch-btn-custom:hover:after {
+			background: #23252d;
+			transition-delay: .4s;
+		}
+
+
+	/* From Top */
+
+	.get-in-touch-btn-custom.from-top:before,
+	.get-in-touch-btn-custom.from-top:after {
+		left: 0;
+		height: 0;
+		width: 100%;
+	}
+
+	.get-in-touch-btn-custom.from-top:before {
+		bottom: 0;
+		border: 1px solid #23252d;
+		border-top: 0;
+		border-bottom: 0;
+	}
+
+	.get-in-touch-btn-custom.from-top:after {
+		top: 0;
+		height: 0;
+	}
+
+	.get-in-touch-btn-custom.from-top:hover:before,
+	.get-in-touch-btn-custom.from-top:hover:after {
+		height: 100%;
+	}
+
+	.get-in-touch-btn-custom.from-top.active:before,
+	.get-in-touch-btn-custom.from-top.active:after {
+		height: 100%;
+	}
+
+@media only screen and (max-width:480px) {
+	.get-in-touch-btn-custom {
+		padding: 5px 12px;
+		font-size: 10px;
+	}
 }
 /*=======================
 	after before slider

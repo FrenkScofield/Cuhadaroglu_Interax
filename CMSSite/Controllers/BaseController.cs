@@ -21,9 +21,9 @@ namespace CMSSite.Controllers
         IDocumentsService _IDocumentsService;
         ISiteConfigService _ISiteConfigService;
         IUserService _IUserService;
-        
 
-        public BaseController( 
+
+        public BaseController(
             IHostingEnvironment _IHostingEnvironment,
           IContentPageService _IContentPageService,
         IDocumentsService _IDocumentsService,
@@ -31,7 +31,7 @@ namespace CMSSite.Controllers
         IHttpContextAccessor _httpContextAccessor,
          IUserService _IUserService
             )
-        { 
+        {
             this._IHostingEnvironment = _IHostingEnvironment;
             this._ISiteConfigService = _ISiteConfigService;
             this._IDocumentsService = _IDocumentsService;
@@ -50,7 +50,7 @@ namespace CMSSite.Controllers
             {
                 var menu = _IContentPageService.Where(o => o.Link == link, true, false, o => o.Documents).Result.FirstOrDefault();
                 if (menu != null)
-                { 
+                {
                     ViewBag.content = menu;
                     return View();
                 }
@@ -65,6 +65,31 @@ namespace CMSSite.Controllers
             }
         }
 
+ 
+        public IActionResult Validate(string user, string pass)
+        {
+            var _user = _IUserService.Where(o => (o.UserName == user || o.Name == user) && (o.Pass == pass ), true, false).Result.FirstOrDefault();
+            if (_user != null)
+            {
+                _user.LoginCount = _user.LoginCount == null ? null : _user.LoginCount++;
+                _httpContextAccessor.HttpContext.Session.Set("fUser", _user);
+                ViewBag.User = _user;
+            }  
+            return Json(_user);
+        }
+        public IActionResult Login()
+        {
+            if (_httpContextAccessor.HttpContext.Session.Get("fUser") != null)
+            {
+                return Redirect("/");
+            }
+            else
+            {
+                setData();
+                return View();
+            }
+            
+        }
         public IActionResult Index()
         {
 
@@ -193,8 +218,19 @@ namespace CMSSite.Controllers
             #region dynamicContent
             var link = HttpContext.Request.Path.Value.Trim().ToStr();
             List<ContentPage> contentPages = new List<ContentPage>();
-        
-            int langID = 0;
+
+            if (_httpContextAccessor.HttpContext.Session.Get("fUser") != null)
+            {
+                ViewBag.User = _httpContextAccessor.HttpContext.Session.Get("fUser");
+            }
+            else
+            {
+                ViewBag.User = null;
+            }
+
+
+
+                int langID = 0;
             if (_httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != null)
             {
                 langID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") ?? 1;
@@ -232,34 +268,21 @@ namespace CMSSite.Controllers
                     ViewBag.LanguageID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID");
                 }
             }
-            var currState = _httpContextAccessor.HttpContext.Session.GetString("currState"); 
-            
+
+            Regex reg = new Regex("[*'\",_&#^@]");
+
+            var currState = reg.Replace(_httpContextAccessor.HttpContext.Session.GetString("currState") ?? "-", string.Empty);
+
             ViewBag.currState = currState;
             bool isBayi = false;
             bool isEndustri = false;
             bool isMimar = false;
             bool isBireysel = false;
-            switch (currState)
-            {
-                case "Bayi":
-                    isBayi = true;
-                    break;
-                case "Endustri":
-                    isEndustri = true;
-                    break;
-                case "Mimar":
-                    isMimar = true;
-                    break;
-                case "Bireysel":
-                    isBireysel = true;
-                    break;
-                default:
-                    isBayi = true;
-                    break;
-            }
-         
 
-            contentPages = _IContentPageService.Where(x => x.LangId == langID&& x.IsDeleted == null && (x.IsBayi == isBayi || x.IsEndustri == isEndustri || x.IsMimar == isMimar || x.IsBireysel == isBireysel) && x.IsInteral==true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList(); 
+          
+
+
+            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
             //if (_httpContextAccessor.HttpContext.Session.Get("contentPages") == null)
             //{
@@ -274,7 +297,34 @@ namespace CMSSite.Controllers
             //}
             // ViewBag.IsHeaderMenu = contentPages.Where(o => o.IsHeaderMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
             // ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
-            ViewBag.contentPages = contentPages.ToList();
+            switch (currState)
+            {
+                case "Bayi":
+                    isBayi = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
+                    break;
+                case "Endustri":
+                    isEndustri = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
+                    break;
+                case "Mimar":
+                    isMimar = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    break;
+                case "Bireysel":
+                    isBireysel = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
+                    break;
+                case "-":
+                    isMimar = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    break;
+                default:
+                    isMimar = true;
+                    break;
+            }
+
+            
             ViewBag.Pages = contentPages.ToList();
             //   ViewBag.fikirler = _IFikirService.Where(o => o.FikirStatus != FikirDurumu.Ondegerlendirme,
             //      true, false,
@@ -301,11 +351,11 @@ namespace CMSSite.Controllers
         }
         [HttpPost]
         public IActionResult ChangeType(string ID)
-        { 
-            string currState = "Bayi";
+        {
+            string currState = "-";
             if (_httpContextAccessor.HttpContext.Session.GetString("currState") != null)
             {
-                currState = _httpContextAccessor.HttpContext.Session.GetString("currState"); 
+                currState = _httpContextAccessor.HttpContext.Session.GetString("currState");
             }
             //_httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);   
             switch (ID)
@@ -323,13 +373,13 @@ namespace CMSSite.Controllers
                     currState = "Bireysel";
                     break;
                 default:
-                    currState= "Bayi";
+                    currState = "-";
                     break;
             }
             ViewBag.currState = currState;
             _httpContextAccessor.HttpContext.Session.Set("currState", currState);
             return Json("");
-        } 
+        }
         [HttpPost]
         public IActionResult ChangeLanguage(string LanguageID, string PageUrl, string PageData)
         {
@@ -355,11 +405,11 @@ namespace CMSSite.Controllers
             else
             {
                 return Json("");
-            } 
+            }
             //_IContentPageService.Where(o => o.Link == link, true, false, null).Result.FirstOrDefault(); 
         }
- 
-      
+
+
     }
 }
 //web@cuhadaroglu.com

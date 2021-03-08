@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System.Reflection;
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CMS.Controllers
 {
@@ -40,22 +34,19 @@ namespace CMS.Controllers
             this._IUserService = _IUserService;
 
         }
-
-        public IActionResult FileManager()
-        {
-            return View();
-        }
+  
+    
         public IActionResult Index()
         {
             if (SessionRequest._User == null)
             {
-              
+
                 return RedirectToAction("Login1", "Login");
             }
 
             ViewBag.pageTitle = "Dashboard";
 
-       
+
 
 
             var menus = _IServiceConfigService.Where().Result.ToList();

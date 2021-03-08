@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Kendo.Mvc.UI;
+﻿using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Linq;
 
 
 namespace CMS.Controllers
@@ -39,7 +33,7 @@ namespace CMS.Controllers
         }
 
 
-   
+
 
         public IActionResult InsertOrUpdate(SiteConfig postModel)
         {

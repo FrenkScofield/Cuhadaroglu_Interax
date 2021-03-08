@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Kendo.Mvc.UI;
+﻿using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace CMS.Controllers
@@ -60,21 +55,13 @@ namespace CMS.Controllers
                             var rowResult = _ISpecContentValueService.Delete(rowItem);
                             var res = _ISpecContentValueService.SaveChanges();
                         }
-                       
                     }
                     else
                     {
                         var res = _ISpecContentValueService.InsertOrUpdate(o);
                         insertAll.Add(res);
                     }
-
-                }
-                else
-                {
-
-                }
-
-
+                }  
             });
             return Json(insertAll);
         }

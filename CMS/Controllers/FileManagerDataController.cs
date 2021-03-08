@@ -1,12 +1,12 @@
 ﻿using Kendo.Mvc.UI;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 
 namespace CMS.Controllers
 {
@@ -34,6 +34,10 @@ namespace CMS.Controllers
             {
                 return CreateUserFolder();
             }
+        }
+        public IActionResult FileManager()
+        {
+            return View();
         }
 
 #pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
@@ -327,7 +331,7 @@ namespace CMS.Controllers
 
             newEntry = RenameEntry(entry);
 
-        
+
             return Json(VirtualizePath(newEntry));
         }
 

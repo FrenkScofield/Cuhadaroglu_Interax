@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_Layout";
     var content = ViewBag.content as ContentPage;
-    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    var subPages = ViewBag.subPages as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
@@ -11,14 +11,14 @@
     <!-- GALLERY CONTENT START -->
     <div class="container">
         <div class="masonry-outer mfp-gallery news-grid clearfix row ">
-            @foreach (var item in contentPages)
+            @foreach (var item in subPages)
             {
                 <!-- COLUMNS 1 -->
                 <div class="masonry-item  col-lg-4 col-md-6 col-sm-12">
                     <div class="blog-post blog-grid date-style-2">
 
                         <div class="sx-post-media sx-img-effect img-reflection">
-                            <a href="javascript:void(0);"><img src="/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")"></a>
+                            <a href="javascript:void(0);"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")"></a>
                         </div>
 
                         <div class="sx-post-info p-t30">

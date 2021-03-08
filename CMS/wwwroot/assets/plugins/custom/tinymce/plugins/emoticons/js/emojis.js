@@ -3925,7 +3925,6 @@ window.tinymce.Resource.add("tinymce.plugins.emoticons", {
     category: "activity"
   },
   "3rd_place_medal": {
-    keywords: [ "award", "third" ],
     "char": "\ud83e\udd49",
     fitzpatrick_scale: false,
     category: "activity"

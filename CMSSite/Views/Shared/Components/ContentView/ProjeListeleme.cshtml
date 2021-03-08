@@ -1,8 +1,10 @@
 ﻿@{
     Layout = "_Layout";
-    var content = ViewBag.content as ContentPage;
-    var contentPages = ViewBag.contentPages as List<ContentPage>;
-    int LanguageID = (int)ViewBag.LanguageID;
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage; 
+    var subPages = ViewBag.subPages as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID; 
+    int parentCheck = 0;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
 <!-- ALL PROJECTS START -->
@@ -10,24 +12,23 @@
 
     <div class="container">
         <!-- TITLE START -->
-        <div class="section-head">
+        @*<div class="section-head">
             <div class="sx-separator-outer separator-center">
                 <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
                     <h3 class="sep-line-one">Our Projects</h3>
                 </div>
             </div>
-        </div>
-        <!-- TITLE END -->
-  
+        </div>*@
+        <!-- TITLE END --> 
         <!-- GALLERY CONTENT START -->
         <ul class="masonry-outer mfp-gallery work-grid row clearfix list-unstyled m-b0">
-            @foreach (var item in contentPages)
+            @foreach (var item in subPages)
             {
                 <!-- COLUMNS 1 -->
                 <li class="masonry-item cat-1 col-lg-4 col-md-6 col-sm-12 m-b30">
                     <div class="sx-box   image-hover-block">
                         <div class="sx-thum-bx">
-                            <img src="@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")">
+                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")">
                         </div>
                         <div class="sx-info  p-t20 text-white">
                             <h4 class="sx-tilte"><a href="/@item.Link">@item.Name</a></h4>

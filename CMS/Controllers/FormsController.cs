@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Kendo.Mvc.UI;
+﻿using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Linq;
 
 
 namespace CMS.Controllers
@@ -19,9 +13,9 @@ namespace CMS.Controllers
             this._IFormsService = _IFormsService;
         }
 
-        public ActionResult GetPaging([DataSourceRequest] DataSourceRequest request,int selecttype)
+        public ActionResult GetPaging([DataSourceRequest] DataSourceRequest request, int selecttype)
         {
-            var orders = _IFormsService.Where(o=>o.FormTypeId == selecttype, true, false, o => o.FormType).Result;
+            var orders = _IFormsService.Where(o => o.FormTypeId == selecttype, true, false, o => o.FormType).Result;
             orders = orders.ApplyOrdersFiltering(request.Filters);
             var total = orders.Count();
             orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);

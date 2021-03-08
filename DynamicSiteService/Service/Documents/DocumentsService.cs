@@ -18,8 +18,9 @@ public class DocumentsService : GenericRepo<CMSDBContext, Documents>, IDocuments
         res.ResultType.MessageList = new List<string>();
 
         //Duplicate Control
-        var modelControl = Where(o => o.Id != model.Id && o.Link == model.Link, false).Result.FirstOrDefault();
-        if (modelControl != null)
+        //var modelControl = Where(o => o.Id != model.Id && o.Link == model.Link, false).Result.FirstOrDefault();
+        var modelControl = Where(o => o.ThumbImageId == model.ThumbImageId && o.PictureId == model.PictureId && o.BannerImageId == model.BannerImageId, false).Result.FirstOrDefault();
+        if (modelControl != null && modelControl.Link == model.Link)
         {
             res.ResultType.RType = RType.Warning;
             res.ResultType.MessageList.Add("Duplicate");
@@ -27,9 +28,10 @@ public class DocumentsService : GenericRepo<CMSDBContext, Documents>, IDocuments
         }
         else
         {
-            if (model.Id > 0)
+            if (modelControl != null && (model.ThumbImageId > 0 || model.PictureId > 0 || model.BannerImageId > 0))
             {
-                res.ResultRow = Update(model);
+                modelControl.Link = model.Link;
+                res.ResultRow = Update(modelControl);
             }
             else
             {

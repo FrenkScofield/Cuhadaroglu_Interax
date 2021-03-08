@@ -1,13 +1,14 @@
 ﻿@{
     var content = ViewBag.currContent as ContentPage;
     var Pages = ViewBag.Pages as List<ContentPage>;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
     List<ContentPage> Blogs = new List<ContentPage>();
     if (Pages != null)
     {
         Blogs = Pages.Where(x => x.ContentTypesId == 2).ToList();
     }
-   string currState= (string.IsNullOrEmpty(ViewBag.currState)?"Bayi": ViewBag.currState) as string;
+    string currState= (string.IsNullOrEmpty(ViewBag.currState)?"Bayi": ViewBag.currState) as string;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -61,12 +62,9 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
     <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
-</head>
-
+</head> 
 <body>
-
     <div class="page-wraper">
-
         <!-- HEADER START -->
         <header class="site-header header-style-1 nav-wide">
             <div class="top-bar bg-gray">
@@ -84,7 +82,7 @@
                     <div class="container clearfix">
                         <div class="logo-header">
                             <div class="logo-header-inner logo-header-one">
-                                <a href="index.html">
+                                <a href="/">
                                     <img src="/assets-site/images/logo-1.png" alt="" />
                                 </a>
                             </div>
@@ -96,7 +94,6 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-
                         <!-- EXTRA NAV -->
                         <div class="extra-nav">
                             <div class="extra-cell">
@@ -105,17 +102,17 @@
                                 </a>
                             </div>
                             <div class="extra-cell">
-                                <div class="contact-slide-show"><a href="javascript:;" class="get-in-touch-btn from-top">@currState.Replace("\"", "")</a></div>
+                                <div class="contact-slide-show-deleted"><a href="javascript:void(0)" class="get-in-touch-btn-custom ">@currState.Replace("\"", "")</a></div>
                             </div>
                         </div>
                         <!-- EXTRA Nav -->
                         <!-- MAIN NAVIGATION -->
                         <div class="header-nav nav-dark navbar-collapse collapse justify-content-start collapse">
-                            @if (Pages != null)
+                            @if (contentPages != null)
                             {
                                 <ul class=" nav navbar-nav">
 
-                                    @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(x => x.ContentOrderNo))
+                                    @foreach (var item in contentPages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(x => x.ContentOrderNo))
                                     {
                                         <li>
                                             @if (string.IsNullOrEmpty(item.ExternalLink))
@@ -127,12 +124,11 @@
                                                 <a href="@item.ExternalLink" target="@(item.ExternalLink.StartsWith("http")?"_blank":"")">@item.Name</a>
                                             }
                                             @{
-                                                var subItems = Pages.Where(x => x.ContentPageId == item.Id && x.IsHeaderMenu == true).OrderBy(x => x.ContentOrderNo).ThenBy(m => m.Id);
+                                                var subItems = contentPages.Where(x => x.ContentPageId == item.Id && x.IsHeaderMenu == true).OrderBy(x => x.ContentOrderNo).ThenBy(m => m.Id);
                                             }
-
-                                            @if (Pages.Any(x => x.ContentPageId == item.Id && x.Id != item.Id && x.IsHeaderMenu == true))
+                                            @if (contentPages.Any(x => x.ContentPageId == item.Id && x.Id != item.Id && x.IsHeaderMenu == true))
                                             {
-                                                if (Pages.Any(a => a.Id == subItems.FirstOrDefault().ContentPageId))
+                                                if (contentPages.Any(a => a.Id == subItems.FirstOrDefault().ContentPageId))
                                                 {
                                                     <ul class="sub-menu">
                                                         @foreach (var itemSub in subItems)
@@ -151,98 +147,99 @@
                                                         }
                                                     </ul>
                                                 }
-
                                             }
-
                                         </li>
                                     }
-
                                 </ul>
                             }
                         </div>
+                        <!-- LP START ===== -->
 
-                        <!-- CONTACT -->
-                        <div class="contact-slide-hide" style="background-image:url(images/background/v2.jpg)">
-                            <div class="contact-nav">
-                                <a href="javascript:void(0)" class="contact_close">&times;</a>
-                                <div class="contact-nav-form">
-                                    <div class="row">
+                        <script src="~/assets-site/js/jquery.waitforimages.min.js"></script>
+                        <link href="~/assets-site/css/accordion.css" rel="stylesheet" />
 
-                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Bayi">
+                        <div class="flex-container" style="display:none">
+                            <div class="spinner">
+                                <p>
+                                    <div class="cube1"></div>
+                                    <div class="cube2"></div>
 
-                                            <div class="number-block-one animate-in-to-top">
-                                                <img src="/assets-site/images/pic1.jpg" alt="" />
-                                                <div class="figcaption bg-white text-center p-a20">
-                                                    <h4 class="m-a0">Bayi</h4>
-                                                </div>
-                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                                    <span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Bireysel">
-
-                                            <div class="number-block-one animate-in-to-top">
-                                                <img src="/assets-site/images/pic2.jpg" alt="" />
-                                                <div class="figcaption bg-white text-center p-a20">
-                                                    <h4 class="m-a0">Bireysel</h4>
-                                                </div>
-                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                                    <span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Endustri">
-
-                                            <div class="number-block-one animate-in-to-top">
-                                                <img src="/assets-site/images/pic3.jpg" alt="" />
-                                                <div class="figcaption bg-white text-center p-a20">
-                                                    <h4 class="m-a0">Endustri</h4>
-                                                </div>
-                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                                    <span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-lg-3 col-md-6 col-sm-6 m-b30 contentTypes" data-id="Mimar">
-
-                                            <div class="number-block-one animate-in-to-top">
-                                                <img src="/assets-site/images/pic4.jpg" alt="" />
-                                                <div class="figcaption bg-white text-center p-a20">
-                                                    <h4 class="m-a0">Mimar</h4>
-                                                </div>
-                                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                                    <span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                </p>
+                            </div>
+                            <div class="closeC">x</div>
+                            <div class="flex-slide contentTypes" data-id="Bayi" style="background-image: url(/assets-site/images/pic2.jpg)">
+                                <div class="flex-title flex-title-home">Bayi</div>
+                                <div class="flex-about flex-about-home"><p>Yeni sistemler ve uygulamalar ile tanışın</p></div>
+                            </div>
+                            <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg)">
+                                <div class="flex-title">Bireysel</div>
+                                <div class="flex-about"><p>Evinize mimari estetik ve konfor katın</p></div>
+                            </div>
+                            <div class="flex-slide contentTypes" data-id="Endustri" style="background-image: url(/assets-site/images/pic4.jpg)">
+                                <div class="flex-title">Endüstri</div>
+                                <div class="flex-about">
+                                    <p>Alüminyuma şekil veriyoruz</p>
                                 </div>
-                                <script>
-
-                                    $(".contentTypes").click(function () {
-
-                                        $.post("/Base/ChangeType", { ID: $(this).data("id") }, function (data) {
-                                            window.location.reload();
-                                        });
-                                        return false;
-                                    });
-                                </script>
-
+                            </div>
+                            <div class="flex-slide contentTypes" id="defaultSet" data-id="Mimar" style="background-image: url(/assets-site/images/pic5.jpg)">
+                                <div class="flex-title">Mimar</div>
+                                <div class="flex-about">
+                                    <p>Projelerinizi hayata geçirin</p>
+                                </div>
                             </div>
                         </div>
+                        <script>
+                            $(".contentTypes").click(function () {
+                                $.post("/Base/ChangeType", { ID: $(this).data("id") }, function (data) {
+                                    window.location.reload();
+                                });
+                                return false;
+                            });
 
+                            $(".closeC").click(function () {
+                                $(".flex-container").fadeOut();
+                            });
+                            $(".get-in-touch-btn-custom").click(function () {
+                                $(".flex-container").fadeIn();
+                            });
+                        </script>
+
+                        <script>
+
+                            (function () {
+                                $('.flex-container').waitForImages(function () {
+                                    $('.spinner').fadeOut();
+                                }, $.noop, true);
+
+                                $(".flex-slide").each(function () {
+                                    $(this).hover(function () {
+                                        $(this).find('.flex-title').css({
+                                            transform: 'rotate(0deg)',
+                                            top: '10%'
+                                        });
+                                        $(this).find('.flex-about').css({
+                                            opacity: '1'
+                                        });
+                                    }, function () {
+                                        $(this).find('.flex-title').css({
+                                            transform: 'rotate(90deg)',
+                                            top: '15%'
+                                        });
+                                        $(this).find('.flex-about').css({
+                                            opacity: '0'
+                                        });
+                                    })
+                                });
+                            })();</script>
+
+
+                        <!-- LP END ===== -->
                         <!-- SITE SEARCH -->
                         <div id="search">
                             <span class="close"></span>
                             <form role="search" id="searchform" action="/search" method="get" class="radius-xl">
                                 <div class="input-group">
-                                    <input value="" name="q" type="search" placeholder="Type to search" />
+                                    <input value="" name="q" type="search" placeholder="Arama" />
                                     <span class="input-group-btn"><button type="button" class="search-btn"><i class="fa fa-search arrow-animation"></i></button></span>
                                 </div>
                             </form>
@@ -274,7 +271,9 @@
                             <div class="widget widget_about">
                                 <!--<h4 class="widget-title">About Company</h4>-->
                                 <div class="logo-footer clearfix p-b15">
-                                    <a href="index.html"><img src="images/logo-1.png" alt=""></a>
+                                    <a href="/">
+                                        <img src="/assets-site/images/logo-1.png" alt="Cuhadaroğlu interal">
+                                    </a>
                                 </div>
                                 <p>Interal for interior and architecture purpose. Today we can tell you, thanks to your passion.</p>
 
@@ -351,35 +350,7 @@
 
                     </div>
                 </div>
-                <div class="container">
-                    <div class="call-to-action-wrap">
-                        <div class="row">
-                            <div class="col-lg-7 col-md-6">
-                                <div class="call-to-action-left">
-                                    <h5 class="text-uppercase m-b10 m-t0">Subscribe to our newsletter!</h5>
-                                    <span>Never Miss Anything From Interal By Signing Up To Our Newsletter.</span>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-md-6">
-                                <div class="call-to-action-right">
-                                    <div class="widget_newsletter">
-                                        <div class="newsletter-bx">
-                                            <form role="search" method="post">
-                                                <div class="input-group">
-                                                    <input name="news-letter" class="form-control" placeholder="ENTER YOUR EMAIL" type="text">
-                                                    <span class="input-group-btn">
-                                                        <button type="submit" class="site-button"><i class="fa fa-paper-plane-o"></i></button>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
             <!-- FOOTER COPYRIGHT -->
             <div class="footer-bottom overlay-wraper">
@@ -452,7 +423,14 @@
     <script src="/assets-site/js/rev-script-1.js"></script>
 
 
-
+    @if (currState == "-")
+    {
+        <script>$(".flex-container").show();</script>
+    }
+    else
+    {
+        <script>$(".flex-container").hide();</script>
+    }
 </body>
 
 </html>

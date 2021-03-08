@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Kendo.Mvc;
+﻿using Kendo.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
-using Kendo.Mvc.UI;
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Linq;
 
 public static class AjaxCustomPaging
 {
