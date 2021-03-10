@@ -61,7 +61,7 @@ public partial class CMSDBContext : DbContext
 
     //    modelBuilder.Entity<Card>()
     //.HasRequired(c => c.Stage)
-    //.WithMany()
+    //.WithMany()b
     //.WillCascadeOnDelete(false);
 
 
@@ -73,17 +73,20 @@ public partial class CMSDBContext : DbContext
 
         modelBuilder.Entity<ContentPage>().HasOne(a => a.BannerImage).WithOne(b => b.BannerImage).HasForeignKey<Documents>(b => b.BannerImageId);
 
+
         modelBuilder.Entity<ContentPage>().HasMany(a => a.Documents).WithOne(b => b.Document);
 
         modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.Gallery);
 
-        modelBuilder.Entity<ContentPage>().HasMany(a => a.Documents).WithOne(b => b.TechnicalProperty);
 
-        modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.CadData);
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.TechnicalProperties).WithOne(b => b.TechnicalProperty);
 
-        modelBuilder.Entity<ContentPage>().HasMany(a => a.Documents).WithOne(b => b.BIMFile);
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.CadDatas).WithOne(b => b.CadData);
 
-        modelBuilder.Entity<ContentPage>().HasMany(a => a.Gallery).WithOne(b => b.TechnicalDocument);
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.BIMFiles).WithOne(b => b.BIMFile);
+
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.TechnicalDocuments).WithOne(b => b.TechnicalDocument);
+
 
         modelBuilder.Entity<ContentPage>().HasMany(a => a.ContentPageChilds).WithOne(b => b.Parent);
 

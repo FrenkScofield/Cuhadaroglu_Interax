@@ -117,7 +117,29 @@
                                 </div>
                                 <div id="collapseThree5" class="acod-body collapse">
                                     <div class="acod-content p-tb15">
-                                        
+                                        @foreach (var item in content.TechnicalProperties)
+                                        {
+                                            <div class="col-md-3 m-b30">
+                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                    </div>
+                                                    <div class="icon-content">
+                                                        <h4 class="sx-tilte">@item.Name</h4>
+
+                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link"  target="_blank" class="site-button-link">İNDİR</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div class="col-md-4 m-b30">
+                                                <div class="wt-icon-box-wraper left  p-a15 m-b10">
+                                                    <a href="" class="btn-block">
+                                                        <span class="text-black m-r10"><i class="fa fa-file-pdf-o"></i></span>
+                                                        <strong class="text-uppercase text-black"></strong>
+                                                    </a>
+                                                </div>
+                                            </div>*@
+                                        }
 
                                     </div>
                                 </div>
@@ -134,7 +156,21 @@
                                 </div>
                                 <div id="collapseFour5" class="acod-body collapse">
                                     <div class="acod-content p-tb15">
-                                         
+                                        @foreach (var item in content.CadDatas)
+                                        {
+                                        <div class="col-md-3 m-b30">
+                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                </div>
+                                                <div class="icon-content">
+                                                    <h4 class="sx-tilte">@item.Name</h4>
+
+                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +186,21 @@
                                 </div>
                                 <div id="collapseFive5" class="acod-body collapse">
                                     <div class="acod-content p-tb15">
-                                         
+                                        @foreach (var item in content.BIMFiles)
+                                        {
+                                        <div class="col-md-3 m-b30">
+                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                </div>
+                                                <div class="icon-content">
+                                                    <h4 class="sx-tilte">@item.Name</h4>
+
+                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +216,21 @@
                                 </div>
                                 <div id="collapseFive6" class="acod-body collapse">
                                     <div class="acod-content p-tb15">
-                                         
+                                        @foreach (var item in content.TechnicalDocuments)
+                                        {
+                                        <div class="col-md-3 m-b30">
+                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                </div>
+                                                <div class="icon-content">
+                                                    <h4 class="sx-tilte">@item.Name</h4>
+
+                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
