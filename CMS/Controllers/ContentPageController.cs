@@ -26,7 +26,7 @@ namespace CMS.Controllers
         {
             this._IContentPageService = _IContentPageService;
             this._IDocumentsService = _IDocumentsService;
-            this._IHostingEnvironment = _IHostingEnvironment; 
+            this._IHostingEnvironment = _IHostingEnvironment;
         }
 
 
@@ -58,13 +58,13 @@ namespace CMS.Controllers
                 DocList.ForEach(o =>
                 {
                     RModel<Documents> result = _IDocumentsService.InsertOrUpdate(o);
-                    if(result.ResultType.RType == RType.Warning)
+                    if (result.ResultType.RType == RType.Warning)
                     {
                         isErr = true;
-                        errMsg = result.ResultType.MessageList; 
+                        errMsg = result.ResultType.MessageList;
                     }
                 });
-                if(isErr)
+                if (isErr)
                 {
                     return Json("Err-duplicate");
                 }
@@ -72,7 +72,7 @@ namespace CMS.Controllers
                 {
                     return Json(DocList);
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -396,7 +396,7 @@ namespace CMS.Controllers
 
         public JsonResult DeleteImage(int id)
         {
-            var result = _IDocumentsService.Where(o => o.Types == "ContentPage" && o.Id == id).Result.FirstOrDefault(); 
+            var result = _IDocumentsService.Where(o => o.Types == "ContentPage" && o.Id == id).Result.FirstOrDefault();
             var path = this.GetPathAndFilename(result.Link);
             if (System.IO.File.Exists(path))
             {
@@ -497,6 +497,24 @@ namespace CMS.Controllers
                 Directory.CreateDirectory(path);
 
             return path + filename;
+        }
+
+
+        public IActionResult UpdateOrder(List<OrderUpdateModel> postModel)
+        {
+            var rows = _IContentPageService.Where(o => o.ContentTypesId == postModel.FirstOrDefault().dataid).Result.ToList();
+            postModel.ForEach(o =>
+            {
+                var row = rows.FirstOrDefault(r => r.Id == o.Id);
+                if (row != null)
+                {
+                    row.OrderNo = o.OrderNo;
+                    _IContentPageService.Update(row);
+                    _IContentPageService.SaveChanges();
+                }
+            });
+
+            return Json("ok");
         }
 
     }

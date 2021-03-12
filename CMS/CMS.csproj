@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\SiteConfig\Index.cshtml" />
     <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.svg" />
     <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.woff2" />
     <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-regular-400.svg" />

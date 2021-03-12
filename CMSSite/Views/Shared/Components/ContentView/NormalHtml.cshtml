@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contents = ViewBag.contents as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+    var User = ViewBag.User as User;
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+
+
+
+<div class="section-full p-t80 p-b50 mobile-page-padding" style="transform: none;">
+    <div class="container" style="transform: none;">
+
+        <!-- GALLERY CONTENT START -->
+        <div class="row" style="transform: none;">
+
+
+            <div class="col-lg-12 col-md-12">
+                <div class="section-content">
+                    <div class="service-single-block m-b30">
+                        @if (!string.IsNullOrEmpty(content.Picture.Link))
+                        {
+                            <div class="sx-media">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@content.Picture.Link" alt="">
+                            </div>
+                        }
+
+                        <h3 class="m-t30 sx-tilte">@Html.Raw(content.Description)</h3>
+                        <h4 class="m-t30 sx-tilte">@Html.Raw(content.ContentShort)</h4>
+                        <p>
+                            @Html.Raw(content.ContentData)
+                        </p>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+        <!-- GALLERY CONTENT END -->
+    </div>
+
+
+</div>

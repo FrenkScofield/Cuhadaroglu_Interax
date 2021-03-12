@@ -285,7 +285,7 @@
                                 <!--<h4 class="widget-title">About Company</h4>-->
                                 <div class="logo-footer clearfix p-b15">
                                     <a href="/">
-                                        <img src="/assets-site/images/logo-1.png" alt="Cuhadaroğlu interal">
+                                        <img src="/assets-site/images/logo-2.png" alt="Cuhadaroğlu interal">
                                     </a>
                                 </div>
                                 <p>
@@ -295,15 +295,15 @@
                                 <ul class="social-icons  sx-social-links">
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                        <li><a href="@SessionRequest.config.Facebook" class="fa fa-facebook"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                                        <li><a href="@SessionRequest.config.Linkedin" class="fa fa-linkedin"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                        <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
                                     }
 
 

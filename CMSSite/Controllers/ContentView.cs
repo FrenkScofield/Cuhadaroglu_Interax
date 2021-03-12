@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
 
 namespace CMSSite.Components
 {
@@ -54,7 +55,10 @@ namespace CMSSite.Components
                 _httpContextAccessor.HttpContext.Session.SetInt32("LanguageID", content.LangId);
                 langID = content.LangId;
             }
-            var currState = _httpContextAccessor.HttpContext.Session.GetString("currState");
+            Regex reg = new Regex("[*'\",_&#^@]");
+
+            var currState = reg.Replace(_httpContextAccessor.HttpContext.Session.GetString("currState") ?? "-", string.Empty);
+
 
             ViewBag.currState = currState;
             bool isBayi = false;
