@@ -65,16 +65,16 @@ namespace CMSSite.Controllers
             }
         }
 
- 
+
         public IActionResult Validate(string user, string pass)
         {
-            var _user = _IUserService.Where(o => (o.UserName == user || o.Name == user) && (o.Pass == pass ), true, false).Result.FirstOrDefault();
+            var _user = _IUserService.Where(o => (o.UserName == user || o.Name == user) && (o.Pass == pass), true, false).Result.FirstOrDefault();
             if (_user != null)
             {
                 _user.LoginCount = _user.LoginCount == null ? null : _user.LoginCount++;
                 _httpContextAccessor.HttpContext.Session.Set("fUser", _user);
                 ViewBag.User = _user;
-            }  
+            }
             return Json(_user);
         }
         public IActionResult Login()
@@ -88,7 +88,7 @@ namespace CMSSite.Controllers
                 setData();
                 return View();
             }
-            
+
         }
         public IActionResult Index()
         {
@@ -230,7 +230,7 @@ namespace CMSSite.Controllers
 
 
 
-                int langID = 0;
+            int langID = 0;
             if (_httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != null)
             {
                 langID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") ?? 1;
@@ -279,7 +279,7 @@ namespace CMSSite.Controllers
             bool isMimar = false;
             bool isBireysel = false;
 
-          
+
 
 
             contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
@@ -324,7 +324,7 @@ namespace CMSSite.Controllers
                     break;
             }
 
-            
+
             ViewBag.Pages = contentPages.ToList();
             //   ViewBag.fikirler = _IFikirService.Where(o => o.FikirStatus != FikirDurumu.Ondegerlendirme,
             //      true, false,
@@ -360,14 +360,14 @@ namespace CMSSite.Controllers
             //_httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);   
             switch (ID)
             {
-                case "Bayi":
-                    currState = "Bayi";
+                case "Uygulamacılar":
+                    currState = "Uygulamacılar";
                     break;
-                case "Endustri":
-                    currState = "Endustri";
+                case "Endustriyel":
+                    currState = "Endustriyel";
                     break;
-                case "Mimar":
-                    currState = "Mimar";
+                case "Mimarlar":
+                    currState = "Mimarlar";
                     break;
                 case "Bireysel":
                     currState = "Bireysel";

@@ -8,13 +8,16 @@
     {
         Blogs = Pages.Where(x => x.ContentTypesId == 2).ToList();
     }
-    string currState= (string.IsNullOrEmpty(ViewBag.currState)?"Bayi": ViewBag.currState) as string;
+    string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string;
 }
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+    @*<a href="https://www.facebook.com/cuhadaroglumetal"><i class="fa fa-facebook fa-lg"></i></a>
+        <a href="https://www.instagram.com/cuhadaroglu_group/"><i class="fa fa-instagram fa-lg"></i></a>
+        <a href="https://www.linkedin.com/company/cuhadaroglu-metal/?viewAsMember=true"><i class="fa fa-linkedin fa-lg"></i></a>
+        <a href="https://twitter.com/cuhadaroglu_alu"><i class="fa fa-twitter fa-lg"></i></a>*@
     <!-- META -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,7 +65,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
     <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
-</head> 
+</head>
 <body>
     <div class="page-wraper">
         <!-- HEADER START -->
@@ -71,8 +74,8 @@
                 <div class="container">
                     <div class="d-flex justify-content-end">
                         <ul class="list-unstyled e-p-bx">
-                            <li><span>Mail us:</span> info@interal.com</li>
-                            <li><span>Call us:</span>(0212) 224-2020</li>
+                            <li> info@interal.com.tr</li>
+                            <li>(0212) 224-2020</li>
                         </ul>
                     </div>
                 </div>
@@ -167,26 +170,32 @@
                                 </p>
                             </div>
                             <div class="closeC">x</div>
-                            <div class="flex-slide contentTypes" data-id="Bayi" style="background-image: url(/assets-site/images/pic2.jpg)">
-                                <div class="flex-title flex-title-home">Bayi</div>
-                                <div class="flex-about flex-about-home"><p>Yeni sistemler ve uygulamalar ile tanışın</p></div>
-                            </div>
+
                             <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg)">
                                 <div class="flex-title">Bireysel</div>
                                 <div class="flex-about"><p>Evinize mimari estetik ve konfor katın</p></div>
                             </div>
-                            <div class="flex-slide contentTypes" data-id="Endustri" style="background-image: url(/assets-site/images/pic4.jpg)">
-                                <div class="flex-title">Endüstri</div>
-                                <div class="flex-about">
-                                    <p>Alüminyuma şekil veriyoruz</p>
-                                </div>
-                            </div>
-                            <div class="flex-slide contentTypes" id="defaultSet" data-id="Mimar" style="background-image: url(/assets-site/images/pic5.jpg)">
-                                <div class="flex-title">Mimar</div>
+
+                            <div class="flex-slide contentTypes" id="Mimarlar" data-id="Mimarlar" style="background-image: url(/assets-site/images/pic5.jpg)">
+                                <div class="flex-title">Mimarlar</div>
                                 <div class="flex-about">
                                     <p>Projelerinizi hayata geçirin</p>
                                 </div>
                             </div>
+
+                            <div class="flex-slide contentTypes" data-id="Uygulamacılar" style="background-image: url(/assets-site/images/pic2.jpg)">
+                                <div class="flex-title flex-title-home">Uygulamacılar</div>
+                                <div class="flex-about flex-about-home"><p>Yeni sistemler ve uygulamalar ile tanışın</p></div>
+                            </div>
+
+                            <div class="flex-slide contentTypes" data-id="Endüstriyel" style="background-image: url(/assets-site/images/pic4.jpg)">
+                                <div class="flex-title">Endüstriyel</div>
+                                <div class="flex-about">
+                                    <p>Alüminyuma şekil veriyoruz</p>
+                                </div>
+                            </div>
+
+
                         </div>
                         <script>
                             $(".contentTypes").click(function () {
@@ -237,10 +246,14 @@
                         <!-- SITE SEARCH -->
                         <div id="search">
                             <span class="close"></span>
-                            <form role="search" id="searchform" action="/search" method="get" class="radius-xl">
+                            <form role="search" id="searchform" action="/base/search" method="get" class="radius-xl">
                                 <div class="input-group">
-                                    <input value="" name="q" type="search" placeholder="Arama" />
-                                    <span class="input-group-btn"><button type="button" class="search-btn"><i class="fa fa-search arrow-animation"></i></button></span>
+                                    <input value="" name="search" type="search" placeholder="Arama" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="search-btn">
+                                            <i class="fa fa-search arrow-animation"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </form>
                         </div>
@@ -275,13 +288,26 @@
                                         <img src="/assets-site/images/logo-1.png" alt="Cuhadaroğlu interal">
                                     </a>
                                 </div>
-                                <p>Interal for interior and architecture purpose. Today we can tell you, thanks to your passion.</p>
+                                <p>
+                                    Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.
+                                </p>
 
                                 <ul class="social-icons  sx-social-links">
-                                    <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
-                                    <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
-                                    <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
-                                    <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
+                                    {
+                                        <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
+                                    {
+                                        <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
+                                    {
+                                        <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                    }
+
+
+
                                 </ul>
                             </div>
                         </div>
@@ -338,7 +364,7 @@
                                 <h5 class="widget-title">Bize Ulaşın</h5>
                                 <ul class="widget_address">
                                     <li>Yakuplu Mah. Hürriyet Bulvarı, No6-8 Beylikdüzü, Istanbul, Turkey</li>
-                                    <li>info@interal.com</li>
+                                    <li>info@interal.com.tr</li>
                                     <li>(+90)212 224-2020</li>
                                     <li>(+90)212 224-2020</li>
                                 </ul>
@@ -350,7 +376,7 @@
 
                     </div>
                 </div>
-             
+
             </div>
             <!-- FOOTER COPYRIGHT -->
             <div class="footer-bottom overlay-wraper">

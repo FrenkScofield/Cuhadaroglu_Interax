@@ -3,19 +3,19 @@
     var Pages = ViewBag.Pages as List<ContentPage>;
     var contentPages = ViewBag.contentPages as List<ContentPage>;
     int LanguageID = ViewBag.LanguageID;
-    var content = ViewBag.currContent as ContentPage; 
-    string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string; 
+    var content = ViewBag.currContent as ContentPage;
+    string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string;
     ContentPage homeIntro = contentPages.FirstOrDefault(x => x.ContentPageId == 12);
     var Projects = Pages.Where(x => x.ContentTypesId == 5).ToList();
-    var Sliders = contentPages.Where(x => x.ContentTypesId == 4  ).ToList(); 
-    var Categories = Pages.Where(x => x.ContentPageId == 2).Take(3).OrderBy(o => o.ContentOrderNo).ToList();  
+    var Sliders = contentPages.Where(x => x.ContentTypesId == 4).ToList();
+    var Categories = Pages.Where(x => x.ContentPageId == 2).Take(3).OrderBy(o => o.ContentOrderNo).ToList();
     var Blogs = Pages.Where(x => x.ContentPageId == 16).ToList();
     //   var ProjectFilters = Pages.Where(x => x.ContentTypesId == 5).ToList();
-    // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0)); 
+    // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0));
     var x = "asd";
 
 }
- 
+
 
 <!-- SLIDER START -->
 <div id="rev_slider_26_1_wrapper" class="rev_slider_wrapper fullscreen-container home-rev-slider" data-alias="mask-showcase" data-source="gallery">
@@ -187,14 +187,27 @@
         <!-- left side social bar-->
         <div class="slide-left-social">
             <ul class="clearfix">
-                <li><a href="#" class="sx-title-swip" data-hover="Linkedin">Linkedin</a></li>
-                <li><a href="#" class="sx-title-swip" data-hover="Twitter">Twitter</a></li>
-                <li><a href="#" class="sx-title-swip" data-hover="Facebook">Facebook</a></li>
+                @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
+                {
+                    <li><a href="#" class="sx-title-swip" data-hover="Linkedin">Linkedin</a></li>
+                }
+                @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
+                {
+                    <li><a href="#" class="sx-title-swip" data-hover="Instagram">Instagram</a></li>
+                }
+                @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
+                {
+                    <li><a href="#" class="sx-title-swip" data-hover="Facebook">Facebook</a></li>
+                }
+
+
+
+
             </ul>
-        </div> 
+        </div>
     </div>
 </div>
-<!-- SLIDER END --> 
+<!-- SLIDER END -->
 @if (homeIntro != null)
 {
     <!-- ABOUT COMPANY START -->
@@ -274,7 +287,7 @@
                 @foreach (var item in Categories)
                 {
                     i++;
-                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30"> 
+                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
                         <div class="number-block-one animate-in-to-top">
                             <a href="/@item.Link">
                                 <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
@@ -285,10 +298,10 @@
                                     <span>0@(i)</span>
                                 </div>
                             </a>
-                        </div> 
+                        </div>
                     </div>
-                }  
-            </div>  
+                }
+            </div>
             @*     <div class="large-title-block full-content bg-gray">s
                     <div class="row">
                         <div class="col-lg-6 col-md-12 col-sm-12">
@@ -333,7 +346,7 @@
                 <div class="section-content ">
                     <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
                         @foreach (var item in Projects)
-                        { 
+                        {
                             <div class="item fadingcol col-one overflow-hide">
                                 <div class="sx-box   image-hover-block">
                                     <div class="sx-thum-bx">
@@ -342,9 +355,9 @@
                                     <div class="sx-info  p-t20 text-white">
                                         <h4 class="sx-tilte"><a href="/@item.Link">@item.Name</a></h4>
                                         <p class="m-b0"></p>
-                                    </div> 
+                                    </div>
                                 </div>
-                            </div> 
+                            </div>
                         }
                     </div>
                 </div>
