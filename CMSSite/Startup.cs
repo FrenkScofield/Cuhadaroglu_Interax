@@ -96,6 +96,14 @@ namespace CMSSite
                      new { controller = "Base", action = "Login" }
                             );
 
+
+                routes.MapRoute(
+              name: "Search",
+              template: "Search/{*search}",
+              defaults: new {  controller = "Base", action = "Search", search = "" }
+          );
+
+
                 routes.MapRoute(
                    name: "BaseContent",
                    template: "{*link}",

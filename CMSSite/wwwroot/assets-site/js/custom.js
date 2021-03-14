@@ -879,35 +879,6 @@ All JavaScript fuctions Start
 
 
 
-    //________ Contact form home page function by = custom.js________//	
-
-    jQuery(document).on('submit', 'form.cons-contact-form2', function (e) {
-        e.preventDefault();
-        var form = jQuery(this);
-        /* sending message */
-
-        jQuery.ajax({
-            url: 'http://7xtheme.com/inteshape/form-handler2.php',
-            data: form.serialize() + "&action=contactform",
-            type: 'POST',
-            dataType: 'JSON',
-            beforeSend: function () {
-                jQuery('.loading-area').show();
-
-            },
-
-            success: function (data) {
-                jQuery('.loading-area').hide();
-                if (data['success']) {
-                    jQuery("<div class='alert alert-success'>" + data['message'] + "</div>").insertBefore('form.cons-contact-form2');
-                } else {
-                    jQuery("<div class='alert alert-danger'>" + data['message'] + "</div>").insertBefore('form.cons-contact-form2');
-                }
-            }
-        });
-        jQuery('.cons-contact-form2').trigger("reset");
-        return false;
-    });
 
 
     /*===========================

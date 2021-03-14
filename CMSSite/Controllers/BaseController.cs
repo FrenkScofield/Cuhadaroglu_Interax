@@ -22,6 +22,7 @@ namespace CMSSite.Controllers
         ISiteConfigService _ISiteConfigService;
         IUserService _IUserService;
         IFormsService _IFormsService;
+        ISpecService _ISpecService;
 
 
         public BaseController(
@@ -31,7 +32,8 @@ namespace CMSSite.Controllers
         ISiteConfigService _ISiteConfigService,
         IHttpContextAccessor _httpContextAccessor,
          IUserService _IUserService,
-         IFormsService _IFormsService
+         IFormsService _IFormsService,
+         ISpecService _ISpecService
             )
         {
             this._IHostingEnvironment = _IHostingEnvironment;
@@ -41,8 +43,50 @@ namespace CMSSite.Controllers
             this._httpContextAccessor = _httpContextAccessor;
             this._IUserService = _IUserService;
             this._IFormsService = _IFormsService;
+            this._ISpecService = _ISpecService;
 
         }
+
+
+        //[Route("Search/{search?}")]
+        public IActionResult Search(string search)
+        {
+            var langID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID");
+            ViewBag.LanguageID = langID;
+
+            setData();
+
+            var contentPages = _IContentPageService.Where(x =>
+            x.Parent!=null &&
+            x.ContentPageId !=null &&
+
+           (x.Name.ToLower().Contains(search.ToLower())
+            || x.Description.ToLower().Contains(search.ToLower())
+            || x.ContentShort.ToLower().Contains(search.ToLower())
+            || x.ContentData.ToLower().Contains(search.ToLower())
+
+
+            ) &&
+            x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false,
+                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
+
+            ViewBag.contentData = contentPages;
+
+            var Specs = _ISpecService.Where(null, true, false, o => o.Parent).Result.ToList();
+            ViewBag.Specs = Specs;
+
+
+            List<ContentPage> currList = contentPages.Where(x => x.IsDeleted == null).ToList();
+            List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
+            ViewBag.categories = contentPages.Where(x => x.ContentPageId == null && x.IsDeleted == null).ToList();
+            //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
+            ViewBag.subPages = currList;
+            ViewBag.currSpecList = currSpecList;
+
+
+            return View();
+        }
+
 
         public IActionResult FormSave(Forms postModel)
         {
@@ -53,6 +97,7 @@ namespace CMSSite.Controllers
         public IActionResult BaseContent()
         {
             var link = HttpContext.Items["cmspage"].ToString();
+
             var config = _ISiteConfigService.Where().Result.FirstOrDefault();
             _httpContextAccessor.HttpContext.Session.Set("config", config);
 
@@ -66,6 +111,10 @@ namespace CMSSite.Controllers
                 }
                 else
                 {
+                    //if (link.Contains("search"))
+                    //{
+                    //    return View();
+                    //}
                     return Redirect(SessionRequest.config.BaseUrl);
                 }
             }
