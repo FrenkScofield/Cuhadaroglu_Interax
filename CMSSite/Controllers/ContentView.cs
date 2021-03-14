@@ -14,6 +14,7 @@ namespace CMSSite.Components
     public class ContentView : ViewComponent
     {
 
+        IFormTypeService _IFormTypeService;
         IHttpContextAccessor _httpContextAccessor;
         IContentPageService _IContentPageService;
         ISpecService _ISpecService;
@@ -22,13 +23,15 @@ namespace CMSSite.Components
             IContentPageService _IContentPageService,
             ISpecService _ISpecService,
         IDocumentsService _IDocumentsService,
-        IHttpContextAccessor httpContextAccessor
+        IHttpContextAccessor httpContextAccessor,
+        IFormTypeService _IFormTypeService
             )
         {
             this._IContentPageService = _IContentPageService;
             this._ISpecService = _ISpecService;
             this._httpContextAccessor = httpContextAccessor;
             this._IDocumentsService = _IDocumentsService;
+            this._IFormTypeService = _IFormTypeService;
         }
 
         public IViewComponentResult Invoke(TemplateType TemplateType)
@@ -47,6 +50,16 @@ namespace CMSSite.Components
 
             List<ContentPage> contentPages = new List<ContentPage>();
             var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsPublish == true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments, o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue).Result.FirstOrDefault();
+
+            //if (content.FormTypeId)
+            //{
+            //    int fid = content.FormTypeId.Value;
+            //    FormType formtip  _IFormTypeService.Where(o => o.Id == fid).Result.FirstOrDefault();
+            //    ViewBag.formtip = formtip;
+
+            //}
+
+
             var Specs = _ISpecService.Where(null, true, false, o => o.Parent).Result.ToList();
             ViewBag.Specs = Specs;
             int langID = content != null ? content.LangId : 1;
@@ -81,21 +94,25 @@ namespace CMSSite.Components
             ViewBag.Pages = contentPages.ToList();
             switch (currState)
             {
-                case "Bayi":
+                case "Uygulamacılar":
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
-                case "Endustri":
+                case "Endustriyel":
                     isEndustri = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
                     break;
-                case "Mimar":
+                case "Mimarlar":
                     isMimar = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
                     break;
                 case "Bireysel":
                     isBireysel = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
+                    break;
+                case "-":
+                    isMimar = true;
+                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
                     break;
                 default:
                     isMimar = true;
@@ -114,7 +131,7 @@ namespace CMSSite.Components
             }
             else if (TemplateType == TemplateType.UrunListeleme)
             {
-                
+
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
                 ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent.Id && x.IsDeleted == null).ToList();

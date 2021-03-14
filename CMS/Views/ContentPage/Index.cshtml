@@ -1,13 +1,13 @@
 ﻿@{
     string control_Name_ContentPage = "ContentPage";
-    var dt_ContentPagePage = "#dt_" + control_Name_ContentPage;
+    var dt_ContentPage = "#dt_" + control_Name_ContentPage;
     var selecttype_ContentPage = Context.Request.Query["selecttype"].ToInt();
     var selectname_ContentPage = Context.Request.Query["selectname"].ToStr();
     var descname = Context.Request.Query["descname"].ToStr();
     var list = ViewBag.list as List<ContentPage>; }
 <script type="text/javascript">
     var control_Name_ContentPage = "@control_Name_ContentPage";
-    var dt_ContentPagePage = "#dt_" + control_Name_ContentPage;
+    var dt_ContentPage = "#dt_" + control_Name_ContentPage;
     var selecttype_ContentPage = "@selecttype_ContentPage";
     var selectname_ContentPage = "@selectname_ContentPage";
 </script>
@@ -16,7 +16,160 @@
         display: none
     }
 </style>
+<script>
+    $(function () {
+        var table = $(dt_ContentPage).DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Turkish.json",
+            },
+            "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 hideMe col-md-6'B><'col-sm-12 col-md-6'f>><'row'><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-10'i><'col-sm-12 col-md-2'p>>",
+            fixedHeader: true,
+            buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'],
+            "pageLength": 100,
+            "DisplayLength": 100,
+            "lengthMenu": [[100, 500, 5000], [100, 500, 5000]],
+            "lengthChange": true,
+            "fnDrawCallback": function (settings, json) {
+                $(".buttons-excel-top").click(function () {
+                    $(".buttons-excel").click(); $(".buttons-excel").trigger('click');
+                    return false;
+                })
+                $(".buttons-copy-top").click(function () {
+                    $(".buttons-copy").click(); $(".buttons-copy").trigger('click');
+                    return false;
+                })
+                $(".buttons-csv-top").click(function () {
+                    $(".buttons-csv").click(); $(".buttons-csv").trigger('click');
+                    return false;
+                })
+                $(".buttons-pdf-top").click(function () {
+                    $(".buttons-pdf").click(); $(".buttons-pdf").trigger('click');
+                    return false;
+                })
+                //ayarlar() lBfrtip;
+            },
+        });
+        //$(dt_ContentPage).DataTable({ responsive: !0,  columns: [{ data: "OrderID" }, { data: "Country" }, { data: "ShipCity" }, { data: "CompanyName" }, { data: "ShipDate" }, { data: "Status" }, { data: "Type" }, { data: "Actions", responsivePriority: -1 }], columnDefs: [{ targets: -1, title: "Actions", orderable: !1, render: function (t, a, l, e) { return '\t\t\t\t\t\t\t<div class="dropdown dropdown-inline">\t\t\t\t\t\t\t\t<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">\t                                <i class="la la-cog"></i>\t                            </a>\t\t\t\t\t\t\t  \t<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">\t\t\t\t\t\t\t\t\t<ul class="nav nav-hoverable flex-column">\t\t\t\t\t\t\t    \t\t<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-edit"></i><span class="nav-text">Edit Details</span></a></li>\t\t\t\t\t\t\t    \t\t<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-leaf"></i><span class="nav-text">Update Status</span></a></li>\t\t\t\t\t\t\t    \t\t<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-print"></i><span class="nav-text">Print</span></a></li>\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t  \t</div>\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\t\t\t\t\t\t\t\t<i class="la la-edit"></i>\t\t\t\t\t\t\t</a>\t\t\t\t\t\t\t<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\t\t\t\t\t\t\t\t<i class="la la-trash"></i>\t\t\t\t\t\t\t</a>\t\t\t\t\t\t' } }, { width: "75px", targets: -3, render: function (t, a, l, e) { var s = { 1: { title: "Pending", class: "label-light-primary" }, 2: { title: "Delivered", class: " label-light-danger" }, 3: { title: "Canceled", class: " label-light-primary" }, 4: { title: "Success", class: " label-light-success" }, 5: { title: "Info", class: " label-light-info" }, 6: { title: "Danger", class: " label-light-danger" }, 7: { title: "Warning", class: " label-light-warning" } }; return void 0 === s[t] ? t : '<span class="label label-lg font-weight-bold' + s[t].class + ' label-inline">' + s[t].title + "</span>" } }, { width: "75px", targets: -2, render: function (t, a, l, e) { var s = { 1: { title: "Online", state: "danger" }, 2: { title: "Retail", state: "primary" }, 3: { title: "Direct", state: "success" } }; return void 0 === s[t] ? t : '<span class="label label-' + s[t].state + ' label-dot mr-2"></span><span class="font-weight-bold text-' + s[t].state + '">' + s[t].title + "</span>" } }] })
 
+        //jQuery(document).ready((function () { KTDatatablesDataSourceAjaxClient.init() }));
+    });
+    $(document).ready(function () {
+        $(".buttons-excel-top").click(function () {
+            $(".buttons-excel").click(); $(".buttons-excel").trigger('click');
+            return false;
+        })
+        $(".buttons-copy-top").click(function () {
+            $(".buttons-copy").click(); $(".buttons-copy").trigger('click');
+            return false;
+        })
+        $(".buttons-csv-top").click(function () {
+            $(".buttons-csv").click(); $(".buttons-csv").trigger('click');
+            return false;
+        })
+        $(".buttons-pdf-top").click(function () {
+            $(".buttons-pdf").click(); $(".buttons-pdf").trigger('click');
+            return false;
+        })
+    })
+</script>
+@*<script type="text/javascript">
+        var ContentPage_ListFunc;
+        $(function () {
+            ContentPage_ListFunc = {
+                load: function () {
+                    ContentPage_ListFunc.GetPaging();
+                },
+                GetPaging: function () {
+                    var columns = [];
+                    columns.push({ "data": "Name", text: "Ad" });
+                    columns.push({ "data": "Link", text: "Link" });
+                    columns.push({ "data": "Detail", text: "İşlemler" });
+                    $.each(columns, function (i, item) {
+                        $(dt_ContentPage + ' thead tr').append('<td>' + item.text + '</td>');
+                    });
+                    var table = $(dt_ContentPage).DataTable({
+                        "ajax": {
+                            "url": '/' + control_Name_ContentPage + '/GetPaging',
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": function (searchModel) {
+                                $(dt_ContentPage).LoadingOverlay("show");
+                                if (selecttype > 0) {
+                                    searchModel.ContentTypesId = selecttype;
+                                }
+                                searchModel.pagingSearchParam = 'Name,Link';
+                            },
+                            "dataSrc": function (json) {
+                                return_data = new Array();
+                                var data = json.data;
+                                $.each(data, function (i, row) {
+                                    var Detail = "";
+                                    Detail += '<a class="btn btn-sm btn-clean btn-icon btn-icon-md"  href ="/' + control_Name_ContentPage + '/InsertOrUpdatePage?id=' + row.Id + '"  title="Düzenle" > ' + '<i class="la la-edit"></i>' + ' </a > ';
+                                    //Detail += '<a class="btn btn-sm btn-clean btn-icon btn-icon-md btnDelete" dataid="' + row.Id + '" title="Sil" > ' + '<i class="la la-remove"></i>' + '  </a>';
+                                    return_data.push({
+                                        'Name': row.Name,
+                                        'Link': row.Link,
+                                        'Detail': Detail,
+                                    });
+                                });
+                                $(dt_ContentPage).LoadingOverlay("hide");
+                                return return_data;
+                            }
+                        },
+                        "fnDrawCallback": function (settings, json) {
+                            $(dt_ContentPage + ' .btnDelete').click(function () {
+                                var dataid = $(this).attr("dataid");
+                                alerts("Silinsin mi ?", "yesno", function (result) {
+                                    if (result == true) {
+                                        $(dt_ContentPage).LoadingOverlay("show");
+                                        $.ajx('/' + control_Name_ContentPage + "/Delete", { id: dataid }, function (resultData) {
+                                            if (resultData && resultData.IsDeleted) {
+                                                table.ajax.reload();
+                                            }
+                                            else {
+                                                alerts(resultData.ResultType.MessageList[0]);
+                                            }
+                                            $(dt_ContentPage).LoadingOverlay("hide");
+                                        });
+                                    }
+                                });
+                            });
+
+                            $('.dt-buttons').css('float', 'right');
+                            $('.dt-buttons').css('margin-left', '20px');
+                            $('.dt-buttons').css('margin-top', '15px');
+
+                            $(dt_ContentPage).LoadingOverlay("hide");
+                            ayarlar();
+                        },
+                        "language": {
+                            "url": "/content/json/Turkish.json",
+                        },
+                        "dom": 'lBfrtip',
+                        "buttons": ['copy', 'csv', 'excel', 'pdf'],
+                        "destroy": true,
+                        "caseInsensitive": true,
+                        "serverSide": true,
+                        "responsive": true,
+                        "pageLength": 100,
+                        "DisplayLength": 100,
+                        "lengthMenu": [[100, 250, 500, 1000, 2500, 5000], [100, 250, 500, 1000, 2500, 5000]],
+                        "lengthChange": true,
+                        "processing": true,
+                        "columnDefs": [
+                            //{ "orderable": false, "targets": [0, 1] },
+                        ],
+                        "columns": columns,
+
+                    });
+
+                },
+
+
+            }
+            ContentPage_ListFunc.load();
+        });
+    </script>*@
 <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <div class="d-flex align-items-center flex-wrap mr-2">
@@ -129,103 +282,52 @@
             </div>
             <div class="card-body">
                 <table id="dt_@control_Name_ContentPage" class="table table-bordered table-hover table-checkable" style="margin-top: 13px !important">
+
                     <thead>
                         <tr>
+                            <th>ID</th>
+                            <th>Başlık</th>
+                            <th>Üst Kategori</th>
+                            <th>İçerik Tipi</th>
+                            <th>Şablon Tipi</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>Detail</th>
+
                         </tr>
                     </thead>
+
+                    <tbody>
+                        @foreach (var item in list)
+                        {
+                            <tr>
+                                <td style="vertical-align:middle">@item.Id</td>
+                                <td style="vertical-align:middle">@item.Name</td>
+                                <td style="vertical-align:middle">@item.Parent?.Name</td>
+                                <td style="vertical-align:middle">@item.ContentTypes?.Name</td>
+                                <td style="vertical-align:middle">@item.TemplateType.ExGetDescription()</td>
+                                <td style="vertical-align:middle">@item.CreaDate</td>
+                                <td style="vertical-align:middle">
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="label label-success label-dot mr-2"></span>
+                                        <span class="font-weight-bold text-success">Yayında</span> }
+                                    else
+                                    {
+                                        <span class="label label-danger label-dot mr-2"></span>
+                                        <span class="font-weight-bold text-danger">Yayında Değil</span>}
+
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/@control_Name_ContentPage/InsertOrUpdatePage?id=@item.Id" title="Düzenle">
+                                        <i class="la la-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-<script>
-    $(function () {
-        getGrid();
-        function getGrid() {
-            var columns = [];
-            columns.push({ "data": "Id", text: "ID" });
-            columns.push({ "data": "Name", text: "Başlık" });
-            columns.push({ "data": "ParentName", text: "Üst Kategori" });
-            columns.push({ "data": "ContentTypesName", text: "İçerik Tipi" });
-            columns.push({ "data": "TemplateTypeName", text: "Şablon Tipi" });
-            columns.push({ "data": "CreaDate", text: "Tarih" });
-            columns.push({ "data": "IsActive", text: "Durum" });
-
-
-            columns.push({ "data": "Detail", text: "Detail" });
-
-            $.each(columns, function (i, item) {
-                $(dt_ContentPage + ' thead tr').append('<td> ' + item.text + '</td > ');
-            });
-
-            var table = $(dt_ContentPage).DataTable({
-                "ajax": {
-                    "url": '/' + controllerName_Content + '/GetPaging',
-                    "type": "POST",
-                    "datatype": "json",
-                    "data": function (searchModel) {
-                        $(dt_ContentPage).LoadingOverlay("show");
-                        searchModel.selectid = selecttype_ContentPage;
-                    },
-                    "dataSrc": function (json) {
-                        return_data = new Array();
-                        var data = json.data;
-
-                        $.each(data, function (i, row) {
-                            var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '" title="Edit"><i class="la la-edit"></i></a>';
-
-
-
-                            return_data.push({
-                                'Id': row.Id,
-                                'ContentData': row.ContentData,
-
-
-                                'Detail': detail,
-                            });
-
-                        });
-                        $(dt_ContentPage).LoadingOverlay("hide");
-                        return return_data;
-                    }
-                },
-                "fnDrawCallback": function (settings, json) {
-
-                    $('.dt-buttons').css('float', 'right');
-                    $('.dt-buttons').css('margin-left', '20px');
-                    $('.dt-buttons').css('margin-top', '16px');
-
-                    $(dt_ContentPage).LoadingOverlay("hide");
-                    ayarlar();
-                },
-                "destroy": true,
-                "caseInsensitive": true,
-                "responsive": true,
-                "pageLength": 100,
-                "DisplayLength": 5,
-                "lengthMenu": [[100, 25, 100, 1000, 2500, 5000], [100, 25, 100, 1000, 2500, 5000]],
-                "lengthChange": true,
-                "processing": true,
-                "columns": columns,
-                "order": [[0, "desc"]],
-                rowReorder: true,
-                columnDefs: [
-                    { orderable: true, className: 'reorder', targets: 0 },
-                    { orderable: false, targets: '_all' }
-                ],
-            });
-            table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {
-                var myArray = [];
-                for (var i = 0, ien = diff.length; i < ien; i++) {
-                    var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selectid_Content });
-                }
-                $.ajx('/' + controllerName_Content + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
-            });
-
-        }
-    });
-</script>

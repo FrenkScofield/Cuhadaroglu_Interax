@@ -10,11 +10,8 @@ public partial class Forms : BaseModel
     {
     }
 
-    [DisplayName("Ad")]
-    public string Name { get; set; }
-
-    [DisplayName("Soyad")]
-    public string LastName { get; set; }
+    [DisplayName("Ad Soyad")]
+    public string NameSurname { get; set; }
 
     [DisplayName("Mail")]
     public string Email { get; set; }

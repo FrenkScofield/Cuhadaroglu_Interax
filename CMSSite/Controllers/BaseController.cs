@@ -21,6 +21,7 @@ namespace CMSSite.Controllers
         IDocumentsService _IDocumentsService;
         ISiteConfigService _ISiteConfigService;
         IUserService _IUserService;
+        IFormsService _IFormsService;
 
 
         public BaseController(
@@ -29,7 +30,8 @@ namespace CMSSite.Controllers
         IDocumentsService _IDocumentsService,
         ISiteConfigService _ISiteConfigService,
         IHttpContextAccessor _httpContextAccessor,
-         IUserService _IUserService
+         IUserService _IUserService,
+         IFormsService _IFormsService
             )
         {
             this._IHostingEnvironment = _IHostingEnvironment;
@@ -38,8 +40,16 @@ namespace CMSSite.Controllers
             this._IContentPageService = _IContentPageService;
             this._httpContextAccessor = _httpContextAccessor;
             this._IUserService = _IUserService;
+            this._IFormsService = _IFormsService;
 
         }
+
+        public IActionResult FormSave(Forms postModel)
+        {
+            var result = _IFormsService.InsertOrUpdate(postModel);
+            return Json(result);
+        }
+
         public IActionResult BaseContent()
         {
             var link = HttpContext.Items["cmspage"].ToString();
@@ -299,15 +309,15 @@ namespace CMSSite.Controllers
             // ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
             switch (currState)
             {
-                case "Bayi":
+                case "Uygulamacılar":
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
-                case "Endustri":
+                case "Endustriyel":
                     isEndustri = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
                     break;
-                case "Mimar":
+                case "Mimarlar":
                     isMimar = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
                     break;
