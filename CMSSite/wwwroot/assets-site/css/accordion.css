@@ -1,5 +1,4 @@
 
-
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
 $defaultSeconds: 3s;
@@ -45,7 +44,7 @@ body {
 .flex-title {
     color: #f1f1f1;
     position: relative;
-    font-size: 6vw;
+    font-size: 5vw;
     margin: auto;
     text-align: center;
     transform: rotate(90deg);
@@ -71,7 +70,7 @@ body {
     width: 70%;
     font-size: 2vw;
     padding: 5%;
-    top: 20%;
+    top: 30%;
     border: 2px solid #f1f1f1;
     border-radius: 10px;
     line-height: 1.3;
