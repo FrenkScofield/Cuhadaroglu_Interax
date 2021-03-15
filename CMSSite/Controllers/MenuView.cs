@@ -29,7 +29,8 @@ namespace CMSSite.Components
         {
             #region dynamicContent 
             var link = HttpContext.Request.Path.Value.Trim().Trim('/');
-            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() , true, false, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.FirstOrDefault();
+            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() , true, false, 
+                o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage,o=>o.FormType).Result.FirstOrDefault();
             int langID = 1;
             if (content != null && _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != content.LangId)
             {

@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DynamicSiteService.Migrations
 {
     [DbContext(typeof(CMSDBContext))]
-    partial class CMSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210312140446_db34343dsfsdfdfsdfsdf")]
+    partial class db34343dsfsdfdfsdfsdf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,6 +414,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int?>("IsStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("LoginCount")
                         .HasColumnType("int");
 
@@ -424,7 +429,7 @@ namespace DynamicSiteService.Migrations
                     b.Property<int?>("ModUser")
                         .HasColumnType("int");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("OrderNo")

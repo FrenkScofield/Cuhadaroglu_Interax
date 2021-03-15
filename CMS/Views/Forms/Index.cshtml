@@ -1,85 +1,128 @@
 ﻿@{
-    var pageName = "Forms";
-    var selecttype = Context.Request.Query["selecttype"].ToInt();
-    var selectname = Context.Request.Query["selectname"].ToStr();
+    var selectid_Forms = Context.Request.Query["selecttype"].ToInt();
+    var controllerName_Forms = "Forms";
+    var titleName_Forms = "Forms";
+    var dt_Forms = "dt_" + controllerName_Forms;
+
 }
-<!--begin::Content-->
-<!--begin::Subheader-->
-<div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-2">
-            <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(selectname + " Sayfası")</h5>
-            <!--end::Page Title-->
-            <!--begin::Action-->
-            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-            <span class="text-muted font-weight-bold mr-4">Sayfa Bilgisi</span>
-            <a href="/@Html.Raw(pageName)/InsertOrUpdatePage?selecttype=@selecttype&selectname=@selectname" class="btn btn-light-primary font-weight-bolder btn-sm">Yeni Kayıt</a>
-            <!--end::Action-->
+<script>
+    var selectid_Forms = "@selectid_Forms";
+    var controllerName_Forms = "@controllerName_Forms";
+    var titleName_Forms = "@titleName_Forms";
+    var dt_Forms = "#@dt_Forms";
+</script>
+
+<div class="row">
+    <div class="col-xl-12">
+        <!--begin::Advance Table Widget 10-->
+        <div class="card card-custom gutter-b card-stretch">
+            <!--begin::Header-->
+            <div class="card-header border-0 py-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label font-weight-bolder text-dark">@Html.Raw(titleName_Forms)</span>
+                </h3>
+                <div class="card-toolbar">
+                    <a href="/@Html.Raw(controllerName_Forms)/InsertOrUpdatePage?selectid=@selectid_Forms" class="btn btn-light-primary font-weight-bolder btn-sm">New @Html.Raw(titleName_Forms)</a>
+                </div>
+            </div>
+            <!--end::Header-->
+            <div class="card-body py-0">
+                <div class="table-responsive">
+                    <table id="@dt_Forms" class="table table-bordered table-hover table-checkable">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
-        <!--end::Info-->
-        
     </div>
 </div>
-<!--end::Subheader-->
-<!--begin::Entry-->
-<div class="d-flex flex-column-fluid">
-    <!--begin::Container-->
-    <div class="container-fluid">
 
-        @(Html.Kendo().Grid<Forms>().Name("grid_"+ pageName)
-                .Columns(columns => {
-                    columns.Bound(o => o.Id).Groupable(false);
-                    columns.Bound(p => p.Name);
-                    columns.Bound(p => p.LastName);
-                    columns.Bound(p => p.Email);
-                    columns.Bound(p => p.Phone);
-                    columns.Bound(p => p.Custom1);
-                    columns.Bound(p => p.Custom2);
-                    columns.Bound(p => p.Custom3);
-                    columns.Bound(p => p.Subject);
-                    columns.Bound(p => p.Id)
-                    .Sortable(false)
-                    .Title("Detay")
-                    .ClientTemplate("<a class='btn btn-sm btn-clean btn-icon btn-icon-md' href='/"+pageName+"/InsertOrUpdatePage?id=#=Id#' title='Detay'><i class='la la-edit'></i></a>");
-                })
-            .Pageable()
-            .Sortable()
-            .Filterable()
-            .Scrollable()
-            .Resizable(r => r.Columns(true))
-            .Reorderable(r => r.Columns(true))
-            .DataSource(dataSource =>
-            dataSource
-            .Ajax().Events(events => events.Error("error_handler"))
-            .Read(read => read.Action("GetPaging", pageName, new { selecttype = selecttype }))
-            .PageSize(15)
-            )
-            )
-
-
-
-
-    </div>
-    <!--end::Container-->
-</div>
-<!--end::Entry-->
-<!--end::Content-->
 
 <script>
-    function error_handler(e) {
-        if (e.errors) {
-            var message = "Errors:\n";
-            $.each(e.errors, function (key, value) {
-                if ('errors' in value) {
-                    $.each(value.errors, function () {
-                        message += this + "\n";
-                    });
-                }
-            });
-            alert(message);
-        }
-    }
+    $(function () {
+        getGrid();
+        function getGrid() {
+            var columns = [];
+            columns.push({ "data": "Id", text: "ID" });
+            columns.push({ "data": "NameSurname", text: "NameSurname" });
+            columns.push({ "data": "Email", text: "Telefon" });
+            columns.push({ "data": "Subject", text: "Subject" });
+            columns.push({ "data": "FormTypeName", text: "FormTypeName" });
 
+            columns.push({ "data": "Detail", text: "Detail" });
+
+            $.each(columns, function (i, item) {
+                $(dt_Forms + ' thead tr').append('<td> ' + item.text + '</td > ');
+            });
+
+            var table = $(dt_Forms).DataTable({
+                "ajax": {
+                    "url": '/' + controllerName_Forms + '/GetPaging',
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (searchModel) {
+                        $(dt_Forms).LoadingOverlay("show");
+                        searchModel.selectid = selectid_Forms;
+
+                    },
+                    "dataSrc": function (json) {
+                        return_data = new Array();
+                        var data = json.data;
+
+                        $.each(data, function (i, row) {
+                            var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Forms + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '" title="Edit"><i class="la la-edit"></i></a>';
+                            debugger;
+                            return_data.push({
+                                'Id': row.Id,
+                                'NameSurname': row.NameSurname,
+                                'Email': row.Email,
+                                'Subject': row.Subject,
+                                'FormTypeName': row.FormType.Name,
+
+                                'Detail': detail,
+                            });
+
+                        });
+                        $(dt_Forms).LoadingOverlay("hide");
+                        return return_data;
+                    }
+                },
+                "fnDrawCallback": function (settings, json) {
+
+                    $('.dt-buttons').css('float', 'right');
+                    $('.dt-buttons').css('margin-left', '20px');
+                    $('.dt-buttons').css('margin-top', '16px');
+
+                    $(dt_Forms).LoadingOverlay("hide");
+                    ayarlar();
+                },
+                "destroy": true,
+                "caseInsensitive": true,
+                "responsive": true,
+                "pageLength": 100,
+                "DisplayLength": 5,
+                "lengthMenu": [[100, 25, 100, 1000, 2500, 5000], [100, 25, 100, 1000, 2500, 5000]],
+                "lengthChange": true,
+                "processing": true,
+                "columns": columns,
+                "order": [[0, "desc"]],
+                rowReorder: true,
+                columnDefs: [
+                    { orderable: true, className: 'reorder', targets: 0 },
+                    { orderable: false, targets: '_all' }
+                ],
+            });
+            table.on(dt_Forms + ' row-reorder.dt', function (dragEvent, diff, nodes) {
+                var myArray = [];
+                for (var i = 0, ien = diff.length; i < ien; i++) {
+                    var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selectid_Forms });
+                }
+                $.ajx('/' + controllerName_Forms + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
+            });
+
+        }
+    });
 </script>

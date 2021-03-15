@@ -5,4 +5,4 @@
     var url = Context.Request.Path.Value.ToLower();
 }
 
-@await Component.InvokeAsync("ContentView", new { TemplateType = _page.TemplateType })
+@await Component.InvokeAsync("ContentView", new { TemplateType = _page?.TemplateType })

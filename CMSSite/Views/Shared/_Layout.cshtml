@@ -65,6 +65,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
     <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
+
+    <script src="/general.js?v=@SessionRequest.version"></script>
 </head>
 <body>
     <div class="page-wraper">
@@ -171,25 +173,29 @@
                             </div>
                             <div class="closeC">x</div>
 
-                            <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg)">
+                            <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg); background-size: cover;background-position: center center;background-attachment: fixed;">
                                 <div class="flex-title">Bireysel</div>
-                                <div class="flex-about"><p>Evinize mimari estetik ve konfor katın</p></div>
+                                <div class="flex-about">
+                                    <p>Evinize mimari estetik ve konfor katın</p>
+                                </div>
                             </div>
 
-                            <div class="flex-slide contentTypes" id="Mimarlar" data-id="Mimarlar" style="background-image: url(/assets-site/images/pic5.jpg)">
-                                <div class="flex-title">Mimarlar</div>
+                            <div class="flex-slide contentTypes" id="Mimarlar" data-id="Mimarlar" style="background-image: url(/assets-site/images/pic5.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
+                                <div class="flex-title">Mimar</div>
                                 <div class="flex-about">
                                     <p>Projelerinizi hayata geçirin</p>
                                 </div>
                             </div>
 
-                            <div class="flex-slide contentTypes" data-id="Uygulamacılar" style="background-image: url(/assets-site/images/pic2.jpg)">
-                                <div class="flex-title flex-title-home">Uygulamacılar</div>
-                                <div class="flex-about flex-about-home"><p>Yeni sistemler ve uygulamalar ile tanışın</p></div>
+                            <div class="flex-slide contentTypes" data-id="Uygulamacılar" style="background-image: url(/assets-site/images/pic2.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
+                                <div class="flex-title">Uygulamacı</div>
+                                <div class="flex-about">
+                                    <p>Yeni sistemler ve uygulamalar ile tanışın</p>
+                                </div>
                             </div>
 
-                            <div class="flex-slide contentTypes" data-id="Endüstriyel" style="background-image: url(/assets-site/images/pic4.jpg)">
-                                <div class="flex-title">Endüstriyel</div>
+                            <div class="flex-slide contentTypes" data-id="Endüstriyel" style="background-image: url(/assets-site/images/pic4.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
+                                <div class="flex-title">Endüstri</div>
                                 <div class="flex-about">
                                     <p>Alüminyuma şekil veriyoruz</p>
                                 </div>
@@ -246,11 +252,11 @@
                         <!-- SITE SEARCH -->
                         <div id="search">
                             <span class="close"></span>
-                            <form role="search" id="searchform" action="/base/search" method="get" class="radius-xl">
+                            <form role="search" name="search" id="searchform" action="/Base/Search" method="get" class="radius-xl">
                                 <div class="input-group">
                                     <input value="" name="search" type="search" placeholder="Arama" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="search-btn">
+                                        <button type="submit" class="search-btn">
                                             <i class="fa fa-search arrow-animation"></i>
                                         </button>
                                     </span>
@@ -285,7 +291,7 @@
                                 <!--<h4 class="widget-title">About Company</h4>-->
                                 <div class="logo-footer clearfix p-b15">
                                     <a href="/">
-                                        <img src="/assets-site/images/logo-1.png" alt="Cuhadaroğlu interal">
+                                        <img src="/assets-site/images/logo-2.png" alt="Cuhadaroğlu interal">
                                     </a>
                                 </div>
                                 <p>
@@ -295,15 +301,15 @@
                                 <ul class="social-icons  sx-social-links">
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                        <li><a href="@SessionRequest.config.Facebook" class="fa fa-facebook"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                                        <li><a href="@SessionRequest.config.Linkedin" class="fa fa-linkedin"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
                                     {
-                                        <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                        <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
                                     }
 
 
@@ -434,7 +440,7 @@
     <script src="/assets-site/js/owl.carousel.min.js"></script><!-- OWL  SLIDER  -->
     <script src="/assets-site/js/jquery.owl-filter.js"></script>
     <script src="/assets-site/js/stellar.min.js"></script><!-- PARALLAX BG IMAGE   -->
-    <script src="/assets-site/js/custom.js"></script><!-- CUSTOM FUCTIONS  -->
+    <script src="/assets-site/js/custom.js?v=@SessionRequest.version"></script><!-- CUSTOM FUCTIONS  -->
     <script src="/assets-site/js/jquery.bgscroll.js"></script><!-- BACKGROUND SCROLL -->
     <script src="/assets-site/js/theia-sticky-sidebar.js"></script><!--sticky content-->
     <!-- REVOLUTION JS FILES -->

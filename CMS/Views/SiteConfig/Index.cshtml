@@ -1,38 +1,24 @@
 ﻿@{
-    var PageType = "Forms";
-    var EnumText = "Forms";
-    var postModel = ViewBag.postModel as Forms;
+    var PageType = "SiteConfig";
+    var EnumText = "Site Ayarları";
+    var postModel = ViewBag.edit as SiteConfig;
     var selecttype = Context.Request.Query["selecttype"].ToInt();
-    var selectname = Context.Request.Query["selectname"].ToStr();
-
-
-    if (postModel == null)
-    {
-        postModel = new Forms();
-        postModel.FormTypeId = selecttype;
-    }
-    else
-    {
-        selecttype = postModel.FormTypeId;
-    }
-    var TitleName = EnumText + " " + (postModel.Id > 0 ? "Güncelleme" : "Ekleme");
-
 
 
 
     var dynamicRow = new DynamicModel()
     {
-        model = postModel == null ? new Forms() : postModel,
-        controllerName = postModel == null ? new Forms().GetType().Name : postModel.GetType().Name,
+        model = postModel == null ? new SiteConfig() : postModel,
+        controllerName = postModel == null ? new SiteConfig().GetType().Name : postModel.GetType().Name,
         PageType = PageType,
-        titleName = EnumText ,
+        titleName = EnumText + " " + (postModel?.Id > 0 ? "Güncelleme" : "Ekleme"),
         InsertMethodName = "InsertOrUpdate",
         labelClass = "col-md-4",
         inputClass = "col-md-8",
         colClass = "col-md-6",
         nonProp = "",
         orderby = "",
-        //addBtn = "<input type='submit' value='" + "Kaydet" + "' " + "class='btn btn-primary btn-shadow-hover font-weight-bold mr-2' />",
+        addBtn = "<input type='submit' value='" + "Kaydet" + "' " + "class='btn btn-primary btn-shadow-hover font-weight-bold mr-2' />",
         //removeBtn = $"<input dataid='{postModel?.Id}' type='button' value='Sil' class='btnDelete btn btn-danger btn-shadow-hover font-weight-bold mr-2' />",
 
     };
@@ -50,11 +36,10 @@
             <!--begin::Action-->
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
             <span class="text-muted font-weight-bold mr-4">Sayfa Bilgisi</span>
-            <a href="#" class="btn btn-light-primary font-weight-bolder btn-sm">@Html.Raw("Yeni Kayıt")</a>
             <!--end::Action-->
         </div>
         <!--end::Info-->
-     
+
     </div>
 </div>
 <!--end::Subheader-->

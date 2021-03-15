@@ -9,6 +9,7 @@ public partial class FormType : BaseModel
     public FormType()
     {
         Forms = new HashSet<Forms>();
+        ContentPage = new HashSet<ContentPage>();
     }
 
 
@@ -19,6 +20,7 @@ public partial class FormType : BaseModel
 
     [DisplayName("Formlar")]
     public virtual ICollection<Forms> Forms { get; set; }
+    public virtual ICollection<ContentPage> ContentPage { get; set; }
 
 
 }
