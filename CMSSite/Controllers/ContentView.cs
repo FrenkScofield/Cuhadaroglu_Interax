@@ -110,7 +110,7 @@ namespace CMSSite.Components
             }
             else if (TemplateType == TemplateType.UrunListeleme)
             {
-                
+
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
                 ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent.Id && x.IsDeleted == null).ToList();
