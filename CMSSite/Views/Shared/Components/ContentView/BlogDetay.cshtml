@@ -4,6 +4,8 @@
     var contents = ViewBag.contents as List<ContentPage>;  
     int LanguageID = (int)ViewBag.LanguageID; 
 } 
+
+
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
  
 <div class="section-full p-t80 p-b50 inner-page-padding">
@@ -13,7 +15,8 @@
             <div class="blog-post blog-detail text-black">
                 <div class="sx-post-media">
                     <div class="portfolio-item">
-                        <img class="img-responsive" src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(content.Picture!=null?content.ThumbImage.Link:"")" alt="@(content.Picture!=null?content.Picture.Alt:"")">
+                        <img class="img-responsive" src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(content.Picture!=null?content.Picture.Link:"")" 
+                             alt="@(content.Picture!=null?content.Picture.Alt:"")">
                     </div>
                 </div> 
                 <div class="sx-post-title ">
@@ -68,6 +71,4 @@
         </div>
     </div>
 </div>
-<!-- SECTION CONTENT END -->
-        </div>
-<!-- CONTENT END -->
+

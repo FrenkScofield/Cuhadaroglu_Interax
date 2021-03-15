@@ -144,6 +144,18 @@ namespace CMSSite.Components
 
                 //select Distinct SpecId from SpecContentValue
             }
+            else if (TemplateType == TemplateType.KategoriListeleme)
+            {
+
+                List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
+                List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
+                ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent?.Id && x.IsDeleted == null).ToList();
+                //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
+                ViewBag.subPages = currList;
+                ViewBag.currSpecList = currSpecList;
+
+                //select Distinct SpecId from SpecContentValue
+            }
             return View(TemplateType.ToString());
         }
     }

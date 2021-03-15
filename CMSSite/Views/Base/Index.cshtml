@@ -229,7 +229,7 @@
                             <h3 class="m-t0 sx-tilte">@homeIntro.ContentShort</h3>
                             <p>@homeIntro.Description</p>
                             <div class="text-left">
-                                <a href="javascript:;" class="site-button-secondry btn-half"><span>Devamı</span></a>
+                                <a href="@homeIntro.Link" class="site-button-secondry btn-half"><span>Devamı</span></a>
                             </div>
                         </div>
                     </div>
@@ -252,7 +252,7 @@
 
                             </div>
                             <div class="about-home-before">
-                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(homeIntro.Picture!=null?homeIntro.Picture.Link:"defaultImage")" alt="">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(homeIntro.ThumbImage!=null?homeIntro.ThumbImage.Link:"defaultImage")" alt="">
                             </div>
                         </div>
                     </div>
@@ -300,24 +300,6 @@
                     </div>
                 }
             </div>
-            @*     <div class="large-title-block full-content bg-gray">s
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <div class="large-title">
-                                <h3 class="m-tb0">We present the idea with impressive details.</h3>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12	col-sm-12">
-                            <div class="large-title-info">
-                                <p>Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.</p>
-                                <div class="text-left">
-                                    <a href="javascript:;" class="site-button-link">Daha Fazla</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            *@
         </div>
     </div>
 </div>

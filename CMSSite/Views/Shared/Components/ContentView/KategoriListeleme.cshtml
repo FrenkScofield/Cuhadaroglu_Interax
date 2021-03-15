@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var Pages = ViewBag.Pages as List<ContentPage>;
+    var subPages = ViewBag.subPages as List<ContentPage>;
+
+    var categories = ViewBag.categories as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+    // int[] specList = new int[] { 16, 17, 64, 63 };
+    var Specs = ViewBag.Specs as List<Spec>;
+    List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
+    var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
+    List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
+    List<int> currSpecList = ViewBag.currSpecList as List<int>;
+    int parentCheck = 0;
+    var Categories = Pages.Where(x => x.ContentPageId == 2).OrderBy(o => o.ContentOrderNo).ToList();
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+
+<style>
+    .number-block img {
+        width: 100%;
+    }
+</style>
+
+<div class="section-full  mobile-page-padding bg-white  p-t80 p-b30 bg-repeat overflow-hide" style="background-image:url(images/background/bg-5.png);">
+
+    <div class="container right-half-bg-image-outer">
+        <div class="right-half-bg-image bg-parallax bg-fixed bg-top-right" data-stellar-background-ratio="0" style="background-image:url(images/background/bg-2.jpg)"></div>
+        <!-- TITLE START -->
+        <div class="section-head">
+            <div class="sx-separator-outer separator-left">
+                <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                    <h3 class="sep-line-one">Sistemlerimiz</h3>
+                </div>
+            </div>
+        </div>
+        <!-- TITLE END -->
+        <div class="section-content">
+            <div class="row number-block-one-outer justify-content-center">
+                @{ var i = 0;}
+                @foreach (var item in Categories)
+                {
+                    i++;
+                    <div class="col-lg-6 col-md-6 col-sm-6 m-b30">
+                        <div class="number-block-one animate-in-to-top">
+                            <a href="/@item.Link">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
+                                <div class="figcaption bg-white text-center p-a20">
+                                    <h4 class="m-a0">@item.Name</h4>
+                                </div>
+                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                    <span>0@(i)</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

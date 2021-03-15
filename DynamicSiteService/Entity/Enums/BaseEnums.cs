@@ -46,7 +46,10 @@ public enum TemplateType : int
     [Description("Ürün Listeleme")]
     UrunListeleme = 12,
     [Description("İletişim")]
-    Contact = 13
+    Contact = 13,
+
+    [Description("Kategori Listeleme")]
+    KategoriListeleme = 14,
 }
 
 
