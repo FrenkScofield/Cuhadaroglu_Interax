@@ -362,7 +362,7 @@ namespace CMSSite.Controllers
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
-                case "Endustriyel":
+                case "Endüstriyel":
                     isEndustri = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
                     break;
@@ -422,8 +422,8 @@ namespace CMSSite.Controllers
                 case "Uygulamacılar":
                     currState = "Uygulamacılar";
                     break;
-                case "Endustriyel":
-                    currState = "Endustriyel";
+                case "Endüstriyel":
+                    currState = "Endüstriyel";
                     break;
                 case "Mimarlar":
                     currState = "Mimarlar";

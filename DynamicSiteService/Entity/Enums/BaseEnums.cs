@@ -5,6 +5,16 @@ using System.Linq;
 using System.Web;
 
 
+public enum UserType : int
+{
+    [Description("Admin")]
+    Admin = 1,
+    [Description("Bayi")]
+    Bayi = 2,
+    [Description("Mimar")]
+    Mimar = 3,
+
+}
 public enum SpecType : int
 {
     [Description("tanım")]
@@ -50,6 +60,9 @@ public enum TemplateType : int
 
     [Description("Kategori Listeleme")]
     KategoriListeleme = 14,
+
+    [Description("Statik Html")]
+    StaticHtml = 15,
 }
 
 
@@ -63,17 +76,19 @@ public enum EventType : int
     tip2 = 2,
 
 }
-public enum ContentPageType
-{
-    [Description("Slider")]
-    Slider = 1,
-    [Description("Kategori")]
-    Kategori = 2,
-    [Description("Sayfa")]
-    Sayfa = 3,
-    [Description("Blog")]
-    Blog = 4
-}
+//public enum ContentPageType
+//{
+//    [Description("Slider")]
+//    Slider = 1,
+//    [Description("Kategori")]
+//    Kategori = 2,
+//    [Description("Sayfa")]
+//    Sayfa = 3,
+//    [Description("Blog")]
+//    Blog = 4,
+//    [Description("Bayi")]
+//    Bayi = 5
+//}
 public enum ProductsType
 {
     [Description("Ürün")]

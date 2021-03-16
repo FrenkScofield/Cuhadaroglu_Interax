@@ -115,47 +115,47 @@
                         <div class="header-nav nav-dark navbar-collapse collapse justify-content-start collapse">
                             @if (contentPages != null)
                             {
-                                <ul class=" nav navbar-nav">
+                            <ul class=" nav navbar-nav">
 
-                                    @foreach (var item in contentPages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(x => x.ContentOrderNo))
+                                @foreach (var item in contentPages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(x => x.ContentOrderNo))
                                     {
-                                        <li>
-                                            @if (string.IsNullOrEmpty(item.ExternalLink))
+                                <li>
+                                    @if (string.IsNullOrEmpty(item.ExternalLink))
                                             {
-                                                <a href="@(item.IsClick == false ? "javascript:void(0)":(item.TemplateType==TemplateType.Sayfa?item.ContentPageChilds.FirstOrDefault(b=>b.IsDeleted==null).Link: item.Link))">@item.Name</a>
+                                    <a href="@(item.IsClick == false ? "javascript:void(0)":(item.TemplateType==TemplateType.Sayfa?item.ContentPageChilds.FirstOrDefault(b=>b.IsDeleted==null).Link: item.Link))">@item.Name</a>
                                             }
                                             else
                                             {
-                                                <a href="@item.ExternalLink" target="@(item.ExternalLink.StartsWith("http")?"_blank":"")">@item.Name</a>
+                                    <a href="@item.ExternalLink" target="@(item.ExternalLink.StartsWith("http")?"_blank":"")">@item.Name</a>
                                             }
-                                            @{
+                                    @{
                                                 var subItems = contentPages.Where(x => x.ContentPageId == item.Id && x.IsHeaderMenu == true).OrderBy(x => x.ContentOrderNo).ThenBy(m => m.Id);
-                                            }
-                                            @if (contentPages.Any(x => x.ContentPageId == item.Id && x.Id != item.Id && x.IsHeaderMenu == true))
+                                    }
+                                    @if (contentPages.Any(x => x.ContentPageId == item.Id && x.Id != item.Id && x.IsHeaderMenu == true))
                                             {
                                                 if (contentPages.Any(a => a.Id == subItems.FirstOrDefault().ContentPageId))
                                                 {
-                                                    <ul class="sub-menu">
-                                                        @foreach (var itemSub in subItems)
+                                    <ul class="sub-menu">
+                                        @foreach (var itemSub in subItems)
                                                         {
-                                                            <li>
-                                                                @if (string.IsNullOrEmpty(itemSub.ExternalLink))
+                                        <li>
+                                            @if (string.IsNullOrEmpty(itemSub.ExternalLink))
                                                                 {
-                                                                    <a href="/@itemSub.Link">@itemSub.Name</a>
+                                            <a href="/@itemSub.Link">@itemSub.Name</a>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <a href="@itemSub.ExternalLink" target="@(itemSub.ExternalLink.StartsWith("http")?"_blank":"")">@itemSub.Name</a>
+                                            <a href="@itemSub.ExternalLink" target="@(itemSub.ExternalLink.StartsWith("http")?"_blank":"")">@itemSub.Name</a>
                                                                 }
-                                                            </li>
+                                        </li>
 
                                                         }
-                                                    </ul>
+                                    </ul>
                                                 }
                                             }
-                                        </li>
+                                </li>
                                     }
-                                </ul>
+                            </ul>
                             }
                         </div>
                         <!-- LP START ===== -->
@@ -174,11 +174,17 @@
                             @*<div class="closeC">x</div>*@
 
                             <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg); background-size: cover;background-position: center center;background-attachment: fixed;">
+                                <div class="logo-footer clearfix p-b15" style="position: absolute;margin-top: -18%;margin-left: 1%;">
+                                    <a href="/">
+                                        <img src="/assets-site/images/logo-2.png" alt="Cuhadaroğlu interal">
+                                    </a>
+                                </div>
                                 <div class="flex-title">Bireysel</div>
                                 <div class="flex-about">
                                     <p>Evinize mimari estetik ve konfor katın</p>
                                 </div>
                             </div>
+
 
                             <div class="flex-slide contentTypes" id="Mimarlar" data-id="Mimarlar" style="background-image: url(/assets-site/images/pic5.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
                                 <div class="flex-title">Mimar</div>
@@ -301,15 +307,15 @@
                                 <ul class="social-icons  sx-social-links">
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                     {
-                                        <li><a href="@SessionRequest.config.Facebook" class="fa fa-facebook"></a></li>
+                                    <li><a href="@SessionRequest.config.Facebook" class="fa fa-facebook"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
                                     {
-                                        <li><a href="@SessionRequest.config.Linkedin" class="fa fa-linkedin"></a></li>
+                                    <li><a href="@SessionRequest.config.Linkedin" class="fa fa-linkedin"></a></li>
                                     }
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
                                     {
-                                        <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
+                                    <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
                                     }
 
 
@@ -320,48 +326,48 @@
                         @if (Blogs.Count() > 0)
                         {
                             <!-- RESENT POST -->
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="widget recent-posts-entry-date">
-                                    <h5 class="widget-title">Son Yazılar</h5>
-                                    <div class="widget-post-bx">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget recent-posts-entry-date">
+                                <h5 class="widget-title">Son Yazılar</h5>
+                                <div class="widget-post-bx">
 
-                                        @foreach (var item in Blogs.Take(3).OrderByDescending(x => x.CreaDate))
+                                    @foreach (var item in Blogs.Take(3).OrderByDescending(x => x.CreaDate))
                                         {
-                                            <div class="widget-post clearfix">
-                                                <div class="sx-post-date text-center text-uppercase text-white">
-                                                    <strong class="p-date">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Day.ToString())</strong>
-                                                    <span class="p-month">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.ToString("MMMM").Substring(0, 3).ToUpper())</span>
-                                                    <span class="p-year">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Year.ToString())</span>
-                                                </div>
-                                                <div class="sx-post-info">
-                                                    <div class="sx-post-header">
-                                                        <h6 class="post-title"><a href="/@item.Link">@item.Name</a></h6>
-                                                    </div>
-                                                </div>
+                                    <div class="widget-post clearfix">
+                                        <div class="sx-post-date text-center text-uppercase text-white">
+                                            <strong class="p-date">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Day.ToString())</strong>
+                                            <span class="p-month">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.ToString("MMMM").Substring(0, 3).ToUpper())</span>
+                                            <span class="p-year">@(string.IsNullOrEmpty(item.CreaDate.ToString())?"": item.CreaDate.Year.ToString())</span>
+                                        </div>
+                                        <div class="sx-post-info">
+                                            <div class="sx-post-header">
+                                                <h6 class="post-title"><a href="/@item.Link">@item.Name</a></h6>
                                             </div>
+                                        </div>
+                                    </div>
                                         }
 
 
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
                         }
 
                         @if (Pages != null)
                         {
                             <!-- USEFUL LINKS -->
-                            <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
-                                <div class="widget widget_services inline-links">
-                                    <h5 class="widget-title">Linkler</h5>
-                                    <ul>
-                                        @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(o => o.ContentOrderNo))
+                        <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
+                            <div class="widget widget_services inline-links">
+                                <h5 class="widget-title">Linkler</h5>
+                                <ul>
+                                    @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(o => o.ContentOrderNo))
                                         {
-                                            <li><a href="/@item.Link">@item.Name</a></li>
+                                    <li><a href="/@item.Link">@item.Name</a></li>
                                         }
-                                    </ul>
-                                </div>
+                                </ul>
                             </div>
+                        </div>
                         }
 
                         <!-- CONTACT US -->
@@ -457,11 +463,11 @@
 
     @if (currState == "-")
     {
-        <script>$(".flex-container").show();</script>
+    <script>$(".flex-container").show();</script>
     }
     else
     {
-        <script>$(".flex-container").hide();</script>
+    <script>$(".flex-container").hide();</script>
     }
 </body>
 

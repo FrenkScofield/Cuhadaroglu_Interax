@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 
@@ -30,6 +31,12 @@ namespace CMS.Controllers
             };
 
             return Json(result);
+        }
+
+        public JsonResult GetUserType()
+        {
+            var list = Enum.GetValues(typeof(UserType)).Cast<int>().Select(x => new { name = ((UserType)x).ToStr(), value = x.ToString(), text = ((UserType)x).ExGetDescription() }).ToArray();
+            return Json(list);
         }
 
 

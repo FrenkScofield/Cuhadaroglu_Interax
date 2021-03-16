@@ -27,6 +27,15 @@ public static class SessionRequest
         set { }
     }
 
+    public static User fUser
+    {
+        get
+        {
+            return _IHttpContextAccessor.HttpContext.Session.Get<User>("fUser");
+        }
+        set { }
+    }
+
     public static SiteConfig config
     {
         get

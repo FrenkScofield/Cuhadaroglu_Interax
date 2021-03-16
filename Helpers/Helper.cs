@@ -1883,7 +1883,7 @@ public static class Helpers
         return Text;
     }
 
-    public static string ExGetDescription(this Enum value)
+    public static string ExGetDescription(this Enum? value)
     {
         if (value == null)
             return string.Empty;

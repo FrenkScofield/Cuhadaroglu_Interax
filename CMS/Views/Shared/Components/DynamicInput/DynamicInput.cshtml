@@ -58,7 +58,10 @@
 
                 @foreach (var prp in props)
                 {
+                    if (prp.Name == "UserType")
+                    {
 
+                    }
                     try
                     {
                         object value = null;
@@ -204,6 +207,22 @@
                                                         <input @Required id="@prp.Name" name="@prp.Name" placeholder="@Html.Raw(placeholder)" value="@value" class="form-control form-control-solid form-control-lg" type="number">
                                                     </div>
                                                 </div>
+                                            }
+                                            if (DisplayName == "UserType")
+                                            {
+                                                <div class="@Model.colClass">
+                                                    <div class="form-group">
+                                                        <label>@Html.Raw(DisplayName)</label>
+                                                        <select @Required id="dp_@prp.Name" name="dp_@prp.Name" class="form-control form-control-solid form-control-lg">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <script type="text/javascript">
+                                            $(function () {
+                                                $("#dp_@prp.Name").addOptionAjax("/" + TName +"/Get" + "@prp.Name", null, "value", "text", function () { }, function () { }, "@(value == null ? "" : ((int)value).ToStr())", "", "Seçiniz");
+                                            });
+                                                </script>
                                             }
                                         }
 

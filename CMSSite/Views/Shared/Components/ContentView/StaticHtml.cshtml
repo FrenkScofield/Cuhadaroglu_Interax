@@ -1,0 +1,9 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contents = ViewBag.contents as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+}
+
+
+@Html.Raw(content.ContentData)

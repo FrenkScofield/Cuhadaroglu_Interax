@@ -98,7 +98,7 @@ body {
     -ms-flex: 1; /* IE 10 */
     flex: 1;
     cursor: pointer;
-    padding-top: 10%;
+    padding-top: 20%;
     -webkit-transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -ms-transition: all 500ms ease;

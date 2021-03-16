@@ -101,7 +101,7 @@ namespace CMSSite.Components
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
-                case "Endustriyel":
+                case "Endüstriyel":
                     isEndustri = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
                     break;

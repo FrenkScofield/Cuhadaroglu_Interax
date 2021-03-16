@@ -5,7 +5,6 @@
     int LanguageID = (int)ViewBag.LanguageID;
     var Specs = ViewBag.Specs as List<Spec>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
-    var User = ViewBag.User as User;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
 <!-- SECTION CONTENT START -->
@@ -104,7 +103,7 @@
                             </div>
                         </div>
 
-                        @if (User != null)
+                        @if (SessionRequest.fUser != null)
                         {
                             <div class="panel sx-panel">
                                 <div class="acod-head">

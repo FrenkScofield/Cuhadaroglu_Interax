@@ -43,7 +43,7 @@ public partial class User : BaseModel
     [DisplayName("Adres 2")]
     public string Adress2 { get; set; }
     [DisplayName("Doğum Tarihi")]
-    public DateTime BirdhDay { get; set; }
+    public DateTime? BirdhDay { get; set; }
     [DisplayName("Kullanıcı No")]
     public string UserNo { get; set; }
     [Required]
@@ -58,8 +58,7 @@ public partial class User : BaseModel
     //[Column(TypeName = "Text")]
     public string Description { get; set; }
 
-
-
+    public UserType? UserType { get; set; }
 
     public virtual ICollection<ServiceConfigAuth> ServiceConfigAuth { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
