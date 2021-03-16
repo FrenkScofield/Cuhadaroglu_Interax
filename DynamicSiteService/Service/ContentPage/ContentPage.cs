@@ -89,9 +89,7 @@ public partial class ContentPage : BaseModel
     [Column(Order = 2)]
     [DisplayName("Button Link")]
     public string ButtonLink { get; set; }
-
-
-    //2. Sayfa İçeriği
+     
     [Column(Order = 2)]
     [DataType("text")]
     [DisplayName("Açıklama")]
@@ -100,16 +98,13 @@ public partial class ContentPage : BaseModel
     [Column(Order = 2)]
     [DataType("text")]
     [DisplayName("Kısa İçerik")]
-    public string ContentShort { get; set; }
-
+    public string ContentShort { get; set; } 
 
     [Column(Order = 2)]
     [DataType("text")]
     [DisplayName("İçerik")]
     public string ContentData { get; set; }
-
-
-
+     
     [Column(Order = 2)]
     [DisplayName("Video Link")]
     public string VideoLink { get; set; }
@@ -123,8 +118,7 @@ public partial class ContentPage : BaseModel
 
     [Column(Order = 3)]
     [DisplayName("Harita")]
-    public bool? IsMap { get; set; }
-
+    public bool? IsMap { get; set; } 
 
     //3. Sayfa Ayarları
 
