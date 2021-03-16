@@ -18,6 +18,7 @@ public class BaseModel : IBaseModel
     public DateTime? IsDeleted { get; set; }
 
     public int? IsStatus { get; set; }
+   
     public int? LoginCount { get; set; }
 
 

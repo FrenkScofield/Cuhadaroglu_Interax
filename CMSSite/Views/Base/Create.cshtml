@@ -5,8 +5,12 @@
 <script src="~/assets-site/css/login/classic/plugins.bundle.js"></script>
 <script src="~/assets-site/css/login/classic/prismjs.bundle.js"></script>
 <script src="~/assets-site/css/login/plugins.bundle.js"></script>
-<script src="~/assets-site/css/login/classic/general.js"></script> 
-<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" /> 
+<script src="~/assets-site/css/login/classic/general.js"></script>
+<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" />
+
+<script src="~/general.js"></script>
+
+
 <div class="section-full p-tb80 inner-page-padding stick_in_parent ">
     <div class="container">
         <div class="row ">
@@ -21,46 +25,76 @@
                             <form class="form" novalidate="novalidate" id="kt_login_signin_form">
                                 <!--begin::Title-->
                                 <div class="pb-13 pt-lg-0 pt-5">
-                                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Üye Girişi</h3>
+                                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Üye Ol</h3>
                                 </div>
                                 <!--begin::Title-->
                                 <!--begin::Form group-->
                                 <div class="form-group">
                                     <label class="font-size-h6 font-weight-bolder text-dark">Kulllanıcı Adı</label>
-                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="username" id="username" autocomplete="off" />
+                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="UserName" id="UserName" autocomplete="off" />
                                 </div>
-                                <!--end::Form group-->
-                                <!--begin::Form group-->
+
                                 <div class="form-group">
-                                    <div class="d-flex justify-content-between mt-n5">
-                                        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Şifre</label>
-                                        <a href="javascript:;" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Şifremi Unuttum ?</a>
-                                    </div>
-                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="pass" id="pass" autocomplete="off" />
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Şifre</label>
+                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="Pass" id="Pass" autocomplete="off" />
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Ad</label>
+                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Name" id="Name" autocomplete="off" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Soyad</label>
+                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Surname" id="Surname" autocomplete="off" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Mail</label>
+                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Mail1" id="Mail1" autocomplete="off" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Telefon</label>
+                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Phone1" id="Phone1" autocomplete="off" />
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Firma</label>
+                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Company" id="Company" autocomplete="off" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Kullanıcı Tipi</label>
+                                    <select class="form-control form-control-solid" required id="dp_UserType" name="dp_UserType">
+                                        <option value="2">Bayi</option>
+                                        <option value="3">Mimar</option>
+                                    </select>
+                                </div>
+
+
+
                                 <!--end::Form group-->
                                 <!--begin::Action-->
                                 <div class="pb-lg-0 pb-5">
-                                    <button type="button" id="f-login" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Giriş Yap</button>
-                                    <a href="/Create" class="btn btn-secondary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Üye Ol</a>
+                                    <button type="button" id="f-login" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Kaydet</button>
                                 </div>
-
-
                                 <!--end::Action-->
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--end::Signin--> 
+                        <!--end::Signin-->
                     </div>
-                    <!--end::Content body--> 
+                    <!--end::Content body-->
                 </div>
                 <!--end::Content-->
             </div>
         </div>
     </div>
-</div> 
+</div>
 <link href="/assets-site/css/login/login-1.css" rel="stylesheet" />
-<script src="/assets-site/css/login/login-1.js"></script>  
+<script src="/assets-site/css/login/login-1.js"></script>
 <script type="text/javascript">
 
     "use strict";
@@ -79,31 +113,67 @@
 
             _login.addClass(cls);
 
-           KTUtil.animateClass(KTUtil.getById(form), 'animate__animated animate__backInUp');
+            KTUtil.animateClass(KTUtil.getById(form), 'animate__animated animate__backInUp');
         }
 
         var _handleSignInForm = function () {
             var validation;
-            debugger;
+
             // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-            validation = FormValidation.formValidation( 
+            validation = FormValidation.formValidation(
                 KTUtil.getById('kt_login_signin_form'),
                 {
                     fields: {
-                        username: {
+                        UserName: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Kullanıcı adı gerekli'
+                                    message: 'Kullanıcı Giriniz'
                                 }
                             }
                         },
-                        password: {
+                        Name: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Şifre gerekli'
+                                    message: 'Ad Giriniz'
+                                }
+                            }
+                        },
+                        Surname: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Soyad Giriniz'
+                                }
+                            }
+                        },
+                        Mail1: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Mail Adresi Giriniz'
+                                }
+                            }
+                        },
+                        Phone1: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Telefon Giriniz'
+                                }
+                            }
+                        },
+                        Company: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Firma Giriniz'
+                                }
+                            }
+                        },
+                        dp_UserType: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Kullanıcı Tipi Giriniz'
                                 }
                             }
                         }
+
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -117,62 +187,40 @@
 
             $('#f-login').on('click', function (e) {
                 e.preventDefault();
-                debugger;
                 validation.validate().then(function (status) {
                     console.log("afterValidate");
-                    console.log("status "+status);
+                    console.log("status " + status);
                     if (status == 'Valid') {
+                        var postModel = $.fn.toForm("#kt_login_signin_form");
 
-                        $.ajx('/Base/Validate', { user: $('#username').val(), pass: $('#pass').val() }, function (result) {
+                        $.ajx('/Base/UserCreate', postModel, function (result) {
+
                             debugger;
-                            if (result && result.Id > 0) {
+                            if (result?.ResultType?.RType == 1) {
 
-                                swal.fire({
-                                    text: "Giriş Başarılı",
-                                    icon: "success",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Tamam",
-                                    customClass: {
-                                        confirmButton: "btn font-weight-bold btn-light-primary"
-                                    }
-                                }).then(function () {
-                                    KTUtil.scrollTop();
-                                });
-
-                                // Submit form
-                                KTUtil.scrollTop();
+                                alert('Üyelik kaydınız başarıyla oluşturulmuştur. Yetkili birim en kısa sürede onaylayacaktır.');
                                 location.reload();
                             }
-                            else {
-                                alert("Hata, lütfen daha sonra tekrar deneyiniz.")
-                             //   swal.fire({
-                             //       text: "Hata, lütfen daha sonra tekrar deneyiniz.",
-                             //       icon: "error",
-                             //       buttonsStyling: false,
-                             //       confirmButtonText: "Tamam",
-                             //       customClass: {
-                             //           confirmButton: "btn font-weight-bold btn-light-primary"
-                             //       }
-                             //   }).then(function () {
-                             //       KTUtil.scrollTop();
-                             //   });
+                            else if (result == "Dublicate") {
+                                KTUtil.scrollTop();
+                                alert('Aynı kullanıcı adı mevcut');
                             }
 
                         });
 
 
                     } else {
-                     //  swal.fire({
-                     //      text: "Hata, lütfen daha sonra tekrar deneyiniz.",
-                     //      icon: "error",
-                     //      buttonsStyling: false,
-                     //      confirmButtonText: "Tamam",
-                     //      customClass: {
-                     //          confirmButton: "btn font-weight-bold btn-light-primary"
-                     //      }
-                     //  }).then(function () {
-                     //      KTUtil.scrollTop();
-                     //  });
+                        //swal.fire({
+                        //    text: "Hata, lütfen daha sonra tekrar deneyiniz.",
+                        //    icon: "error",
+                        //    buttonsStyling: false,
+                        //    confirmButtonText: "Tamam",
+                        //    customClass: {
+                        //        confirmButton: "btn font-weight-bold btn-light-primary"
+                        //    }
+                        //}).then(function () {
+                        //    KTUtil.scrollTop();
+                        //});
                     }
                 });
             });

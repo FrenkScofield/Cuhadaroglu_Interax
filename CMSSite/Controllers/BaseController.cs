@@ -57,8 +57,8 @@ namespace CMSSite.Controllers
             setData();
 
             var contentPages = _IContentPageService.Where(x =>
-            x.Parent!=null &&
-            x.ContentPageId !=null &&
+            x.Parent != null &&
+            x.ContentPageId != null &&
 
            (x.Name.ToLower().Contains(search.ToLower())
             || x.Description.ToLower().Contains(search.ToLower())
@@ -127,7 +127,7 @@ namespace CMSSite.Controllers
 
         public IActionResult Validate(string user, string pass)
         {
-            var _user = _IUserService.Where(o => (o.UserName == user || o.Name == user) && (o.Pass == pass), true, false).Result.FirstOrDefault();
+            var _user = _IUserService.Where(o => o.IsActive == true && (o.Mail1 == user || o.UserName == user || o.Name == user) && (o.Pass == pass), true, false).Result.FirstOrDefault();
             if (_user != null)
             {
                 _user.LoginCount = _user.LoginCount == null ? null : _user.LoginCount++;
@@ -136,6 +136,28 @@ namespace CMSSite.Controllers
             }
             return Json(_user);
         }
+
+        public IActionResult Create()
+        {
+            setData();
+            return View();
+
+        }
+
+        public IActionResult UserCreate(User postModel)
+        {
+            var row = _IUserService.Where(o => o.UserName == postModel.UserName).Result.FirstOrDefault();
+            if (row != null)
+            {
+                return Json("Dublicate");
+            }
+            else
+            {
+                var rs = _IUserService.InsertOrUpdate(postModel);
+                return Json(rs);
+            }
+        }
+
         public IActionResult Login()
         {
             if (_httpContextAccessor.HttpContext.Session.Get("fUser") != null)
@@ -468,6 +490,11 @@ namespace CMSSite.Controllers
             //_IContentPageService.Where(o => o.Link == link, true, false, null).Result.FirstOrDefault(); 
         }
 
+        public IActionResult Logout()
+        {
+            _httpContextAccessor.HttpContext.Session.Set("fUser", "");
+            return Redirect("/");
+        }
 
     }
 }

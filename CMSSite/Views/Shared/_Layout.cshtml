@@ -67,6 +67,10 @@
     <script src="/assets-site/js/jquery-1.12.4.min.js"></script><!-- JQUERY.MIN JS -->
 
     <script src="/general.js?v=@SessionRequest.version"></script>
+
+
+
+
 </head>
 <body>
     <div class="page-wraper">
@@ -76,8 +80,15 @@
                 <div class="container">
                     <div class="d-flex justify-content-end">
                         <ul class="list-unstyled e-p-bx">
-                            <li> info@interal.com.tr</li>
-                            <li>(0212) 224-2020</li>
+                            @if (SessionRequest.fUser != null)
+                            {
+                            <li>@Html.Raw(SessionRequest.fUser.UserName)</li>
+                            <li><a style="color:black;" href="/Base/Logout"><b>Çıkış</b></a></li>
+                            <li>-</li>
+
+                            }
+                            <li>@Html.Raw(SessionRequest.config.Mail)</li>
+                            <li>@Html.Raw(SessionRequest.config.Phone)</li>
                         </ul>
                     </div>
                 </div>
@@ -375,10 +386,9 @@
                             <div class="widget widget_address_outer">
                                 <h5 class="widget-title">Bize Ulaşın</h5>
                                 <ul class="widget_address">
-                                    <li>Yakuplu Mah. Hürriyet Bulvarı, No6-8 Beylikdüzü, Istanbul, Turkey</li>
-                                    <li>info@interal.com.tr</li>
-                                    <li>(+90)212 224-2020</li>
-                                    <li>(+90)212 224-2020</li>
+                                    <li>@Html.Raw(SessionRequest.config.Adress)</li>
+                                    <li>@Html.Raw(SessionRequest.config.Mail)</li>
+                                    <li>@Html.Raw(SessionRequest.config.Phone)</li>
                                 </ul>
 
                             </div>

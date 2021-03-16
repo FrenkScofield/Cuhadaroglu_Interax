@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DynamicSiteService.Migrations
 {
     [DbContext(typeof(CMSDBContext))]
-    partial class CMSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210316165358_db23233sdfsdf")]
+    partial class db23233sdfsdf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,6 +202,9 @@ namespace DynamicSiteService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -260,6 +265,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<string>("Guid")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -348,6 +356,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -402,6 +413,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("FormTypeId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -460,6 +474,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
@@ -502,6 +519,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -546,6 +566,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -600,6 +623,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -652,6 +678,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsCreate")
                         .HasColumnType("bit");
@@ -760,6 +789,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<string>("Instagram")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -878,6 +910,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -942,6 +977,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -996,6 +1034,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -1044,6 +1085,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
@@ -1192,6 +1236,9 @@ namespace DynamicSiteService.Migrations
 
                     b.Property<int>("CreaUser")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");

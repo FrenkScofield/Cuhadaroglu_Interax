@@ -40,13 +40,13 @@ public partial class User : BaseModel
     public string Phone3 { get; set; }
     [DisplayName("Adres 1")]
     public string Adress1 { get; set; }
+    public string Company { get; set; }
     [DisplayName("Adres 2")]
     public string Adress2 { get; set; }
     [DisplayName("Doğum Tarihi")]
     public DateTime? BirdhDay { get; set; }
     [DisplayName("Kullanıcı No")]
     public string UserNo { get; set; }
-    [Required]
     [DisplayName("Cinsiyet")]
     public string SexType { get; set; }
 
@@ -59,6 +59,8 @@ public partial class User : BaseModel
     public string Description { get; set; }
 
     public UserType? UserType { get; set; }
+
+    public bool? IsActive { get; set; }
 
     public virtual ICollection<ServiceConfigAuth> ServiceConfigAuth { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
