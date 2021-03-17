@@ -16,7 +16,6 @@ public partial class User : BaseModel
 
 
 
-    [Required()]
     [DisplayName("Kullanıcı Adı")]
     public string UserName { get; set; }
     [Required]
@@ -61,6 +60,8 @@ public partial class User : BaseModel
     public UserType? UserType { get; set; }
 
     public bool? IsActive { get; set; }
+    public bool? IsKvk { get; set; }
+    public bool? IsIletisimIzın { get; set; }
 
     public virtual ICollection<ServiceConfigAuth> ServiceConfigAuth { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }

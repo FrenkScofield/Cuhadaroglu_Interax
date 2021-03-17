@@ -1,4 +1,6 @@
-﻿@{
+﻿
+<script src="~/general.js"></script>
+@{
     Layout = "_Layout";
 
 }
@@ -29,48 +31,59 @@
                                 </div>
                                 <!--begin::Title-->
                                 <!--begin::Form group-->
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Kulllanıcı Adı</label>
-                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="UserName" id="UserName" autocomplete="off" />
+
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Mail</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="email" name="Mail1" id="Mail1" autocomplete="off" />
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Şifre</label>
-                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="Pass" id="Pass" autocomplete="off" />
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Şifre</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="Pass" id="Pass" autocomplete="off" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Şifre Tekrar</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="PassReply" id="PassReply" autocomplete="off" />
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Ad</label>
-                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Name" id="Name" autocomplete="off" />
-                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Ad</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Name" id="Name" autocomplete="off" />
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Soyad</label>
-                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Surname" id="Surname" autocomplete="off" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Mail</label>
-                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Mail1" id="Mail1" autocomplete="off" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Telefon</label>
-                                    <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Phone1" id="Phone1" autocomplete="off" />
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Soyad</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Surname" id="Surname" autocomplete="off" />
+                                    </div>
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Firma</label>
-                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Company" id="Company" autocomplete="off" />
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Telefon</label>
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Phone1" id="Phone1" autocomplete="off" />
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Firma</label>
+                                        <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="Company" id="Company" autocomplete="off" />
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="font-size-h6 font-weight-bolder text-dark">Kullanıcı Tipi</label>
-                                    <select class="form-control form-control-solid" required id="dp_UserType" name="dp_UserType">
-                                        <option value="2">Bayi</option>
-                                        <option value="3">Mimar</option>
-                                    </select>
+
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="font-size-h6 font-weight-bolder text-dark">Kullanıcı Tipi</label>
+                                        <select class="form-control form-control-solid" required id="dp_UserType" name="dp_UserType">
+                                            <option value="2">Bayi</option>
+                                            <option value="3">Mimar</option>
+                                        </select>
+                                    </div>
                                 </div>
 
 
@@ -124,11 +137,24 @@
                 KTUtil.getById('kt_login_signin_form'),
                 {
                     fields: {
-                        UserName: {
+                        Pass: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Kullanıcı Giriniz'
+                                    message: 'Şifre Giriniz'
                                 }
+                            },
+                        },
+                        PassReply: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Şifre Tekrar Giriniz'
+                                }
+                            },
+                            identical: {
+                                compare: function () {
+                                    return form.querySelector('[name="Pass"]').value;
+                                },
+                                message: 'Şifreler Eşleşmiyor'
                             }
                         },
                         Name: {
@@ -186,12 +212,19 @@
 
 
             $('#f-login').on('click', function (e) {
+
                 e.preventDefault();
                 validation.validate().then(function (status) {
                     console.log("afterValidate");
                     console.log("status " + status);
                     if (status == 'Valid') {
                         var postModel = $.fn.toForm("#kt_login_signin_form");
+
+                        debugger;
+                        if (postModel.Pass != postModel.PassReply) {
+                            alert('Şifreler Eşleşmiyor...');
+                            return;
+                        }
 
                         $.ajx('/Base/UserCreate', postModel, function (result) {
 
@@ -418,4 +451,16 @@
     });
 
 
-</script> 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
