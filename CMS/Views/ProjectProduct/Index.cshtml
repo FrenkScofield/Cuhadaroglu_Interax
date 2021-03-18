@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+
+    int id1 = Context.Request.Query["id"].ToInt();
+
+    if (id1 < 1)
+    {
+        return;
+    }
+    var urlPath = "ProjectProduct";
+    var ListName = "Proje Ürünleri";
+
+    var edit = ViewBag.edit as ProjectProduct;
+}
+<script>
+     var urlPath = '@urlPath';
+    var id1 = @id1;
+    var idFilter = 3;
+    var ListName = "@Html.Raw(ListName)";
+</script>
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <select id="@urlPath" class="@urlPath kt-dual-listbox" multiple>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("." + urlPath).each(function () {
+        var t = $(this),
+            a = null != t.attr("data-available-title") ? t.attr("data-available-title") : ListName + " Listesi",
+            e = null != t.attr("data-selected-title") ? t.attr("data-selected-title") : "Eklenen " + ListName + " Listesi",
+            l = null != t.attr("data-add") ? t.attr("data-add") : "Ekle",
+            d = null != t.attr("data-remove") ? t.attr("data-remove") : "Secileni Sil",
+            i = null != t.attr("data-add-all") ? t.attr("data-add-all") : "Tumunu Ekle",
+            o = null != t.attr("data-remove-all") ? t.attr("data-remove-all") : "Tumunu Sil",
+            n = [];
+
+
+        $.LoadingOverlay("show");
+        $.ajx(urlPath + "/getData", { id1: id1, idFilter: idFilter }, function (resultData) {
+            $.each(resultData, function (i, item) {
+                var optionsAll = $("<option></option>").attr("value", item.value).text(item.text);
+                if (item.selected)
+                    $(optionsAll).attr('selected', "selected");
+                $(t).append(optionsAll);
+            });
+
+            //t.children("option").each(function () {
+            //    var t = $(this).val(),
+            //        a = $(this).text(),
+            //        e = !!$(this).is(":selected");
+
+            //    n.push({ text: a, value: t, selected: e });
+            //});
+
+
+            var r = null != t.attr("data-search") ? t.attr("data-search") : "";
+
+            var s = new DualListbox(t.get(0), {
+                addEvent: function (tt) {
+                    //if ($('#dp_Brand').val() == "") {
+                    //    alerts("Lutfen Seçim Yapınız...");
+                    //    s._buildDualListbox();
+                    //    return;
+                    //}
+                    $.LoadingOverlay("show");
+                    $.ajx(urlPath + "/setData", { id1: id1, id2: tt, type: 'add' }, function (resultData) {
+                        $.LoadingOverlay("hide");
+                    }, function () { location.reload(); });
+                },
+                removeEvent: function (tt) {
+                    $.LoadingOverlay("show");
+                    $.ajx(urlPath + "/setData", { id1: id1, id2: tt, type: 'remove' }, function (resultData) {
+                        $.LoadingOverlay("hide");
+                    }, function () { });
+                },
+                availableTitle: a,
+                selectedTitle: e,
+                addButtonText: l,
+                removeButtonText: d,
+                addAllButtonText: i,
+                removeAllButtonText: o,
+                options: n
+            });
+
+            "false" == r && s.search.classList.add("dual-listbox__search--hidden");
+
+            $.LoadingOverlay("hide");
+        }, function () { location.reload(); });
+
+
+
+
+    });
+</script>

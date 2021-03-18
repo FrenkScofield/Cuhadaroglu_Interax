@@ -59,13 +59,17 @@ public partial class CMSDBContext : DbContext
 
 
 
-    //    modelBuilder.Entity<Card>()
-    //.HasRequired(c => c.Stage)
-    //.WithMany()b
-    //.WillCascadeOnDelete(false);
+        //    modelBuilder.Entity<Card>()
+        //.HasRequired(c => c.Stage)
+        //.WithMany()b
+        //.WillCascadeOnDelete(false);
 
 
         //.WillCascadeOnDelete(false);
+
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Projects).WithOne(b => b.Project);
+        modelBuilder.Entity<ContentPage>().HasMany(a => a.Products).WithOne(b => b.Product);
+
 
         modelBuilder.Entity<ContentPage>().HasOne(a => a.ThumbImage).WithOne(b => b.ThumbImage).HasForeignKey<Documents>(b => b.ThumbImageId);
 
