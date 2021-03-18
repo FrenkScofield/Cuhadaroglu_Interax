@@ -4,6 +4,7 @@
     var contents = ViewBag.contents as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
     var Specs = ViewBag.Specs as List<Spec>;
+    var ProjectList = ViewBag.ProjectList as List<ProjectProduct>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
@@ -41,16 +42,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-md-5 "> 
+            <div class="col-lg-5 col-md-5 ">
                 <div class="project-detail-outer">
                     @foreach (var item in content.Gallery)
-                    { 
+                    {
                         <div class="project-detail-pic m-b30">
                             <div class="sx-media">
                                 <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
                             </div>
                         </div>
-                    } 
+                    }
                 </div>
             </div>
 
@@ -64,7 +65,7 @@
 </div>
 <!-- SECTION CONTENT END  -->
 <!-- SECTION CONTENTG START -->
-<div class="section-full p-t80 p-b80 inner-page-padding">
+<div class="section-full p-b80 inner-page-padding">
     <div class="container">
 
         <div class="faq-1">
@@ -94,9 +95,9 @@
                                 <div class="acod-content p-tb15">
                                     @foreach (var item in content.Gallery)
                                     {
-                                    <div class="col-md-3">
-                                        <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
-                                    </div>
+                                        <div class="col-md-3">
+                                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                                        </div>
                                     }
 
                                 </div>
@@ -126,18 +127,18 @@
                                                     <div class="icon-content">
                                                         <h4 class="sx-tilte">@item.Name</h4>
 
-                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link"  target="_blank" class="site-button-link">İNDİR</a>
+                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             @*<div class="col-md-4 m-b30">
-                                                <div class="wt-icon-box-wraper left  p-a15 m-b10">
-                                                    <a href="" class="btn-block">
-                                                        <span class="text-black m-r10"><i class="fa fa-file-pdf-o"></i></span>
-                                                        <strong class="text-uppercase text-black"></strong>
-                                                    </a>
-                                                </div>
-                                            </div>*@
+                                                    <div class="wt-icon-box-wraper left  p-a15 m-b10">
+                                                        <a href="" class="btn-block">
+                                                            <span class="text-black m-r10"><i class="fa fa-file-pdf-o"></i></span>
+                                                            <strong class="text-uppercase text-black"></strong>
+                                                        </a>
+                                                    </div>
+                                                </div>*@
                                         }
 
                                     </div>
@@ -157,18 +158,18 @@
                                     <div class="acod-content p-tb15">
                                         @foreach (var item in content.CadDatas)
                                         {
-                                        <div class="col-md-3 m-b30">
-                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                </div>
-                                                <div class="icon-content">
-                                                    <h4 class="sx-tilte">@item.Name</h4>
+                                            <div class="col-md-3 m-b30">
+                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                    </div>
+                                                    <div class="icon-content">
+                                                        <h4 class="sx-tilte">@item.Name</h4>
 
-                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         }
                                     </div>
                                 </div>
@@ -187,18 +188,18 @@
                                     <div class="acod-content p-tb15">
                                         @foreach (var item in content.BIMFiles)
                                         {
-                                        <div class="col-md-3 m-b30">
-                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                </div>
-                                                <div class="icon-content">
-                                                    <h4 class="sx-tilte">@item.Name</h4>
+                                            <div class="col-md-3 m-b30">
+                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                    </div>
+                                                    <div class="icon-content">
+                                                        <h4 class="sx-tilte">@item.Name</h4>
 
-                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         }
                                     </div>
                                 </div>
@@ -217,18 +218,18 @@
                                     <div class="acod-content p-tb15">
                                         @foreach (var item in content.TechnicalDocuments)
                                         {
-                                        <div class="col-md-3 m-b30">
-                                            <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                    <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                </div>
-                                                <div class="icon-content">
-                                                    <h4 class="sx-tilte">@item.Name</h4>
+                                            <div class="col-md-3 m-b30">
+                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                    </div>
+                                                    <div class="icon-content">
+                                                        <h4 class="sx-tilte">@item.Name</h4>
 
-                                                    <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         }
                                     </div>
                                 </div>
@@ -244,7 +245,7 @@
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
                                     </h4>
-                                </div> 
+                                </div>
                             </div>
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
@@ -254,7 +255,7 @@
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
                                     </h4>
-                                </div> 
+                                </div>
                             </div>
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
@@ -264,7 +265,7 @@
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
                                     </h4>
-                                </div> 
+                                </div>
                             </div>
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
@@ -274,18 +275,60 @@
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
                                     </h4>
-                                </div> 
+                                </div>
                             </div>
-                           
 
-                                    }
+
+                        }
 
                     </div>
                 </div>
             </div>
+
         </div>
 
 
     </div>
 </div>
 <!-- SECTION CONTENT END -->
+
+<div class="section-full mobile-page-padding p-b50 bg-white" id="proContent">
+    <div class="section-content">
+        <div class="container">
+            <!-- TITLE START -->
+            <div class="section-head">
+                <div class="sx-separator-outer separator-center">
+                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                        <h3 class="sep-line-one">@content.Name'in kullanıldığı projeler</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- TITLE END -->
+        </div>
+
+        <div class=" filter-carousal-1-outer relative z-index1">
+            <!-- TITLE END -->
+            <div class="filter-carousal-1  container-fluid p-b30">
+                <!-- IMAGE CAROUSEL START -->
+                <div class="section-content ">
+                    <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
+                        @foreach (var item in ProjectList)
+                        {
+                            <div class="item fadingcol col-one overflow-hide">
+                                <div class="sx-box   image-hover-block">
+                                    <div class="sx-thum-bx">
+                                        <img src="@(item.Project.ThumbImage!=null?"http://interalcms.zonagency.com/fileupload/UserFiles/Folders/"+item.Project.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.Project.ThumbImage!=null?item.Project.ThumbImage.Alt:item.Project.Name)">
+                                    </div>
+                                    <div class="sx-info  p-t20 text-white">
+                                        <h4 class="sx-tilte"><a href="/@item.Project.Link">@item.Project.Name</a></h4>
+                                        <p class="m-b0"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

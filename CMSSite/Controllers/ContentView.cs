@@ -19,12 +19,14 @@ namespace CMSSite.Components
         IContentPageService _IContentPageService;
         ISpecService _ISpecService;
         IDocumentsService _IDocumentsService;
+        IProjectProductService _IProjectProductService;
         public ContentView(
             IContentPageService _IContentPageService,
             ISpecService _ISpecService,
         IDocumentsService _IDocumentsService,
         IHttpContextAccessor httpContextAccessor,
-        IFormTypeService _IFormTypeService
+        IFormTypeService _IFormTypeService,
+        IProjectProductService _IProjectProductService
             )
         {
             this._IContentPageService = _IContentPageService;
@@ -32,6 +34,7 @@ namespace CMSSite.Components
             this._httpContextAccessor = httpContextAccessor;
             this._IDocumentsService = _IDocumentsService;
             this._IFormTypeService = _IFormTypeService;
+            this._IProjectProductService = _IProjectProductService;
         }
 
         public IViewComponentResult Invoke(TemplateType TemplateType)
@@ -49,10 +52,14 @@ namespace CMSSite.Components
             }
 
             List<ContentPage> contentPages = new List<ContentPage>();
-            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsPublish == true, true, false, 
-                o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments, 
-                o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue)
+            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsPublish == true, true, false,
+                o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments,
+                o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue
+                )
                 .Result.FirstOrDefault();
+
+
+
 
             //if (content.FormTypeId)
             //{
@@ -61,7 +68,14 @@ namespace CMSSite.Components
             //    ViewBag.formtip = formtip;
 
             //}
-
+            if (content.ContentTypesId == 5)
+            {
+                ViewBag.ProductList = _IProjectProductService.Where(o => o.ProjectId == content.Id, true, false, o => o.Product).Result.ToList();
+            }
+            if (content.ContentTypesId == 3)
+            {
+                ViewBag.ProjectList = _IProjectProductService.Where(o => o.ProductId == content.Id, true, false, o => o.Project,o=>o.Project.ThumbImage).Result.ToList();
+            }
 
             var Specs = _ISpecService.Where(null, true, false, o => o.Parent).Result.ToList();
             ViewBag.Specs = Specs;
@@ -71,10 +85,11 @@ namespace CMSSite.Components
                 _httpContextAccessor.HttpContext.Session.SetInt32("LanguageID", content.LangId);
                 langID = content.LangId;
             }
+
+            ViewBag.content = content;
+
             Regex reg = new Regex("[*'\",_&#^@]");
-
             var currState = reg.Replace(_httpContextAccessor.HttpContext.Session.GetString("currState") ?? "-", string.Empty);
-
 
             ViewBag.currState = currState;
             bool isBayi = false;
@@ -82,18 +97,13 @@ namespace CMSSite.Components
             bool isMimar = false;
             bool isBireysel = false;
 
-
-
             contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false, o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
-            // contentPages = _IContentPageService.Where(o => o.LangId == langID, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage,o=>o.SpecContentValue).Result.OrderBy(o => o.ContentOrderNo).ToList();
 
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
 
 
-            ViewBag.content = content;
             ViewBag.LanguageID = langID;
-
             ViewBag.Pages = contentPages.ToList();
             switch (currState)
             {
@@ -121,6 +131,8 @@ namespace CMSSite.Components
                     isMimar = true;
                     break;
             }
+
+
 
 
             if (TemplateType == TemplateType.ProjeListeleme)

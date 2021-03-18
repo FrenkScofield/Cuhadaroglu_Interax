@@ -193,6 +193,7 @@
                             <th>Tarih</th>
                             <th>Durum</th>
                             <th>Detail</th>
+                            <th>Önizleme</th>
 
                         </tr>
                     </thead>
@@ -211,16 +212,23 @@
                                     @if (item.IsActive == true)
                                     {
                                         <span class="label label-success label-dot mr-2"></span>
-                                        <span class="font-weight-bold text-success">Yayında</span> }
+                                        <span class="font-weight-bold text-success">Yayında</span>
+                                    }
                                     else
                                     {
                                         <span class="label label-danger label-dot mr-2"></span>
-                                        <span class="font-weight-bold text-danger">Yayında Değil</span>}
+                                        <span class="font-weight-bold text-danger">Yayında Değil</span>
+                                    }
 
                                 </td>
                                 <td style="vertical-align:middle">
                                     <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/@control_Name_ContentPage/InsertOrUpdatePage?id=@item.Id" title="Düzenle">
                                         <i class="la la-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="http://interal.zonagency.com/@item.Link" title="Önizleme">
+                                        <i class="fa fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>

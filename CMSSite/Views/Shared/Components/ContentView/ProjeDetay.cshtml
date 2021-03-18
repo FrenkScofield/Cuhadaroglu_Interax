@@ -31,14 +31,44 @@
                         <div class="m-b0">
                             <div class="sx-divider divider-1px  bg-black"><i class="icon-dot c-square"></i></div>
                         </div>
-                        <ul class="social-icons social-square social-darkest m-b0">
+                        @*<ul class="social-icons social-square social-darkest m-b0">
                             <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
                             <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
                             <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
                             <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
                             <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
                             <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
-                        </ul>
+                        </ul>*@
+                    </div>
+                </div>
+                <div class="autor-post-tag-share p-a30 bg-gray">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget_tag_cloud m-b15">
+                                <h5 class="tagcloud">Tags</h5>
+                                <div class="tagcloud">
+                                    @foreach (var item in ViewBag.ProductList as List<ProjectProduct>)
+                                    {
+                                        <a href="@item.Product.Link">@item.Product.Name</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="clearfix single-post-share">
+                                <h5>Share this Post:</h5>
+                                <div class="widget_social_inks">
+                                    <ul class="social-icons social-md social-square social-dark m-b0">
+                                        <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>  
@@ -56,6 +86,8 @@
             </div>
 
         </div>
+        <div>
          
+        </div>
     </div>
 </div> 

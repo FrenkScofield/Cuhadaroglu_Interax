@@ -12,8 +12,7 @@ public partial class ContentPage : BaseModel
         ContentPageChilds = new HashSet<ContentPage>();
         Gallery = new HashSet<Documents>();
         SpecContentValue = new HashSet<SpecContentValue>();
-        Products = new HashSet<ProjectProduct>();
-        Projects = new HashSet<ProjectProduct>();
+        Product = new HashSet<ProjectProduct>();
     }
 
     //1. Sayfa Yapısı
@@ -247,8 +246,7 @@ public partial class ContentPage : BaseModel
 
     public virtual ICollection<SpecContentValue> SpecContentValue { get; set; }
 
-    public virtual ICollection<ProjectProduct> Products { get; set; }
-    public virtual ICollection<ProjectProduct> Projects { get; set; }
+    public virtual ICollection<ProjectProduct> Product { get; set; }
 
 
 
