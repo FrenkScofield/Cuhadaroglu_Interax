@@ -29,8 +29,8 @@ namespace CMSSite.Components
         {
             #region dynamicContent 
             var link = HttpContext.Request.Path.Value.Trim().Trim('/');
-            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() , true, false, 
-                o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage,o=>o.FormType).Result.FirstOrDefault();
+            var content = _IContentPageService.Where(o => o.IsActive == true && o.IsPublish == true && o.Link.ToLower() == link.ToLower(), true, false,
+                o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.FormType).Result.FirstOrDefault();
             int langID = 1;
             if (content != null && _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != content.LangId)
             {
@@ -45,11 +45,11 @@ namespace CMSSite.Components
                 _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
             }
             else
-            { 
+            {
                 contentPages =
                 _httpContextAccessor.HttpContext.Session.Get<List<ContentPage>>("contentPages");
 
-                if(content!=null&&content.LangId!=contentPages.FirstOrDefault().LangId)
+                if (content != null && content.LangId != contentPages.FirstOrDefault().LangId)
                 {
                     contentPages = _IContentPageService.Where(o => o.LangId == content.LangId, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
 
@@ -57,7 +57,7 @@ namespace CMSSite.Components
 
                 _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
             }
- 
+
             ViewBag.contentPages = contentPages;
             ViewBag.content = content;
             ViewBag.LanguageID = _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID");
@@ -83,7 +83,7 @@ namespace CMSSite.Components
                     }
                     ViewBag.SideMenu = contentPages.Where(x => x.ContentPageId == parentID && x.IsSideMenu == true && x.LangId == _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID")).OrderBy(o => o.ContentOrderNo).ToList();
                     List<ContentPage> sideMenus = new List<ContentPage>();
-                    List<ContentPage> tempList = contentPages.Where(x => x.ContentPageId == parentID).OrderBy(o=>o.ContentOrderNo).ToList();
+                    List<ContentPage> tempList = contentPages.Where(x => x.ContentPageId == parentID).OrderBy(o => o.ContentOrderNo).ToList();
                     while (true)
                     {
                         foreach (var item in tempList)
@@ -93,7 +93,7 @@ namespace CMSSite.Components
                                 sideMenus.Add(item);
                             }
                         }
-                        tempList = contentPages.Where(x => x.IsDeleted == null && x.LangId == content.LangId && tempList.Select(x => x.Id).ToList().Contains(x.ContentPageId ?? 0)).OrderBy(o => o.ContentOrderNo).ThenBy(m=>m.Id).ToList();
+                        tempList = contentPages.Where(x => x.IsDeleted == null && x.LangId == content.LangId && tempList.Select(x => x.Id).ToList().Contains(x.ContentPageId ?? 0)).OrderBy(o => o.ContentOrderNo).ThenBy(m => m.Id).ToList();
                         if (tempList.SelectMany(x => x.ContentPageChilds).Count() == 0)
                         {
                             foreach (var item in tempList)

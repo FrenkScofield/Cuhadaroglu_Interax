@@ -29,6 +29,11 @@
             "DisplayLength": 100,
             "lengthMenu": [[100, 500, 5000], [100, 500, 5000]],
             "lengthChange": true,
+            rowReorder: true,
+            columnDefs: [
+                { orderable: true, className: 'reorder', targets: 0 },
+                { orderable: false, targets: '_all' }
+            ],
             "fnDrawCallback": function (settings, json) {
                 $(".buttons-excel-top").click(function () {
                     $(".buttons-excel").click(); $(".buttons-excel").trigger('click');
@@ -49,6 +54,16 @@
                 //ayarlar() lBfrtip;
             },
         });
+
+        table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {
+            var myArray = [];
+            for (var i = 0, ien = diff.length; i < ien; i++) {
+                var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selecttype_ContentPage });
+            }
+            $.ajx('/' + control_Name_ContentPage + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
+        });
+
+
     });
     $(document).ready(function () {
         $(".buttons-excel-top").click(function () {
@@ -185,57 +200,144 @@
 
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Başlık</th>
-                            <th>Üst Kategori</th>
-                            <th>İçerik Tipi</th>
-                            <th>Şablon Tipi</th>
-                            <th>Tarih</th>
-                            <th>Durum</th>
-                            <th>Detail</th>
-                            <th>Önizleme</th>
-
                         </tr>
                     </thead>
 
-                    <tbody>
-                        @foreach (var item in list)
-                        {
+                    @*<thead>
                             <tr>
-                                <td style="vertical-align:middle">@item.Id</td>
-                                <td style="vertical-align:middle">@item.Name</td>
-                                <td style="vertical-align:middle">@item.Parent?.Name</td>
-                                <td style="vertical-align:middle">@item.ContentTypes?.Name</td>
-                                <td style="vertical-align:middle">@item.TemplateType.ExGetDescription()</td>
-                                <td style="vertical-align:middle">@item.CreaDate</td>
-                                <td style="vertical-align:middle">
-                                    @if (item.IsActive == true)
-                                    {
-                                        <span class="label label-success label-dot mr-2"></span>
-                                        <span class="font-weight-bold text-success">Yayında</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger label-dot mr-2"></span>
-                                        <span class="font-weight-bold text-danger">Yayında Değil</span>
-                                    }
+                                <th>ID</th>
+                                <th>Başlık</th>
+                                <th>Üst Kategori</th>
+                                <th>İçerik Tipi</th>
+                                <th>Şablon Tipi</th>
+                                <th>Tarih</th>
+                                <th>Durum</th>
+                                <th>Detail</th>
 
-                                </td>
-                                <td style="vertical-align:middle">
-                                    <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/@control_Name_ContentPage/InsertOrUpdatePage?id=@item.Id" title="Düzenle">
-                                        <i class="la la-edit"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="http://interal.zonagency.com/@item.Link" title="Önizleme">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                </td>
                             </tr>
-                        }
-                    </tbody>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in list)
+                            {
+                                <tr>
+                                    <td style="vertical-align:middle">@item.Id</td>
+                                    <td style="vertical-align:middle">@item.Name</td>
+                                    <td style="vertical-align:middle">@item.Parent?.Name</td>
+                                    <td style="vertical-align:middle">@item.ContentTypes?.Name</td>
+                                    <td style="vertical-align:middle">@item.TemplateType.ExGetDescription()</td>
+                                    <td style="vertical-align:middle">@item.CreaDate</td>
+                                    <td style="vertical-align:middle">
+                                        @if (item.IsActive == true)
+                                        {
+                                            <span class="label label-success label-dot mr-2"></span>
+                                            <span class="font-weight-bold text-success">Yayında</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger label-dot mr-2"></span>
+                                            <span class="font-weight-bold text-danger">Yayında Değil</span>
+                                        }
+
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/@control_Name_ContentPage/InsertOrUpdatePage?id=@item.Id" title="Düzenle">
+                                            <i class="la la-edit"></i>
+                                        </a>
+                                        <a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="http://interal.zonagency.com/@item.Link" title="Önizleme">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>*@
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+<script>
+    $(function () {
+        getGrid();
+        function getGrid() {
+            var columns = [];
+            columns.push({ "data": "Id", text: "ID" });
+            columns.push({ "data": "ContentData", text: "ContentData" });
+            columns.push({ "data": "Detail", text: "Detail" });
+
+            $.each(columns, function (i, item) {
+                $(dt_Content + ' thead tr').append('<td> ' + item.text + '</td > ');
+            });
+
+            var table = $(dt_Content).DataTable({
+                "ajax": {
+                    "url": '/' + controllerName_Content + '/GetPaging',
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (searchModel) {
+                        $(dt_Content).LoadingOverlay("show");
+                        searchModel.selectid = selectid_Content;
+                        debugger;
+                    },
+                    "dataSrc": function (json) {
+                        return_data = new Array();
+                        var data = json.data;
+
+                        $.each(data, function (i, row) {
+                            var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '" title="Edit"><i class="la la-edit"></i></a>';
+                            return_data.push({
+                                'Id': row.Id,
+                                'ContentData': row.ContentData,
+                                'Detail': detail,
+                            });
+
+                        });
+                        $(dt_Content).LoadingOverlay("hide");
+                        return return_data;
+                    }
+                },
+                "fnDrawCallback": function (settings, json) {
+
+                    $('.dt-buttons').css('float', 'right');
+                    $('.dt-buttons').css('margin-left', '20px');
+                    $('.dt-buttons').css('margin-top', '16px');
+
+                    $(dt_Content).LoadingOverlay("hide");
+                    ayarlar();
+                },
+                "destroy": true,
+                "caseInsensitive": true,
+                "responsive": true,
+                "pageLength": 100,
+                "DisplayLength": 5,
+                "lengthMenu": [[100, 25, 100, 1000, 2500, 5000], [100, 25, 100, 1000, 2500, 5000]],
+                "lengthChange": true,
+                "processing": true,
+                "columns": columns,
+                "order": [[0, "desc"]],
+                rowReorder: true,
+                columnDefs: [
+                    { orderable: true, className: 'reorder', targets: 0 },
+                    { orderable: false, targets: '_all' }
+                ],
+            });
+            table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {
+                var myArray = [];
+                for (var i = 0, ien = diff.length; i < ien; i++) {
+                    var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selecttype_ContentPage });
+                }
+                $.ajx('/' + control_Name_ContentPage + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
+            });
+
+        }
+    });
+</script>
+
+
+
+

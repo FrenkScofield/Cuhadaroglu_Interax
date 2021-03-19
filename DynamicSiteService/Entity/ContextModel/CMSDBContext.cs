@@ -39,7 +39,7 @@ public partial class CMSDBContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("server=94.73.146.4;Database=u6827488_interal;User Id=u6827488_interal;Password=Admin123_*1Admin123_*1", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
+            //optionsBuilder.UseSqlServer("server=94.73.146.4;Database=u6827488_interal;User Id=u6827488_interal;Password=Admin123_*1Admin123_*1", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
            //   optionsBuilder.UseSqlServer("server=.;Database=u6827488_interal;trusted_connection=true;", x => x.MigrationsHistoryTable("__EFMigrationsHistory", "mySchema"));
         }
     }

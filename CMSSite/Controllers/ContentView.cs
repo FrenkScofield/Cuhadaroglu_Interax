@@ -52,7 +52,7 @@ namespace CMSSite.Components
             }
 
             List<ContentPage> contentPages = new List<ContentPage>();
-            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsPublish == true, true, false,
+            var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsActive == true, true, false,
                 o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments,
                 o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue
                 )
@@ -74,7 +74,7 @@ namespace CMSSite.Components
             }
             if (content.ContentTypesId == 3)
             {
-                ViewBag.ProjectList = _IProjectProductService.Where(o => o.ProductId == content.Id, true, false, o => o.Project,o=>o.Project.ThumbImage).Result.ToList();
+                ViewBag.ProjectList = _IProjectProductService.Where(o => o.ProductId == content.Id, true, false, o => o.Project, o => o.Project.ThumbImage).Result.ToList();
             }
 
             var Specs = _ISpecService.Where(null, true, false, o => o.Parent).Result.ToList();
@@ -97,7 +97,8 @@ namespace CMSSite.Components
             bool isMimar = false;
             bool isBireysel = false;
 
-            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false, o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
+            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsActive == true && x.IsInteral == true, true, false,
+                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
 
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
