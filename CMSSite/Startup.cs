@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,7 +41,9 @@ namespace CMSSite
             services.AddHttpContextAccessor();
 
 
-            services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>();
+            services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>(opt =>
+         opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
+
 
             services.AddScoped(typeof(IBaseSession), typeof(BaseSession));
             services.AddScoped(typeof(IGenericRepo<IBaseModel>), typeof(GenericRepo<CMSDBContext, IBaseModel>));
