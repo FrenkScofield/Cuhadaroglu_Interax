@@ -155,14 +155,14 @@
                                                     $("#dp_@prp.Name").addOptionAjax("/@methodName/GetSelect", null, "value", "text", null, null, "@value", "", "@Html.Raw(placeholder) Seçiniz");
                                                  });
                                             </script>
- }
+                                        }
                                         else
                                         {
                                             if (prp.PropertyType.GenericTypeArguments.Any(o => o.Name == "Boolean"))
                                             {
 
                                                 <div class="col-md-2">
-                                                    <label style="margin-bottom: 0 !important;" class="col-md-12">@Html.Raw(DisplayName)</label>
+                                                    <label style="margin-bottom: 0 !important;padding-left:0px !important" class="col-md-12">@Html.Raw(DisplayName)</label>
                                                     <div class="form-group">
                                                         <span class="switch">
                                                             <label>
@@ -208,7 +208,7 @@
                                 {
 
                                     <div class="col-md-2">
-                                        <label style="margin-bottom: 0 !important;" class="col-md-12">@Html.Raw(DisplayName)</label>
+                                        <label style="margin-bottom: 0 !important;padding-left:0px !important;" class="col-md-12">@Html.Raw(DisplayName)</label>
                                         <div class="form-group">
                                             <span class="switch">
                                                 <label>
@@ -236,7 +236,7 @@
                                                 $("#dp_@prp.Name").addOptionAjax("/" + TName +"/Get" + "@prp.Name", null, "value", "text", function () { }, function () { }, "@(value == null ? "" : ((int)value).ToStr())", "", "Seçiniz");
                                             });
                                         </script>
- }
+                                    }
                                     else
                                     {
                                         var relation = props.FirstOrDefault(o => prp.Name.Substring(prp.Name.Length - 2, 2) == "Id" && o.Name == prp.Name.Replace("Id", ""));
@@ -259,7 +259,7 @@
                                                     $("#dp_@prp.Name").addOptionAjax("/@methodName/GetSelect",null, "value", "text", null, null, "@value", "", "@Html.Raw(placeholder) Seçiniz");
                                                 });
                                             </script>
- }
+                                        }
                                         else
                                         {
                                             if (prp.PropertyType.GenericTypeArguments.Any(o => o.Name == "Boolean"))
@@ -316,7 +316,7 @@
                                             $("#@prp.Name").datepicker({ format: "dd/mm/yyyy", language: "tr", todayBtn: "linked", clearBtn: !0, todayHighlight: !0 });
                                         });
                                     </script>
- break;
+                                    break;
                                 }
                             case TypeCode.String:
                                 {
@@ -444,17 +444,29 @@
                 });
             });
 
-
             $("#" + formname).submit(function (e) {
                 e.preventDefault();
                 var postModel = $.fn.toForm("#" + formname);
-                debugger;
+
                 try { postModel.Level = parseInt(postModel.Level); } catch (ex) { }
                 $.LoadingOverlay("show");
                 $.ajx("/" + controllerName + "/" + InsertMethodName,
                     { postModel: postModel }, function (resultData) {
                         debugger;
-                        try { location.href = "/" + controllerName } catch (ex) { debugger; location.reload(); }
+                        if (resultData.ResultType.RType == 1) {
+                            var selectid = getQuery('selectid');
+                            var selecttype = getQuery('selecttype');
+                            var selectname = getQuery('selectname');
+
+                            location.href = "/" + controllerName + '/Index?' +
+                                (selectid > 0 ? '&selectid=' + selectid : '')
+                                + (selecttype > 0 ? '&selecttype=' + selecttype : '')
+                                + (selectname != '' ? '&selectname=' + selectname : '');
+
+                        }
+                        else {
+                            alerts(resultData.ResultType.MessageList);
+                        }
 
                         $.LoadingOverlay("hide");
                     }, function () { location.reload(); });

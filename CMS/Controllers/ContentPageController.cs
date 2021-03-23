@@ -500,6 +500,10 @@ namespace CMS.Controllers
         }
 
 
+        public IActionResult Order()
+        {
+            return View();
+        }
         public IActionResult UpdateOrder(List<OrderUpdateModel> postModel)
         {
             var rows = _IContentPageService.Where(o => o.ContentTypesId == postModel.FirstOrDefault().dataid).Result.ToList();

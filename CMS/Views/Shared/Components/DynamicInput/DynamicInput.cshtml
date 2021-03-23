@@ -466,6 +466,14 @@
         </form>
     </div>
     <script>
+        function getQuery(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
         $(function () {
             //var langInt = setInterval(function () {
             //    $("#dp_LangId").val(1);
@@ -511,21 +519,47 @@
             $("#" + formname).submit(function (e) {
                 e.preventDefault();
                 var postModel = $.fn.toForm("#" + formname);
+
                 try { postModel.Level = parseInt(postModel.Level); } catch (ex) { }
                 $.LoadingOverlay("show");
                 $.ajx("/" + controllerName + "/" + InsertMethodName,
                     { postModel: postModel }, function (resultData) {
-                        try {
-                            location.href = "/" + controllerName;
+                        debugger;
+                        if (resultData.ResultType.RType == 1) {
+                            var selectid = getQuery('selectid');
+                            var selecttype = getQuery('selecttype');
+                            var selectname = getQuery('selectname');
 
-                        } catch (ex) {
-                            location.reload();
+                            location.href = "/" + controllerName + '/Index?' +
+                                (selectid > 0 ? '&selectid=' + selectid : '')
+                                + (selecttype > 0 ? '&selecttype=' + selecttype : '')
+                                + (selectname != '' ? '&selectname=' + selectname : '');
+
+                        }
+                        else {
+                            alerts(resultData.ResultType.MessageList);
                         }
 
                         $.LoadingOverlay("hide");
                     }, function () { location.reload(); });
             });
+        });
+    </script>
 
+    <script>
+        $(function () {
+
+            var langInt = setInterval(function () {
+                $("#dp_LangId").val(1);
+                $("#dp_LangId").change();
+                $("#dp_LangId").parent().parent().hide();
+
+
+                $("#dp_OrjId").parent().parent().hide();
+
+
+                clearInterval(langInt);
+            }, 2000);
         });
     </script>
 
