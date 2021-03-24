@@ -54,7 +54,7 @@ namespace CMSSite.Components
             List<ContentPage> contentPages = new List<ContentPage>();
             var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsActive == true, true, false,
                 o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments,
-                o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue
+                o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue, o => o.FormType
                 )
                 .Result.FirstOrDefault();
 

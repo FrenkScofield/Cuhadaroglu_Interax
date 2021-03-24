@@ -17,6 +17,9 @@ public partial class FormType : BaseModel
     [Required]
     public string Name { get; set; }
 
+    [DisplayName("Açıklama")]
+    public string DescName { get; set; }
+
 
     [DisplayName("Formlar")]
     public virtual ICollection<Forms> Forms { get; set; }
