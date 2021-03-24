@@ -46,7 +46,7 @@
                     <!--end::Aside header-->
                     <!--begin::Aside title-->
                     <h3 class="font-weight-bolder text-center font-size-h4 font-size-h1-lg" style="color: #986923;">
-                       HYBRO CMS
+                        HYBRO CMS
                         <br />WELCOME
                     </h3>
                     <!--end::Aside title-->
@@ -68,10 +68,10 @@
                             <!--begin::Title-->
                             <div class="pb-13 pt-lg-0 pt-5">
                                 <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to HYBRO</h3>
-                                <span class="text-muted font-weight-bold font-size-h4">
-                                    New Here?
-                                    <a href="javascript:;" id="kt_login_signup" class="text-primary font-weight-bolder">Create an Account</a>
-                                </span>
+                                @*<span class="text-muted font-weight-bold font-size-h4">
+                                        New Here?
+                                        <a href="javascript:;" id="kt_login_signup" class="text-primary font-weight-bolder">Create an Account</a>
+                                    </span>*@
                             </div>
                             <!--begin::Title-->
                             <!--begin::Form group-->
@@ -192,9 +192,9 @@
                 <!--begin::Content footer-->
                 <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
                     <div class="text-dark-50 font-size-lg font-weight-bolder mr-10">
-                        <a href="/"  class="text-dark-75 text-hover-primary">@Html.Raw(SessionRequest.copyright)</a>
+                        <a href="/" class="text-dark-75 text-hover-primary">@Html.Raw(SessionRequest.copyright)</a>
                     </div>
-                   
+
                 </div>
                 <!--end::Content footer-->
             </div>
@@ -273,14 +273,14 @@
                     }
                 );
 
-                $('#kt_login_signin_submit').on('click', function (e) {
+
+                function setLogin(e) {
                     e.preventDefault();
 
                     validation.validate().then(function (status) {
                         if (status == 'Valid') {
 
                             $.ajx('/Login/Validate', { user: $('#username').val(), pass: $('#pass').val() }, function (result) {
-                                debugger;
                                 if (result && result.Id > 0) {
 
                                     swal.fire({
@@ -315,7 +315,7 @@
 
                             });
 
-                          
+
                         } else {
                             swal.fire({
                                 text: "Sorry, looks like there are some errors detected, please try again.",
@@ -330,6 +330,17 @@
                             });
                         }
                     });
+                }
+
+                $(document).on('keypress', function (e) {
+                    if (e.which == 13) {
+                        setLogin(e);
+                    }
+                });
+
+
+                $('#kt_login_signin_submit').on('click', function (e) {
+                    setLogin(e);
                 });
 
                 // Handle forgot button
@@ -477,8 +488,8 @@
                     e.preventDefault();
                     validation.validate().then(function (status) {
                         if (status == 'Valid') {
-                        
-                          
+
+
 
 
                         } else {

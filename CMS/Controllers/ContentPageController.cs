@@ -83,9 +83,11 @@ namespace CMS.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPaging(DTParameters<ContentPage> param, int ContentTypesId)
+        public JsonResult GetPaging(DTParameters<ContentPage> param, int selectid)
         {
-            var result = _IContentPageService.GetPaging(o => o.ContentTypesId == ContentTypesId, true, param, false, o => o.Lang, o => o.Documents, o => o.ContentPageChilds, o => o.Parent);
+            var result = _IContentPageService.GetPaging(o => o.ContentTypesId == selectid, true, param, false,
+                o => o.Lang, o => o.Documents, o => o.ContentPageChilds, o => o.Parent, o => o.ContentTypes);
+
             result.data = result.data.OrderByDescending(o => o.CreaDate).ThenByDescending(o => o.Name).ToList();
             return Json(result);
         }

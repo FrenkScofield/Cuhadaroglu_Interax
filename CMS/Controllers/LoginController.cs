@@ -7,6 +7,7 @@ namespace CMS.Controllers
 {
     public class LoginController : Controller
     {
+        ISiteConfigService _ISiteConfigService;
         IUserService _IUserService;
         ILangService _ILangService;
         IContentTypesService _IContentTypesService;
@@ -16,6 +17,7 @@ namespace CMS.Controllers
 #pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IFormTypeService _IFormTypeService;
         public LoginController(
+            ISiteConfigService _ISiteConfigService,
          IUserService _IUserService,
          IHttpContextAccessor _IHttpContextAccessor,
 #pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
@@ -26,6 +28,7 @@ namespace CMS.Controllers
          IFormTypeService _IFormTypeService
             )
         {
+            this._ISiteConfigService = _ISiteConfigService;
             this._IUserService = _IUserService;
             this._httpContextAccessor = _IHttpContextAccessor;
             this._IHostingEnvironment = _IHostingEnvironment;
@@ -70,7 +73,6 @@ namespace CMS.Controllers
 
                     var t1 = _IContentTypesService.InsertOrUpdate(new ContentTypes() { Name = "Normal Sayfa" });
                     var t2 = _IContentTypesService.InsertOrUpdate(new ContentTypes() { Name = "Blog" });
-                    var t3 = _IContentTypesService.InsertOrUpdate(new ContentTypes() { Name = "Ürünler" });
                     var t4 = _IContentTypesService.InsertOrUpdate(new ContentTypes() { Name = "Slider" });
 
                     var f1 = _IFormTypeService.InsertOrUpdate(new FormType() { Name = "İletişim" });
@@ -83,6 +85,12 @@ namespace CMS.Controllers
                 {
                 }
             }
+
+
+            var siteConfig = _ISiteConfigService.Where().Result.FirstOrDefault();
+            _httpContextAccessor.HttpContext.Session.Set("siteConfig", siteConfig);
+
+
             var ctypes = _IContentTypesService.Where().Result.ToList();
             _httpContextAccessor.HttpContext.Session.Set("ctypes", ctypes);
 

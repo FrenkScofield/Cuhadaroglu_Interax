@@ -1,13 +1,15 @@
 ﻿@{
-    string control_Name_ContentPage = "ContentPage";
-    var dt_ContentPage = "#dt_" + control_Name_ContentPage;
+    string controllerName_Content = "ContentPage";
+    var dt_ContentPage = "#dt_" + controllerName_Content;
     var selecttype_ContentPage = Context.Request.Query["selecttype"].ToInt();
     var selectname_ContentPage = Context.Request.Query["selectname"].ToStr();
     var descname = Context.Request.Query["descname"].ToStr();
     var list = ViewBag.list as List<ContentPage>; }
+
+
 <script type="text/javascript">
-    var control_Name_ContentPage = "@control_Name_ContentPage";
-    var dt_ContentPage = "#dt_" + control_Name_ContentPage;
+    var controllerName_Content = "@controllerName_Content";
+    var dt_ContentPage = "#dt_" + controllerName_Content;
     var selecttype_ContentPage = "@selecttype_ContentPage";
     var selectname_ContentPage = "@selectname_ContentPage";
 </script>
@@ -16,79 +18,12 @@
         display: none
     }
 </style>
-<script>
-    $(function () {
-        var table = $(dt_ContentPage).DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Turkish.json",
-            },
-            "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 hideMe col-md-6'B><'col-sm-12 col-md-6'f>><'row'><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-10'i><'col-sm-12 col-md-2'p>>",
-            fixedHeader: true,
-            buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'],
-            "pageLength": 100,
-            "DisplayLength": 100,
-            "lengthMenu": [[100, 500, 5000], [100, 500, 5000]],
-            "lengthChange": true,
-            rowReorder: true,
-            columnDefs: [
-                { orderable: true, className: 'reorder', targets: 0 },
-                { orderable: false, targets: '_all' }
-            ],
-            "fnDrawCallback": function (settings, json) {
-                $(".buttons-excel-top").click(function () {
-                    $(".buttons-excel").click(); $(".buttons-excel").trigger('click');
-                    return false;
-                })
-                $(".buttons-copy-top").click(function () {
-                    $(".buttons-copy").click(); $(".buttons-copy").trigger('click');
-                    return false;
-                })
-                $(".buttons-csv-top").click(function () {
-                    $(".buttons-csv").click(); $(".buttons-csv").trigger('click');
-                    return false;
-                })
-                $(".buttons-pdf-top").click(function () {
-                    $(".buttons-pdf").click(); $(".buttons-pdf").trigger('click');
-                    return false;
-                })
-                //ayarlar() lBfrtip;
-            },
-        });
 
-        table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {
-            var myArray = [];
-            for (var i = 0, ien = diff.length; i < ien; i++) {
-                var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selecttype_ContentPage });
-            }
-            $.ajx('/' + control_Name_ContentPage + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
-        });
-
-
-    });
-    $(document).ready(function () {
-        $(".buttons-excel-top").click(function () {
-            $(".buttons-excel").click(); $(".buttons-excel").trigger('click');
-            return false;
-        })
-        $(".buttons-copy-top").click(function () {
-            $(".buttons-copy").click(); $(".buttons-copy").trigger('click');
-            return false;
-        })
-        $(".buttons-csv-top").click(function () {
-            $(".buttons-csv").click(); $(".buttons-csv").trigger('click');
-            return false;
-        })
-        $(".buttons-pdf-top").click(function () {
-            $(".buttons-pdf").click(); $(".buttons-pdf").trigger('click');
-            return false;
-        })
-    })
-</script>
 
 <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <div class="d-flex align-items-center flex-wrap mr-2">
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(selectname_ContentPage + " Sayfası")</h5>
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(selectname_ContentPage + " Listesi")</h5>
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
             <span class="text-muted font-weight-bold mr-4">Sayfa Bilgisi</span>
         </div>
@@ -181,7 +116,7 @@
                     <!--end::Dropdown-->
                     <!--begin::Button-->
 
-                    <a href="/@Html.Raw(control_Name_ContentPage)/InsertOrUpdatePage?selecttype=@selecttype_ContentPage&selectname=@selectname_ContentPage" class="btn btn-primary font-weight-bolder">
+                    <a href="/@Html.Raw(controllerName_Content)/InsertOrUpdatePage?selecttype=@selecttype_ContentPage&selectname=@selectname_ContentPage" class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -196,61 +131,11 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="dt_@control_Name_ContentPage" class="table table-bordered table-hover table-checkable" style="margin-top: 13px !important">
-
+                <table id="dt_@controllerName_Content" class="table table-bordered table-hover table-checkable" style="margin-top: 13px !important">
                     <thead>
                         <tr>
                         </tr>
                     </thead>
-
-                    @*<thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Başlık</th>
-                                <th>Üst Kategori</th>
-                                <th>İçerik Tipi</th>
-                                <th>Şablon Tipi</th>
-                                <th>Tarih</th>
-                                <th>Durum</th>
-                                <th>Detail</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in list)
-                            {
-                                <tr>
-                                    <td style="vertical-align:middle">@item.Id</td>
-                                    <td style="vertical-align:middle">@item.Name</td>
-                                    <td style="vertical-align:middle">@item.Parent?.Name</td>
-                                    <td style="vertical-align:middle">@item.ContentTypes?.Name</td>
-                                    <td style="vertical-align:middle">@item.TemplateType.ExGetDescription()</td>
-                                    <td style="vertical-align:middle">@item.CreaDate</td>
-                                    <td style="vertical-align:middle">
-                                        @if (item.IsActive == true)
-                                        {
-                                            <span class="label label-success label-dot mr-2"></span>
-                                            <span class="font-weight-bold text-success">Yayında</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="label label-danger label-dot mr-2"></span>
-                                            <span class="font-weight-bold text-danger">Yayında Değil</span>
-                                        }
-
-                                    </td>
-                                    <td style="vertical-align:middle">
-                                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/@control_Name_ContentPage/InsertOrUpdatePage?id=@item.Id" title="Düzenle">
-                                            <i class="la la-edit"></i>
-                                        </a>
-                                        <a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="http://interal.zonagency.com/@item.Link" title="Önizleme">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>*@
                 </table>
             </div>
         </div>
@@ -263,41 +148,80 @@
 
 <script>
     $(function () {
+
+
         getGrid();
         function getGrid() {
             var columns = [];
+
+
             columns.push({ "data": "Id", text: "ID" });
-            columns.push({ "data": "ContentData", text: "ContentData" });
+            columns.push({ "data": "Name", text: "Başlık" });
+            columns.push({ "data": "ParentName", text: "Üst Kategori" });
+            columns.push({ "data": "ContentTypesName", text: "İçerik Tipi" });
+            columns.push({ "data": "TemplateTypeName", text: "Şablon Tipi" });
+            //columns.push({ "data": "CreaDate", text: "Tarih" });
+            columns.push({ "data": "strPublish", text: "Yayın Durumu" });
+
             columns.push({ "data": "Detail", text: "Detail" });
 
             $.each(columns, function (i, item) {
-                $(dt_Content + ' thead tr').append('<td> ' + item.text + '</td > ');
+                $(dt_ContentPage + ' thead tr').append('<td> ' + item.text + '</td > ');
             });
 
-            var table = $(dt_Content).DataTable({
+            var table = $(dt_ContentPage).DataTable({
                 "ajax": {
                     "url": '/' + controllerName_Content + '/GetPaging',
                     "type": "POST",
                     "datatype": "json",
                     "data": function (searchModel) {
-                        $(dt_Content).LoadingOverlay("show");
-                        searchModel.selectid = selectid_Content;
-                        debugger;
+                        $(dt_ContentPage).LoadingOverlay("show");
+                        searchModel.selectid = selecttype_ContentPage;
                     },
                     "dataSrc": function (json) {
                         return_data = new Array();
                         var data = json.data;
 
+                        var website = siteConfig.BaseUrl;
+
                         $.each(data, function (i, row) {
                             var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '" title="Edit"><i class="la la-edit"></i></a>';
+
+                            detail += '<a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' + website + row.Link + '" title="Önizleme"><i class="fa fa-eye"></i></a>';
+
+                            if (row.IsActive == true) {
+                                detail += '<label class="checkbox checkbox-success"><input disabled type="checkbox" name="" checked="checked"><span></span></label>';
+                            }
+                            else {
+                                detail += '<label class="checkbox"><input disabled type="checkbox" name="" ><span></span></label>';
+                            }
+
+
+
+                            var strPublish = "";
+                            if (row.IsPublish == true) {
+                                strPublish = '<span class="label label-success label-dot mr-2"></span><span class="font-weight-bold text-success">Yayında</span>';
+                            }
+                            else {
+                                strPublish = '<span class="label label-danger label-dot mr-2"></span><span class="font-weight-bold text-danger">Yayında Değil</span>';
+                            }
+
+
+
+
                             return_data.push({
                                 'Id': row.Id,
-                                'ContentData': row.ContentData,
+                                'Name': row.Name,
+                                'ParentName': (row.Parent != null ? row.Parent.Name : ""),
+                                'ContentTypesName': (row.ContentTypes != null ? row.ContentTypes.Name : ""),
+                                'TemplateTypeName': getEnumRow(TemplateTypeAll, row.TemplateType).text,
+                                'strPublish': strPublish,
+                                //'CreaDate': row.CreaDate,
                                 'Detail': detail,
                             });
 
                         });
-                        $(dt_Content).LoadingOverlay("hide");
+                        $(dt_ContentPage).LoadingOverlay("hide");
                         return return_data;
                     }
                 },
@@ -307,7 +231,7 @@
                     $('.dt-buttons').css('margin-left', '20px');
                     $('.dt-buttons').css('margin-top', '16px');
 
-                    $(dt_Content).LoadingOverlay("hide");
+                    $(dt_ContentPage).LoadingOverlay("hide");
                     ayarlar();
                 },
                 "destroy": true,
@@ -331,7 +255,7 @@
                 for (var i = 0, ien = diff.length; i < ien; i++) {
                     var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selecttype_ContentPage });
                 }
-                $.ajx('/' + control_Name_ContentPage + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
+                $.ajx('/' + controllerName_Content + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
             });
 
         }

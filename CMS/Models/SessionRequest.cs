@@ -30,6 +30,15 @@ public static class SessionRequest
     public static string jokerPass = "123_*1";
 
 
+    public static SiteConfig siteConfig
+    {
+        get
+        {
+            return _IHttpContextAccessor.HttpContext.Session.Get<SiteConfig>("siteConfig");
+        }
+        set { }
+    }
+
 
     public static User _User
     {
