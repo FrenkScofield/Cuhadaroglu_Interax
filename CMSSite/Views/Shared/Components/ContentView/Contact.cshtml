@@ -11,13 +11,13 @@
 <div class="section-full p-tb80 inner-page-padding">
     <!-- LOCATION BLOCK-->
     <div class="container">
-
-        <!-- GOOGLE MAP & CONTACT FORM -->
+        @if (content.FormType != null)
+        {
         <div class="section-content">
             <!-- CONTACT FORM-->
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-sm-12">
-                    <form FormTypeId="1" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post" >
+                    <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
                         <div class="contact-one">
 
                             <!-- TITLE START -->
@@ -25,8 +25,7 @@
                                 <div class="sx-separator-outer separator-left">
                                     <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
                                         <h3 class="sep-line-one">
-                                            @*@Html.Raw(content.FormType.Name)*@
-                                           İletişim - Formu
+                                            @Html.Raw(content.FormType?.Name)
                                         </h3>
                                     </div>
                                 </div>
@@ -61,7 +60,7 @@
 
                         </div>
                     </form>
-                    
+
                 </div>
 
 
@@ -73,7 +72,7 @@
                             <div class="section-head">
                                 <div class="sx-separator-outer separator-left">
                                     <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
-                                        <h3 class="sep-line-one">@Html.Raw(content.Description)</h3>
+                                        <h3 class="sep-line-one">@Html.Raw(content.FormType.DescName)</h3>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +105,7 @@
                 </div>
             </div>
         </div>
-
+            }
 
     </div>
 </div>

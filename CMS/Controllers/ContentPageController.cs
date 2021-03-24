@@ -253,7 +253,7 @@ namespace CMS.Controllers
                 postmodel.ContentData = HttpUtility.HtmlDecode(postmodel.ContentData);
                 postmodel.ContentShort = HttpUtility.HtmlDecode(postmodel.ContentShort);
                 var result = _IContentPageService.InsertOrUpdate(postmodel);
-                return Json(result.ResultRow);
+                return Json(result);
             }
             catch (Exception ex)
             {

@@ -45,6 +45,107 @@
 
             </div>
         </div>
+
+        @if (content.FormType != null)
+        {
+            <div class="section-content">
+                <!-- CONTACT FORM-->
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
+                            <div class="contact-one">
+
+                                <!-- TITLE START -->
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
+                                            <h3 class="sep-line-one">
+                                                @Html.Raw(content.FormType.Name)  Formu
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TITLE END -->
+
+                                <div class="form-group">
+                                    <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Email" type="text" class="form-control" required="" placeholder="Mail">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Phone" type="text" class="form-control" required="" placeholder="Telefon">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu">
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea name="Message" rows="4" class="form-control " required="" placeholder="Mesaj"></textarea>
+                                </div>
+
+                                <div class="text-right">
+                                    <button name="submit" type="submit" value="Submit" class="site-button btn-half">
+                                        <span> Gönder</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="contact-info block-shadow bg-white bg-center p-a40" style="background-image:url(images/background/bg-map.png)">
+
+                            <div>
+                                <!-- TITLE START -->
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
+                                            <h3 class="sep-line-one">
+                                                @Html.Raw(content.FormType.DescName)
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TITLE END -->
+                                <div class="sx-icon-box-wraper left p-b30">
+                                    <div class="icon-xs"><i class="fa fa-phone"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Telefon</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Phone)</p>
+                                    </div>
+                                </div>
+
+                                <div class="sx-icon-box-wraper left p-b30">
+                                    <div class="icon-xs"><i class="fa fa-envelope"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Mail</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Mail)</p>
+                                    </div>
+                                </div>
+
+                                <div class="sx-icon-box-wraper left">
+                                    <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Adres</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Adress)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
     </div>
     <!-- GALLERY CONTENT END -->
 </div>
