@@ -409,6 +409,7 @@
         </form>
     </div>
     <script>
+
         $(function () {
 
             //$("#" + formname + " textarea").each(function () {
@@ -457,11 +458,13 @@
                             var selectid = getQuery('selectid');
                             var selecttype = getQuery('selecttype');
                             var selectname = getQuery('selectname');
+                            var descname = getQuery('descname');
 
                             location.href = "/" + controllerName + '/Index?' +
                                 (selectid > 0 ? '&selectid=' + selectid : '')
                                 + (selecttype > 0 ? '&selecttype=' + selecttype : '')
-                                + (selectname != '' ? '&selectname=' + selectname : '');
+                                + (selectname != null ? '&selectname=' + selectname : '')
+                                + (descname != null ? '&descname=' + descname : '');
 
                         }
                         else {
@@ -474,12 +477,11 @@
 
         });
     </script>
-    @*<style>
-            .kt-portlet__head.kt-portlet__head--lg {
-                background-color:rgba(255,255,255,0.38) !important;
-            }
-
-        </style>*@
+    <style>
+        .kt-portlet__head.kt-portlet__head--lg {
+            background-color: rgba(255,255,255,0.38) !important;
+        }
+    </style>
 
     <script>
         $(function () {

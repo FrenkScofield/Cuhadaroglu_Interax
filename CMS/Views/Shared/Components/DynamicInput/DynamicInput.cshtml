@@ -529,11 +529,13 @@
                             var selectid = getQuery('selectid');
                             var selecttype = getQuery('selecttype');
                             var selectname = getQuery('selectname');
+                            var descname = getQuery('descname');
 
                             location.href = "/" + controllerName + '/Index?' +
                                 (selectid > 0 ? '&selectid=' + selectid : '')
                                 + (selecttype > 0 ? '&selecttype=' + selecttype : '')
-                                + (selectname != '' ? '&selectname=' + selectname : '');
+                                + (selectname != null ? '&selectname=' + selectname : '')
+                                + (descname != null ? '&descname=' + descname : '');
 
                         }
                         else {

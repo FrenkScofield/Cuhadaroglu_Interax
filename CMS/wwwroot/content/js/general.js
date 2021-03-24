@@ -291,10 +291,10 @@ function alerts(message, button, call) {
             } catch (e) {
                 console.log(e)
             }
-           
+
             var optionsAll = $("<option></option>")
-                .attr("value",  item[value])
-                .text(ustkategori +textValue);
+                .attr("value", item[value])
+                .text(ustkategori + textValue);
 
             if (attrName)
                 $(optionsAll)
@@ -411,12 +411,8 @@ function alerts(message, button, call) {
 
         $(id + ' textarea').each(function () {
             try {
-                if (CKEDITOR.instances[$(this).attr('name')])
-                    returnArray[$(this).attr('name')] = CKEDITOR.instances[$(this).attr('name')].getData();
-                else {
-                    returnArray[$(this).attr('name')] = $(this).val();
 
-                }
+                returnArray[$(this).attr('name')] = $(this).val();
             } catch (e) {
                 console.error(e);
             }
