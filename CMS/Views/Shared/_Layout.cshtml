@@ -44,15 +44,15 @@
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         </environment>*@
-    <link href="https://kendo.cdn.telerik.com/2020.3.915/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://kendo.cdn.telerik.com/2020.3.915/js/jszip.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2020.3.915/js/kendo.all.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2020.3.915/js/kendo.aspnetmvc.min.js"></script>
+    <link href="https://kendo.cdn.telerik.com/2021.1.119/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2021.1.119/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.119/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.119/js/kendo.aspnetmvc.min.js"></script>
 
     @{ var culture = System.Globalization.CultureInfo.CurrentCulture.ToString(); }
 
-    <script src="@Html.Raw("https://kendo.cdn.telerik.com/2020.3.915/js/cultures/kendo.culture." + culture + ".min.js")"></script>
-    <script src="@Html.Raw("https://kendo.cdn.telerik.com/2020.3.915/js/messages/kendo.messages." + culture + ".min.js")"></script>
+    @*<script src="@Html.Raw("https://kendo.cdn.telerik.com/2021.1.119/js/cultures/kendo.culture." + culture + ".min.js")"></script>
+    <script src="@Html.Raw("https://kendo.cdn.telerik.com/2021.1.119/js/messages/kendo.messages." + culture + ".min.js")"></script>*@
     <script>
                 var culture = "@culture";
                 kendo.culture(culture); // change the culture
@@ -329,7 +329,7 @@
                                         <ul class="menu-subnav">
 
                                             <li class="menu-item" aria-haspopup="true">
-                                                <a href="/Forms?selecttype=@item.Id&selectname=@item.Name" class="menu-link">
+                                                <a href="/Forms?selecttype=@item.Id&selectname=@item.Name&descname=@item.DescName" class="menu-link">
                                                     <i class="menu-bullet menu-bullet-dot">
                                                         <span></span>
                                                     </i>

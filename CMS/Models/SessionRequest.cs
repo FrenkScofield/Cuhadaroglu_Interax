@@ -13,7 +13,7 @@ public static class SessionRequest
     {
         _IHttpContextAccessor = __IHttpContextAccessor;
     }
-
+     
     public static HttpContext _HttpContext => _IHttpContextAccessor.HttpContext;
 
     public static string Title = "CMS";

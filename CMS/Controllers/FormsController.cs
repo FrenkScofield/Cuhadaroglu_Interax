@@ -20,25 +20,6 @@ namespace CMS.Controllers
             return Json(result);
         }
 
-        //public ActionResult GetPaging([DataSourceRequest] DataSourceRequest request, int selecttype)
-        //{
-
-        //    var orders = _IFormsService.Where(o => o.FormTypeId == selecttype, true, false, o => o.FormType).Result;
-        //    orders = orders.ApplyOrdersFiltering(request.Filters);
-        //    var total = orders.Count();
-        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-        //    if (!request.Sorts.Any() && !request.Groups.Any())
-        //        orders = orders.OrderBy(o => o.Id);
-        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-        //    var data = orders.ApplyOrdersGrouping(request.Groups);
-        //    var result = new DataSourceResult()
-        //    {
-        //        Data = data,
-        //        Total = total
-        //    };
-
-        //    return Json(result);
-        //}
 
 
         public IActionResult InsertOrUpdate(Forms postModel)

@@ -1,10 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,73 +23,115 @@ namespace CMSSite
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration Configuration;
+        private readonly IWebHostEnvironment HostEnvironment;
+
+        public Startup(IConfiguration configuration,
+            IWebHostEnvironment hostEnvironment)
         {
             Configuration = configuration;
+            HostEnvironment = hostEnvironment;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             #region BaseServices
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            //add controller with views support
+            var mvcBuilder = services.AddControllersWithViews();
+
+            //add newtonsoft json serializer
+            mvcBuilder.AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                options.SerializerSettings.Formatting = Formatting.Indented;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = new DefaultContractResolver()
+            };
+
+            if (HostEnvironment.IsDevelopment())
+                mvcBuilder.AddRazorRuntimeCompilation();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache();//To Store session in Memory, This is default implementation of IDistributedCache    
             services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(60));
-            services.AddMvc(option => option.EnableEndpointRouting = false).AddNewtonsoftJson(opt =>
-            {
-                opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                opt.SerializerSettings.DateFormatString = "dd/MM/yyyy";
-            });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
 
-
             services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>(opt =>
-         opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
+            opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
 
 
             services.AddScoped(typeof(IBaseSession), typeof(BaseSession));
             services.AddScoped(typeof(IGenericRepo<IBaseModel>), typeof(GenericRepo<CMSDBContext, IBaseModel>));
             #endregion
 
-            // services.AddScoped(typeof(ISendMail), typeof(SendMail));//Kullanýcaðýnýz servis projesinden en az birtane servisi çaðýrmalýsýnýz.
 
             var allprops = AppDomain.CurrentDomain.GetAssemblies();
-            var props = allprops.Where(o => o.GetName().Name.Contains("DynamicSiteService"))
-                .FirstOrDefault().DefinedTypes;
+            var props = allprops.Where(o => o.ManifestModule.Name == "DynamicSiteService.dll").FirstOrDefault().DefinedTypes;
             var servicesAll = props.Where(o => (!o.IsInterface && o.BaseType.Name.Contains("GenericRepo"))).ToList();
-            servicesAll.ForEach(baseService => { services.AddScoped(baseService.GetInterface("I" + baseService.Name), baseService); });
+            servicesAll.ForEach(baseService =>
+            {
+                services.AddScoped(baseService.GetInterface("I" + baseService.Name), baseService);
+            });
+
+
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
+
+            services.AddKendo();
+
 
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IConfiguration config)
         {
-            if (env.IsDevelopment())
+            if (HostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                //app.UseExceptionHandler("/Home/Error");
-                //  app.UseHsts();
-                // app.UseHttpsRedirection();
+                //app.UseHsts();
             }
-
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseSession();
-            //app.UseAuthenticationMiddleware();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseAuthenticationMiddleware();
+
+            app.UseMiddleware<ErrorMid>();
+
+            //app.InitializeDatabase();
 
             SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+
+
+            var supportedCultures = new[] { new CultureInfo("en-EN") };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-EN"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseMvc(routes =>
             {
 
@@ -110,7 +159,7 @@ namespace CMSSite
                 routes.MapRoute(
               name: "Search",
               template: "Search/{*search}",
-              defaults: new {  controller = "Base", action = "Search", search = "" }
+              defaults: new { controller = "Base", action = "Search", search = "" }
           );
 
 
@@ -130,11 +179,6 @@ namespace CMSSite
 
                 routes.MapRoute(name: "default", template: "{controller=Base}/{action=Index}/{Id?}");
             });
-
-
-
-
-
 
 
         }

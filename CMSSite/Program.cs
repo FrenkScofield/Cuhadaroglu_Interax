@@ -1,11 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CMSSite
 {
@@ -17,17 +20,11 @@ namespace CMSSite
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-          Host.CreateDefaultBuilder(args)
-
-              .ConfigureWebHostDefaults(webBuilder =>
-              {
-                  //webBuilder.UseUrls("http://localhost:1111");
-                  webBuilder.UseKestrel();
-                  webBuilder.UseStartup<Startup>()
-                   .CaptureStartupErrors(true)
-                   .UseSetting("detailedErrors", "true")
-                  ;
-              });
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSerilog((ctx, config) => { config.ReadFrom.Configuration(ctx.Configuration); });
+                });
     }
-
 }

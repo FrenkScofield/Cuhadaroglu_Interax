@@ -1,79 +1,75 @@
 ﻿@{ Layout = null;
-                var DocName = Context.Request.Query["name"].ToStr();
-                var ids = Context.Request.Query["id"].ToStr();
-                var cont = Context.Request.Query["cont"].ToStr(); }
+    var DocName = Context.Request.Query["name"].ToStr();
+    var ids = Context.Request.Query["id"].ToStr();
+    var cont = Context.Request.Query["cont"].ToStr(); }
 
-    <script>
+<script>
     var DocName = "@DocName";
     var ids = "@ids";
     var cont = "@cont";
-    
+
 </script>
 
-    <script>
-        var DocList = [];
-        function onOpen(el) {
-            console.log(el);
+<script>
+    var DocList = [];
+    function onOpen(el) {
+        console.log(el);
 
-            try {
-                if (DocName == "Documents") {
+        try {
+            if (DocName == "Documents" || DocName == "Gallery") {
 
 
-                }
-                else {
-                    $('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
-                    $('#file_link_' + DocName + '').val(el.entry.path);
-                }
-
-            } catch (e) {
-                console.log(e);
+            }
+            else {
+                $('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
+                $('#file_link_' + DocName + '').val(el.entry.path);
             }
 
-            return;
+        } catch (e) {
+            console.log(e);
         }
 
-
-
-        function onDataBound(e) {
-        }
-
-        function onDrop(e) {
-        }
-
-        function onExecute(e) {
-        }
-
-        function onNavigate(e) {
-        }
-
-
-        function onSelect(e) {
-            DocList = [];
-            $.each(e.entries, function (i, item) {
-                DocList.push(
-                    {
-                        Link: item.path,
-                        Name: item.name,
-                        DocumentId: DocName == "Documents" ? ids : null,
-                        ThumbImageId: DocName == "ThumbImage" ? ids : null,
-                        BannerImageId: DocName == "BannerImage" ? ids : null,
-                        PictureId: DocName == "Picture" ? ids : null,
-                        GalleryId: DocName == "Gallery" ? ids : null,
-                        TechnicalPropertyId: DocName == "TechnicalProperties" ? ids : null,
-                        CadDataId: DocName == "CadData" ? ids : null,
-                        BIMFileId: DocName == "BIMFiles" ? ids : null,
-                        TechnicalDocumentId: DocName == "TechnicalDocuments" ? ids : null,
-
-                    }
-                );
-
-            });
-
-        }
+        return;
+    }
 
 
 
-    </script>
+    function onDataBound(e) {
+    }
+
+    function onDrop(e) {
+    }
+
+    function onExecute(e) {
+    }
+
+    function onNavigate(e) {
+    }
+
+
+    function onSelect(e) {
+        DocList = [];
+        $.each(e.entries, function (i, item) {
+            DocList.push(
+                {
+                    Link: item.path,
+                    Name: item.name,
+                    DocumentId: DocName == "Documents" ? ids : null,
+                    GalleryId: DocName == "Gallery" ? ids : null,
+                    ThumbImageId: DocName == "ThumbImage" ? ids : null,
+                    BannerImageId: DocName == "BannerImage" ? ids : null,
+                    PictureId: DocName == "Picture" ? ids : null,
+
+                }
+            );
+
+        });
+
+    }
+
+
+
+</script>
 
 
 <div class="row">
@@ -153,46 +149,46 @@
 
                 filemanager.executeCommand({ command: "TogglePaneCommand", options: { type: "preview" } });
                 filemanager.toolbar.fileManagerDetailsToggle.switchInstance.toggle();
-               
-                    $('#btnFileAdd').click(function () {
-                        debugger;
-                        try {
-                            if (DocName == "Documents") {
-                                $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
-                                    alert('Başarıyla yüklendi');
-                                    location.reload();
-                                });
-                            } 
-                            else {
-                                $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
-                                    console.log(resultData);
-                                    if (resultData.indexOf("Err-") > -1) {
-                                        if (resultData.indexOf("duplicate")) {
-                                            alert("Görsel Adı zaten mevcut.");
-                                        }
-                                        else {
-                                            alert("Hata");
-                                        }
-                                       
+
+                $('#btnFileAdd').click(function () {
+                    debugger;
+                    try {
+                        if (DocName == "Documents" || DocName == "Gallery" ) {
+                            $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
+                                alert('Başarıyla yüklendi');
+                                location.reload();
+                            });
+                        }
+                        else {
+                            $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
+                                console.log(resultData);
+                                if (resultData.indexOf("Err-") > -1) {
+                                    if (resultData.indexOf("duplicate")) {
+                                        alert("Görsel Adı zaten mevcut.");
                                     }
                                     else {
-                                        alert('Başarıyla yüklendi');
-                                        location.reload();
+                                        alert("Hata");
                                     }
 
-                                    
-                                });
-                              //$('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
-                              //$('#file_link_' + DocName + '').val(el.entry.path);
-                            }
+                                }
+                                else {
+                                    alert('Başarıyla yüklendi');
+                                    location.reload();
+                                }
 
-                        } catch (e) {
-                            console.log(e);
 
+                            });
+                            //$('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
+                            //$('#file_link_' + DocName + '').val(el.entry.path);
                         }
-                    });
 
-                })
+                    } catch (e) {
+                        console.log(e);
+
+                    }
+                });
+
+            })
         </script>
 
         <script>
@@ -239,7 +235,7 @@
                 }
             });
 
-            
+
         </script>
 
     </div>

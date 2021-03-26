@@ -14,15 +14,11 @@ namespace CMS.Controllers
 {
     public class ContentPageController : Controller
     {
-#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IHostingEnvironment _IHostingEnvironment;
-#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IContentPageService _IContentPageService;
         IDocumentsService _IDocumentsService;
 
-#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         public ContentPageController(IHostingEnvironment _IHostingEnvironment, IContentPageService _IContentPageService, IDocumentsService _IDocumentsService)
-#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         {
             this._IContentPageService = _IContentPageService;
             this._IDocumentsService = _IDocumentsService;
@@ -88,7 +84,7 @@ namespace CMS.Controllers
             var result = _IContentPageService.GetPaging(o => o.ContentTypesId == selectid, true, param, false,
                 o => o.Lang, o => o.Documents, o => o.ContentPageChilds, o => o.Parent, o => o.ContentTypes);
 
-            result.data = result.data.OrderByDescending(o => o.CreaDate).ThenByDescending(o => o.Name).ToList();
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
@@ -146,77 +142,8 @@ namespace CMS.Controllers
             return Json(result);
         }
 
-        public ActionResult GetTechnicalProperties([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var orders = _IDocumentsService.Where(o => o.TechnicalPropertyId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
-            return Json(result);
-        }
 
-        public ActionResult GetCadData([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var orders = _IDocumentsService.Where(o => o.CadDataId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
-            return Json(result);
-        }
 
-        public ActionResult GetBIMFiles([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var orders = _IDocumentsService.Where(o => o.BIMFileId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
-            return Json(result);
-        }
-
-        public ActionResult GetTechnicalDocuments([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var orders = _IDocumentsService.Where(o => o.TechnicalDocumentId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
-            return Json(result);
-        }
 
         [HttpPost]
         public JsonResult GetSelect()
@@ -247,20 +174,11 @@ namespace CMS.Controllers
         [HttpPost]
         public JsonResult InsertOrUpdate(ContentPage postmodel)
         {
-            try
-            {
-                postmodel.Description = HttpUtility.HtmlDecode(postmodel.Description);
-                postmodel.ContentData = HttpUtility.HtmlDecode(postmodel.ContentData);
-                postmodel.ContentShort = HttpUtility.HtmlDecode(postmodel.ContentShort);
-                var result = _IContentPageService.InsertOrUpdate(postmodel);
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
+            postmodel.Description = HttpUtility.HtmlDecode(postmodel.Description);
+            postmodel.ContentData = HttpUtility.HtmlDecode(postmodel.ContentData);
+            postmodel.ContentShort = HttpUtility.HtmlDecode(postmodel.ContentShort);
+            var result = _IContentPageService.InsertOrUpdate(postmodel);
+            return Json(result);
         }
 
         [HttpPost]
@@ -439,10 +357,6 @@ namespace CMS.Controllers
                 var dc = _IDocumentsService.Where().Result.ToList();
                 result.Documents = dc.Where(o => o.DocumentId == result.Id).ToList();
                 result.Gallery = dc.Where(o => o.GalleryId == result.Id).ToList();
-                result.TechnicalProperties = dc.Where(o => o.TechnicalPropertyId == result.Id).ToList();
-                result.CadDatas = dc.Where(o => o.CadDataId == result.Id).ToList();
-                result.BIMFiles = dc.Where(o => o.BIMFileId == result.Id).ToList();
-                result.TechnicalDocuments = dc.Where(o => o.TechnicalDocumentId == result.Id).ToList();
             }
             return (result);
         }
@@ -487,8 +401,6 @@ namespace CMS.Controllers
             ViewBag.postModel = row;
             return View();
         }
-
-
 
 
         private string GetPathAndFilename(string filename)

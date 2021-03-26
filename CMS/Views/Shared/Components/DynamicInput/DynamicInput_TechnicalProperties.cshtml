@@ -152,7 +152,7 @@
                                     else if (prpName == "BannerImage" || prpName == "Picture" || prpName == "ThumbImage")
                                     {
                                         var doc = value as Documents;
-                                        var imageLink = "http://interalcms.zonagency.com/fileupload/UserFiles/Folders/" + (doc==null? "/assets/media/users/blank.png":doc.Link);
+                                        var imageLink = SessionRequest.siteConfig.ImageUrl + "/fileupload/UserFiles/Folders/" + (doc == null ? "/assets/media/users/blank.png" : doc.Link);
                                         <!--begin::Card-->
                                         <div class="card card-custom gutter-b example example-compact col-md-4">
                                             <div class="card-header">

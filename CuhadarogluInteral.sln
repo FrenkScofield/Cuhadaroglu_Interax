@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "Helpers\Helpers.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSSite", "CMSSite\CMSSite.csproj", "{F78D2999-2D74-4462-B8A1-9489C5FEB7DC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService", "MailService\MailService.csproj", "{027DC90A-F673-4A51-A9A0-4918D97DDB4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F78D2999-2D74-4462-B8A1-9489C5FEB7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F78D2999-2D74-4462-B8A1-9489C5FEB7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F78D2999-2D74-4462-B8A1-9489C5FEB7DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{027DC90A-F673-4A51-A9A0-4918D97DDB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027DC90A-F673-4A51-A9A0-4918D97DDB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027DC90A-F673-4A51-A9A0-4918D97DDB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027DC90A-F673-4A51-A9A0-4918D97DDB4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

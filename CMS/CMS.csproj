@@ -1,19 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
 
   <PropertyGroup>
-    
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>CMS</AssemblyName>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <UserSecretsId>32a82d09-efd2-498b-a232-8f9bad36c644</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.3" />
-    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2020.3.915" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2021.1.119" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.2" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -27,50 +30,12 @@
     <None Remove="Templates\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Views\ProjectProduct\Index.cshtml" />
-    <None Include="Views\SiteConfig\Index.cshtml" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.svg" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.woff2" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-regular-400.svg" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-regular-400.woff2" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-solid-900.svg" />
-    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-solid-900.woff2" />
-    <None Include="wwwroot\content\css\fonts\flaticon2\Flaticon2.svg" />
-    <None Include="wwwroot\content\css\fonts\flaticon2\Flaticon2.woff2" />
-    <None Include="wwwroot\content\css\fonts\flaticon\Flaticon.svg" />
-    <None Include="wwwroot\content\css\fonts\line-awesome\line-awesome.svg" />
-    <None Include="wwwroot\content\css\fonts\line-awesome\line-awesome.woff2" />
-    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0A3R1Gd8.woff2" />
-    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0AnR1Gd8.woff2" />
-    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0DXR1.woff2" />
-    <None Include="wwwroot\content\css\fonts\socicon\socicon.svg" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJbecmNE.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJfecg.woff2" />
-    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJnecmNE.woff2" />
-  </ItemGroup>
-
-
- 
 
   <ItemGroup>
     <ProjectReference Include="..\DynamicSiteService\DynamicSiteService.csproj" />
     <ProjectReference Include="..\GenericRepoPattern\GenericRepoPattern.csproj" />
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
   </ItemGroup>
-
 
 
 </Project>

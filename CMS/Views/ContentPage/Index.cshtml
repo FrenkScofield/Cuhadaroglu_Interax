@@ -12,6 +12,7 @@
     var dt_ContentPage = "#dt_" + controllerName_Content;
     var selecttype_ContentPage = "@selecttype_ContentPage";
     var selectname_ContentPage = "@selectname_ContentPage";
+      var descname_ContentPage = "@descname";
 </script>
 <style>
     .hideMe {
@@ -183,14 +184,13 @@
                         var data = json.data;
 
                         var website = siteConfig.BaseUrl;
-
                         $.each(data, function (i, row) {
-                            var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '" title="Edit"><i class="la la-edit"></i></a>';
+                            var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '&selectname=' + selectname_ContentPage + '&selecttype=' + selecttype_ContentPage + '&descname=' + descname_ContentPage + '" title="Edit"><i class="la la-edit"></i></a>';
 
                             detail += '<a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' + website + row.Link + '" title="Önizleme"><i class="fa fa-eye"></i></a>';
 
                             if (row.IsActive == true) {
-                                detail += '<label class="checkbox checkbox-success"><input disabled type="checkbox" name="" checked="checked"><span></span></label>';
+                                detail += '<label class="checkbox checkbox-success" style="display:inline-flex"><input disabled type="checkbox" name="" checked="checked"><span></span></label>';
                             }
                             else {
                                 detail += '<label class="checkbox"><input disabled type="checkbox" name="" ><span></span></label>';
@@ -243,11 +243,11 @@
                 "lengthChange": true,
                 "processing": true,
                 "columns": columns,
-                "order": [[0, "desc"]],
+                "order": [] ,
                 rowReorder: true,
                 columnDefs: [
-                    { orderable: true, className: 'reorder', targets: 0 },
-                    { orderable: false, targets: '_all' }
+                    { orderable: false, className: 'reorder', targets: 0, order: false },
+                    { orderable: true, targets: '_all' }
                 ],
             });
             table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {

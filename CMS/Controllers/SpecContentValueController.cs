@@ -55,13 +55,21 @@ namespace CMS.Controllers
                             var rowResult = _ISpecContentValueService.Delete(rowItem);
                             var res = _ISpecContentValueService.SaveChanges();
                         }
+
                     }
                     else
                     {
                         var res = _ISpecContentValueService.InsertOrUpdate(o);
                         insertAll.Add(res);
                     }
-                }  
+
+                }
+                else
+                {
+
+                }
+
+
             });
             return Json(insertAll);
         }

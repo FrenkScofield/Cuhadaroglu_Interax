@@ -144,9 +144,9 @@ public partial class CMSDBContext : DbContext
         var filterExpression = CreateFilterExpression<TEntity>();
         if (filterExpression == null) return;
         //if (entityType.GetType().IsInterface==true)
-        if (false)
-            modelBuilder.Query<TEntity>().HasQueryFilter(filterExpression);
-        else
+        //if (false)
+        //    modelBuilder.Query<TEntity>().HasQueryFilter(filterExpression);
+        //else
             modelBuilder.Entity<TEntity>().HasQueryFilter(filterExpression);
     }
 
