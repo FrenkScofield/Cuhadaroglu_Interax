@@ -77,7 +77,7 @@ namespace CMSSite.Components
                 ViewBag.ProjectList = _IProjectProductService.Where(o => o.ProductId == content.Id, true, false, o => o.Project, o => o.Project.ThumbImage).Result.ToList();
             }
 
-            var Specs = _ISpecService.Where(null, true, false, o => o.Parent).Result.ToList();
+            var Specs = _ISpecService.Where(null, true, false, o => o.Parent,o=>o.SpecAttrs).Result.ToList();
             ViewBag.Specs = Specs;
             int langID = content != null ? content.LangId : 1;
             if (content != null && _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != content.LangId)
@@ -138,8 +138,12 @@ namespace CMSSite.Components
 
             if (TemplateType == TemplateType.ProjeListeleme)
             {
-                List<int> currContentList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).Select(x => x.Id).ToList();
-                ViewBag.subPages = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
+                List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
+                List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
+                //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
+              
+                ViewBag.subPages = currList;
+                ViewBag.currSpecList = currSpecList;
             }
             else if (TemplateType == TemplateType.BlogListeleme)
             {
