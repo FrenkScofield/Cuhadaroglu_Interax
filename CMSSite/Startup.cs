@@ -105,7 +105,7 @@ namespace CMSSite
             }
             else
             {
-                //app.UseHsts();
+                app.UseHsts();
             }
             app.UseStaticFiles();
             app.UseRouting();
@@ -121,16 +121,6 @@ namespace CMSSite
             //app.InitializeDatabase();
 
             SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
-
-
-            var supportedCultures = new[] { new CultureInfo("en-EN") };
-
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en-EN"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
 
             app.UseMvc(routes =>
             {

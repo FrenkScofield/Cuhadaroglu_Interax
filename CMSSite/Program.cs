@@ -23,7 +23,7 @@ namespace CMSSite
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>().CaptureStartupErrors(true).UseSetting("detailedErrors", "true");
                     webBuilder.UseSerilog((ctx, config) => { config.ReadFrom.Configuration(ctx.Configuration); });
                 });
     }
