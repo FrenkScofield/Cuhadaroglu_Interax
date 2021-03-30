@@ -70,7 +70,7 @@
                                             case SpecType.editor:
                                                 {
                                                     @(Html.Kendo().Editor()
-                                                          .Name("editor_" + item2.Name).Encoded(false).PasteCleanup(p => p.All())
+                                                          .Name("editor_" + item2.Id).Encoded(false).PasteCleanup(p => p.All())
                                                           .HtmlAttributes(new { ContentPageId = ContentPageId, SpecId = item2.Id, dataid ="item_editor", style = "width: 100%; height:200px", aria_label = "editor" })
                                                           .Tools(tools => tools
                                                             .Clear()
@@ -136,8 +136,24 @@
             $.LoadingOverlay("show");
             $.ajx('/SpecContentValue/InsertOrUpdateBulk',
                 { postModel: postModel }, function (resultData) {
-                    debugger;
-                    try { location.reload(); } catch (ex) { debugger; location.reload(); }
+                    try {
+                        var messageStr = "";
+                        $.each(resultData, function (i, item) {
+                            if (item.ResultType.MessageList.length > 0)
+                                messageStr += item.ResultType.MessageList;
+                        });
+                        if (messageStr) {
+                            alert("Bir hatayla karşılaşıldı. Lütfen Kontrol ediniz.");
+                        }
+                        else {
+                            alert("Spec' ler güncellendi")
+                        }
+                        //$('.tabbar.nav.nav-tabs.nav-bold.nav-tabs-line.nav-tabs-line-3x li a:last').click()
+
+                    } catch (ex) {
+                        alert("Bir hatayla karşılaşıldı. Lütfen Kontrol ediniz.");
+
+                    }
 
                     $.LoadingOverlay("hide");
                 }, function () { location.reload(); });
