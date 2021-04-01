@@ -243,19 +243,11 @@
                 "lengthChange": true,
                 "processing": true,
                 "columns": columns,
-                "order": [] ,
-                rowReorder: true,
-                columnDefs: [
-                    { orderable: false, className: 'reorder', targets: 0, order: false },
-                    { orderable: true, targets: '_all' }
-                ],
-            });
-            table.on(dt_ContentPage + ' row-reorder.dt', function (dragEvent, diff, nodes) {
-                var myArray = [];
-                for (var i = 0, ien = diff.length; i < ien; i++) {
-                    var rowData = table.row(diff[i].node).data(); myArray.push({ id: rowData.Id, OrderNo: diff[i].newPosition, dataid: selecttype_ContentPage });
-                }
-                $.ajx('/' + controllerName_Content + '/UpdateOrder', { postModel: myArray }, function (resultData) { table.ajax.reload(); $(table).LoadingOverlay("hide"); });
+                "order": [],
+                //columnDefs: [
+                //    { orderable: false, className: 'reorder', targets: 0, order: false },
+                //    { orderable: true, targets: '_all' }
+                //],
             });
 
         }
