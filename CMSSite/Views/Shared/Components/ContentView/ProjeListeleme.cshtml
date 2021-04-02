@@ -6,7 +6,6 @@
     int LanguageID = (int)ViewBag.LanguageID;
     int parentCheck = 0;
 
-
     var Specs = ViewBag.Specs as List<Spec>;
     List<int> specList = Specs.Where(x => x.ParentId == 8 && x.SpecType == SpecType.list).Select(s => s.Id).ToList();
     var subSpecs = Specs.Where(x => x.ParentId == 8 && x.SpecType == SpecType.list).OrderBy(o => o.OrderNo).ToList();
@@ -20,59 +19,66 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <p>@subSpecs.FirstOrDefault(x => x.Id == 9).Name</p>
-                <select class="form-control form-control-solid form-control-lg" onchange="updateFilter(this)" id="ddYear" name="ddYear">
+                <select class="form-control form-control-solid form-control-lg" id="ddYear" name="ddYear">
                     <option value="">Yıl Seçiniz</option>
-                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 9).SpecAttrs.Distinct().OrderByDescending(o=>o.AttrValue))
+                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 9).SpecAttrs.Where(x => Specs.Where(s => s.Id == x.SpecId).Select(a => a.Id).ToList().Distinct().Contains(x.SpecId)).Distinct().OrderByDescending(o => o.AttrValue))
                     {
-                        <option value="@item.AttrValue">@item.AttrValue</option>
+                        <option value="@item.Id">@item.AttrValue</option>
                     }
-                </select> 
+                </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <p>@subSpecs.FirstOrDefault(x => x.Id == 10).Name</p>
-                <select class="form-control form-control-solid form-control-lg" onchange="updateFilter(this)" id="ddPlace" name="ddPlace">
+                <select class="form-control form-control-solid form-control-lg" id="ddPlace" name="ddPlace">
                     <option value="">Bölge Seçiniz</option>
-                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 10).SpecAttrs.Distinct().OrderBy(o => o.AttrValue))
+                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 10).SpecAttrs.Where(x => Specs.Where(s => s.Id == x.SpecId).Select(a => a.Id).ToList().Distinct().Contains(x.SpecId)).Distinct().OrderByDescending(o => o.AttrValue))
                     {
-                        <option value="@item.AttrValue">@item.AttrValue</option>
+                        <option value="@item.Id">@item.AttrValue</option>
                     }
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <p>@subSpecs.FirstOrDefault(x => x.Id == 14).Name</p>
-                <select class="form-control form-control-solid form-control-lg" onchange="updateFilter(this)" id="ddType" name="ddType">
+                <select class="form-control form-control-solid form-control-lg" id="ddType" name="ddType">
                     <option value="">Tür Seçiniz</option>
-                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 14).SpecAttrs.Distinct().OrderBy(o => o.AttrValue))
+                    @foreach (var item in subSpecs.FirstOrDefault(x => x.Id == 14).SpecAttrs.Where(x => Specs.Where(s => s.Id == x.SpecId).Select(a => a.Id).ToList().Distinct().Contains(x.SpecId)).Distinct().OrderByDescending(o => o.AttrValue))
                     {
-                        <option value="@item.AttrValue">@item.AttrValue</option>
+                        <option value="@item.Id">@item.AttrValue</option>
                     }
                 </select>
+            </div>
+            <div class="col-md-3">
+                <button type="button" id="btnFilter" class="site-button btn-half" style="margin-top: 50px; max-height: 42px; line-height: 15px; ">   <span> Filtrele</span></button>
             </div>
         </div>
     </div>
 </div>
 
 <div class="section-full  mobile-page-padding bg-white  p-t80 p-b80">
-
     <div class="container">
         <!-- TITLE START -->
         @*<div class="section-head">
                 <div class="sx-separator-outer separator-center">
                     <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
                         <h3 class="sep-line-one">Our Projects</h3>
-                    </div>  
+                    </div>
                 </div>
             </div>*@
         <!-- TITLE END -->
         <!-- GALLERY CONTENT START -->
+        <p id="isEmp">Seçtiğiniz kriterlere ait proje bulunamadı, lütfen tekrar deneyiniz.</p>
         <ul class="masonry-outer mfp-gallery work-grid row clearfix list-unstyled m-b0 project-posts">
             @foreach (var item in subPages)
             {
+                //   subSpecs.FirstOrDefault(x => x.Id == 9).SpecAttrs.Where(x => x.AttrValue == item.SpecContentValue.Where(t => t.ContentPageId == item.Id && t.ContentValue==item.v) Specs.Where(s => s.Id == x.SpecId).Select(a => a.Id).ToList().Distinct().Contains(x.SpecId)).Distinct().OrderByDescending(o => o.AttrValue)
+
+
                 
-                <!-- COLUMNS 1 -->
-                <li class="masonry-item project-post cat-1 col-lg-4 col-md-6 col-sm-12 m-b30 @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id).Select(s=>"chk_"+s.ContentValue).ToArray()))">
+
+
+                <li class="masonry-item project-post cat-1 col-lg-4 col-md-6 col-sm-12 m-b30 @(String.Join(" ", subSpecs.FirstOrDefault(x => ( x.Id == 9 )).SpecAttrs.Where(s=> item.SpecContentValue.Select(p => p.ContentValue).ToList().Contains(s.AttrValue)).Select(s => "chk_" + s.Id).ToArray())) @(String.Join(" ", subSpecs.FirstOrDefault(x => ( x.Id == 10 )).SpecAttrs.Where(s=> item.SpecContentValue.Select(p => p.ContentValue).ToList().Contains(s.AttrValue)).Select(s => "chk_" + s.Id).ToArray())) @(String.Join(" ", subSpecs.FirstOrDefault(x => ( x.Id == 14 )).SpecAttrs.Where(s=> item.SpecContentValue.Select(p => p.ContentValue).ToList().Contains(s.AttrValue)).Select(s => "chk_" + s.Id).ToArray()))">
                     <div class="sx-box   image-hover-block">
                         <div class="sx-thum-bx">
                             <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")">
@@ -85,34 +91,47 @@
                 </li>
             }
         </ul>
+
         <!-- GALLERY CONTENT END -->
 
     </div>
 </div>
 <!-- WHAT WE DO END -->
 <script>
+    $("#isEmp").hide();
+    var sections = $('.project-post');
+    $("#btnFilter").click(function () {
 
-        var sections = $('.project-post');
-        function updateFilter(el) {
-            debugger;
-         //   sections.hide();
-            var $container = jQuery('.masonry-outer');
-            var checkedYear = $("#ddYear").val();
-            var checkedPlace = $("#ddPlace").val();
-            var checkedType = $("#ddType").val();
-            console.log($(el).val())
-            if (checkedYear == "" && checkedPlace == "" && checkedType == "") {
-               // sections.show();
-                $container.isotope({ filter: '*' });
+        //   sections.hide();
+        var $container = jQuery('.masonry-outer');
+        var checkedYear = $("#ddYear").val();
+        var checkedPlace = $("#ddPlace").val();
+        var checkedType = $("#ddType").val();
+
+        if (checkedYear == "" && checkedPlace == "" && checkedType == "") {
+            // sections.show();
+            $container.isotope({ filter: '*' });
+            $("#isEmp").hide();
+        }
+        else {
+            var mFilter = "";
+            mFilter += checkedYear != "" ? ".chk_" + checkedYear : "";
+            mFilter += checkedPlace != "" ? ".chk_" + checkedPlace : "";
+            mFilter += checkedType != "" ? ".chk_" + checkedType : "";
+            console.log(mFilter)
+            $container.isotope({ filter: mFilter });
+            if ($(mFilter).length == 0) {
+                $("#isEmp").show();
             }
             else {
-                $container.isotope({ filter: ".chk_"+$(el).val()});
-              //  $(".chk_" + $(el).val()).show();
+                $("#isEmp").hide();
             }
-            
-          
+            //  $(".chk_" + $(el).val()).show();
         }
-        
 
+
+        return false;
+
+    })
 
 </script>

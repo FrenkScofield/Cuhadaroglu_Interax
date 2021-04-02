@@ -11,7 +11,6 @@ public partial class Documents : BaseModel
 
     }
 
-
     public string Types { get; set; }
 
     public string Name { get; set; }

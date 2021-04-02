@@ -8,8 +8,9 @@
     // int[] specList = new int[] { 16, 17, 64, 63 };
     var Specs = ViewBag.Specs as List<Spec>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
-    var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
+    var subSpecs = Specs.Where(x => (x.ParentId !=15) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
     List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
+    List<int> subSpecListFilter = Specs.Where(x => (x.ParentId !=15)).Select(s => s.Id).ToList();
     List<int> currSpecList = ViewBag.currSpecList as List<int>;
     int parentCheck = 0;
     var currParent = "";
@@ -67,14 +68,12 @@
                 <div class="news-listing">
                     @foreach (var item in subPages)
                     {
-                        <div class="blog-post blog-lg date-style-3 block-shadow @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && x.ContentValue=="true" && subSpecList.Contains(x.SpecId)  ).Select(s=>"chk_"+Specs.FirstOrDefault(o=>o.Id==s.SpecId).ParentId+"_"+s.SpecId).ToArray())  )">
-
+                        <div class="blog-post blog-lg date-style-3 block-shadow @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && x.ContentValue=="true" && subSpecListFilter.Contains(x.SpecId)  ).Select(s=>"chk_"+Specs.FirstOrDefault(o=>o.Id==s.SpecId).ParentId+"_"+s.SpecId).ToArray())  )">
                             <div class="sx-post-info  bg-white">
                                 <div class="sx-post-meta ">
                                     <h4 class="post-title pt-3">@Html.Raw(item.Name)</h4>
                                 </div>
-                                @*<div class="sx-post-title ">
-                                    </div>*@
+                                @*<div class="sx-post-title ">  </div>*@
                                 <div class="sx-post-text">
                                     <div class="row">
                                         <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
@@ -132,7 +131,7 @@
                     var parentID = selArr[0];
                     var specID = selArr[1];
                     if (parentID == 18) {
-                        firstCatArr.push( { parentID: parentID, specID: specID });
+                        firstCatArr.push({ parentID: parentID, specID: specID });
                     }
                     else {
                         secondCatArr.push({ parentID: parentID, specID: specID });
@@ -147,13 +146,10 @@
                         })
                     }
                     if (secondCatArr.length > 0) {
-
                         $(secondCatArr).each(function () {
                             $(".chk_" + this.parentID + "_" + this.specID).show();
                         })
-
                     }
-
                 }
                 else {
                     if (firstCatArr.length > 0) {
@@ -162,14 +158,13 @@
                             debugger;
                             var firstClass = ".chk_" + e.parentID + "_" + e.specID;
                             if (secondCatArr.length > 0) {
-                                $(secondCatArr).each(function (j,k) {
+                                $(secondCatArr).each(function (j, k) {
                                     var secondClass = ".chk_" + k.parentID + "_" + k.specID;
 
                                     $(firstClass + secondClass).show();
-                                    console.log(firstClass +  secondClass + " >>> show");
+                                    console.log(firstClass + secondClass + " >>> show");
                                 })
                             }
-
                         }
                         )
                     }

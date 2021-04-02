@@ -77,7 +77,7 @@ namespace CMSSite.Components
                 ViewBag.ProjectList = _IProjectProductService.Where(o => o.ProductId == content.Id, true, false, o => o.Project, o => o.Project.ThumbImage).Result.ToList();
             }
 
-            var Specs = _ISpecService.Where(null, true, false, o => o.Parent,o=>o.SpecAttrs).Result.ToList();
+            var Specs = _ISpecService.Where(null, true, false, o => o.Parent, o => o.SpecAttrs).Result.ToList();
             ViewBag.Specs = Specs;
             int langID = content != null ? content.LangId : 1;
             if (content != null && _httpContextAccessor.HttpContext.Session.GetInt32("LanguageID") != content.LangId)
@@ -108,7 +108,7 @@ namespace CMSSite.Components
             ViewBag.Pages = contentPages.ToList();
             switch (currState)
             {
-                case "Uygulamacılar":
+                case "Uygulayıcı":
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
@@ -141,7 +141,7 @@ namespace CMSSite.Components
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
-              
+
                 ViewBag.subPages = currList;
                 ViewBag.currSpecList = currSpecList;
             }
@@ -153,12 +153,14 @@ namespace CMSSite.Components
             {
 
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
-                List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
+         
+                List<int> relSpecListIds = Specs.Where(x => x.ParentId != 15).Select(s => s.Id).ToList();
+                List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Where(k=>relSpecListIds.Contains(k.SpecId) && k.ContentValue == "true").Select(s => s.SpecId).Distinct().ToList();
+                 
                 ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent.Id && x.IsDeleted == null).ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
                 ViewBag.subPages = currList;
-                ViewBag.currSpecList = currSpecList;
-
+                ViewBag.currSpecList = currSpecList; 
                 //select Distinct SpecId from SpecContentValue
             }
             else if (TemplateType == TemplateType.KategoriListeleme)

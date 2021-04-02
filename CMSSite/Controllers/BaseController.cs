@@ -380,7 +380,7 @@ namespace CMSSite.Controllers
             // ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
             switch (currState)
             {
-                case "Uygulamacılar":
+                case "Uygulayıcı":
                     isBayi = true;
                     ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
                     break;
@@ -441,8 +441,8 @@ namespace CMSSite.Controllers
             //_httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);   
             switch (ID)
             {
-                case "Uygulamacılar":
-                    currState = "Uygulamacılar";
+                case "Uygulayıcı":
+                    currState = "Uygulayıcı";
                     break;
                 case "Endüstriyel":
                     currState = "Endüstriyel";

@@ -9,7 +9,6 @@ public partial class Forms : BaseModel
     public Forms()
     {
     }
-
     [DisplayName("Ad Soyad")]
     public string NameSurname { get; set; }
 
@@ -43,7 +42,4 @@ public partial class Forms : BaseModel
     [DisplayName("Custom3")]
     public string Custom3 { get; set; }
 
-
-
 }
-

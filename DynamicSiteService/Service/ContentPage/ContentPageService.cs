@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Web;
 
 public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IContentPageService
-{
-
-
+{ 
     public ContentPageService(CMSDBContext context, IBaseSession sessionInfo) : base(context, sessionInfo)
     {
     }
@@ -14,8 +12,7 @@ public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IConte
     {
         RModel<ContentPage> res = new RModel<ContentPage>();
         res.ResultType = new ResultType();
-        res.ResultType.MessageList = new List<string>();
-
+        res.ResultType.MessageList = new List<string>(); 
         //Duplicate Control
         //var modelControl = Where(o => o.Id != model.Id &&  o.Link == model.Link, false).Result.FirstOrDefault();
         //if (modelControl != null)
@@ -28,14 +25,12 @@ public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IConte
         model.ContentData = HttpUtility.HtmlDecode(model.ContentData);
         model.ContentShort = HttpUtility.HtmlDecode(model.ContentShort);
         if (false)
-        {
-
+        { 
         }
         else
         {
             if (model.Id > 0)
-            {
-            
+            { 
                 res.ResultRow = Update(model);
             }
             else
@@ -46,12 +41,6 @@ public class ContentPageService : GenericRepo<CMSDBContext, ContentPage>, IConte
             res.ResultType.RType = RType.OK;
         }
         return res;
-    }
-
-
-
-
-
-
+    } 
 }
 
