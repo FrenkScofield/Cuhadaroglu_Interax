@@ -95,7 +95,7 @@
                                                               imageBrowser.Upload("Upload", "FileManagerData");
                                                               //imageBrowser.Thumbnail("Thumbnail", "FileManagerData");
                                                           }
-                                                      ).Value(item2.SpecContentValue?.FirstOrDefault()?.ContentValue))}
+                                                      ).Value(item2.SpecContentValue?.FirstOrDefault(o=>o.ContentPageId == ContentPageId)?.ContentValue))}
                                                 break;
                                         }
                                     </div>}
@@ -132,13 +132,13 @@
                 });
             });
 
-
             $.LoadingOverlay("show");
             $.ajx('/SpecContentValue/InsertOrUpdateBulk',
                 { postModel: postModel }, function (resultData) {
                     try {
                         var messageStr = "";
                         $.each(resultData, function (i, item) {
+                            debugger;
                             if (item.ResultType.MessageList.length > 0)
                                 messageStr += item.ResultType.MessageList;
                         });
