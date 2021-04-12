@@ -13,99 +13,186 @@
     <div class="container">
         @if (content.FormType != null)
         {
-        <div class="section-content">
-            <!-- CONTACT FORM-->
-            <div class="row">
-                <div class="col-lg-8 col-md-12 col-sm-12">
-                    <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
-                        <div class="contact-one">
+            <div class="section-content">
+                <!-- CONTACT FORM-->
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
+                            <div class="contact-one">
 
-                            <!-- TITLE START -->
-                            <div class="section-head">
-                                <div class="sx-separator-outer separator-left">
-                                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
-                                        <h3 class="sep-line-one">
-                                            @Html.Raw(content.FormType?.Name)
-                                        </h3>
+                                <!-- TITLE START -->
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
+                                            <h3 class="sep-line-one">
+                                                @Html.Raw(content.FormType?.Name)
+                                            </h3>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- TITLE END -->
+
+                                <div class="form-group">
+                                    <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Email" type="text" class="form-control" required="" placeholder="Mail">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Phone" type="text" class="form-control" required="" placeholder="Telefon">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu">
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea name="Message" rows="4" class="form-control " required="" placeholder="Mesaj"></textarea>
+                                </div>
+
+                                <div class="text-right">
+                                    <div class="html-code" style="display: inline-block;">
+                                        <input type="checkbox" name="Custom3" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
+
+                                        <div id="test-modal" class="white-popup mfp-hide">
+                                            <h3>Kullanım Koşulları</h3>
+                                            <p>KİŞİSEL VERİLERİN İŞLENMESİ VE GÜVENLİĞİ FORMU Bu dokumanı onaylayarak 6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 5. Maddesi kapsamında Şirketimize iletmiş olduğunuz kişisel verilerinizin, hizmetlerimiz hakkında bilgi vermek ve sizlerle iletişime geçmek için kullanımına açıkça rıza göstermektesiniz.</p>
+                                            <p>Kişisel verileriniz kanuni düzenlemelere uygun olarak ticari teamüllerde öngörülen sürelerde işlenecektir.</p>
+                                            <p>Kanun kapsamında Veri Sorumlusu Şirketimiz; CUHADAROĞLU olup Kanun’daki tüm sorumluluk ve yükümlülüklerine uymayı kabul etmektedir. Kişisel Verilerinizin, Veri Sorumlusu Şirketimizin belirleyeceği yurtiçi veya yurtdışında bulunan 3. kişilere işbu verilerin saklanması, depolanması ve açık rıza gösterilen amaçlarla işlenmesi için aktarılmasına açıkça onay vermektesiniz. Kanuni haklarınız kapsamında; dilediğiniz zaman Veri Sorumlusu Şirketimize başvurarak tarafınıza ait kişisel verilerin işlenip işlenmediğini öğrenme, işlenen kişisel verileri varsa bunlara ilişkin bilgi talep etme, kişisel verilerin işlenme amacını ve bu verilerin amaca uygun kullanılıp kullanılmadığını öğrenme, kişisel verilerinin aktarıldığı üçüncü kişileri bilme, kişisel verilerindeki hataların düzeltilmesini ve eğer aktarım yapılmışsa ilgili üçüncü kişiden bu düzeltmenin istenmesini talep etme, kişisel verilerin işlenmesini gerektiren sebeplerin ortadan kalkması halinde bu verilerin silinmesini, yok edilmesini ya da anonim hale getirilmesini isteme ve eğer aktarım yapılmışsa bu talebin aktarılan üçüncü kişiye iletilmesini isteme, işlenen verilerin neticesinde kişi ile ilintili olumsuz bir sonuç çıkmasına itiraz etme, Kanun’a aykırı veri işleme nedeniyle zararının ortaya çıkması halinde zararını yasalar çerçevesinde talep etme hakkınız mevcuttur.</p>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function () {   $('.popup-modal').magnificPopup({
+                                            type: 'inline',
+                                            midClick: true,
+                                            mainClass: 'mfp-fade'
+                                        });
+                                        })
+                                    </script>
+                                    <style>
+
+                                        .white-popup {
+                                            position: relative;
+                                            background: #FFF;
+                                            padding: 40px;
+                                            width: auto;
+                                            max-width: 500px;
+                                            margin: 20px auto;
+                                            transition: 1s all;
+                                        }
+
+                                        .mfp-bg {
+                                        }
+
+                                        .mfp-fade.mfp-bg {
+                                            opacity: 0;
+                                            -webkit-transition: all 0.15s ease-out;
+                                            -moz-transition: all 0.15s ease-out;
+                                            transition: all 0.15s ease-out;
+                                        }
+
+
+                                            /* overlay animate in */
+
+                                            .mfp-fade.mfp-bg.mfp-ready {
+                                                opacity: 0.8;
+                                            }
+
+
+                                            /* overlay animate out */
+
+                                            .mfp-fade.mfp-bg.mfp-removing {
+                                                opacity: 0;
+                                            }
+
+                                        .mfp-fade.mfp-wrap .mfp-content {
+                                            opacity: 0;
+                                            transition: all 0.4s ease-out;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+                                            opacity: 1;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+                                            opacity: 0;
+                                        }
+                                    </style>
+                                    <button name="submit" type="submit" value="Submit" class="site-button btn-half">
+                                        <span> Gönder</span>
+                                    </button>
+                                </div>
+
                             </div>
-                            <!-- TITLE END -->
+                        </form>
 
-                            <div class="form-group">
-                                <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
-                            </div>
-
-                            <div class="form-group">
-                                <input name="Email" type="text" class="form-control" required="" placeholder="Mail">
-                            </div>
-
-                            <div class="form-group">
-                                <input name="Phone" type="text" class="form-control" required="" placeholder="Telefon">
-                            </div>
-
-                            <div class="form-group">
-                                <input name="Subject" type="text" required="" class="form-control" placeholder="Konu">
-                            </div>
-
-                            <div class="form-group">
-                                <textarea name="Message" rows="4" class="form-control " required="" placeholder="Mesaj"></textarea>
-                            </div>
-
-                            <div class="text-right">
-                                <button name="submit" type="submit" value="Submit" class="site-button btn-half">
-                                    <span> Gönder</span>
-                                </button>
-                            </div>
-
-                        </div>
-                    </form>
-
-                </div>
+                    </div>
 
 
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="contact-info block-shadow bg-white bg-center p-a40" style="background-image:url(images/background/bg-map.png)">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="contact-info block-shadow bg-white bg-center p-a40" style="background-image:url(images/background/bg-map.png)">
 
-                        <div>
-                            <!-- TITLE START -->
-                            <div class="section-head">
-                                <div class="sx-separator-outer separator-left">
-                                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
-                                        <h3 class="sep-line-one">@Html.Raw(content.FormType.DescName)</h3>
+                            <div>
+                                <!-- TITLE START -->
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
+                                            <h3 class="sep-line-one">@Html.Raw(content.FormType.DescName)</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- TITLE END -->
-                            <div class="sx-icon-box-wraper left p-b30">
-                                <div class="icon-xs"><i class="fa fa-phone"></i></div>
-                                <div class="icon-content">
-                                    <h5 class="m-t0">Telefon</h5>
-                                    <p>@Html.Raw(SessionRequest.config.Phone)</p>
+                                <!-- TITLE END -->
+                                <div class="sx-icon-box-wraper left p-b30">
+                                    <div class="icon-xs"><i class="fa fa-phone"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Telefon</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Phone)</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="sx-icon-box-wraper left p-b30">
-                                <div class="icon-xs"><i class="fa fa-envelope"></i></div>
-                                <div class="icon-content">
-                                    <h5 class="m-t0">Mail</h5>
-                                    <p>@Html.Raw(SessionRequest.config.Mail)</p>
+                                <div class="sx-icon-box-wraper left p-b30">
+                                    <div class="icon-xs"><i class="fa fa-envelope"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Mail</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Mail)</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="sx-icon-box-wraper left">
-                                <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
-                                <div class="icon-content">
-                                    <h5 class="m-t0">Adres</h5>
-                                    <p>@Html.Raw(SessionRequest.config.Adress)</p>
+                                <div class="sx-icon-box-wraper left">
+                                    <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
+                                    <div class="icon-content">
+                                        <h5 class="m-t0">Adres</h5>
+                                        <p>@Html.Raw(SessionRequest.config.Adress)</p>
+                                    </div>
                                 </div>
+                                <div class="sx-icon-box-wraper left">
+                                    <ul class="social-icons social-square social-dark m-b0">
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
+                                        {
+                                            <li><a href="@Html.Raw(SessionRequest.config.Facebook)" target="_blank" class="fa fa-facebook"></a></li>
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
+                                        {
+                                            <li><a href="@Html.Raw(SessionRequest.config.Linkedin)" target="_blank" class="fa fa-linkedin"></a></li>
+                                        }
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
+                                        {
+                                            <li><a href="@Html.Raw(SessionRequest.config.Instagram)" target="_blank" class="fa fa-instagram"></a></li>
+                                        }
+
+
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-            }
+        }
 
     </div>
 </div>

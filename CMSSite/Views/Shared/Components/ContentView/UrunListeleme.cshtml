@@ -40,7 +40,7 @@
                     <!-- FILTERS -->
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Filtreler</h4>
-                        @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)))
+                        @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)).OrderBy(o=>o.OrderNo))
                         {
                             if (item.ParentId != parentCheck)
                             {
@@ -55,7 +55,7 @@
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Kategoriler</h4>
                         <ul class="p-a10 bg-white">
-                            @foreach (var item in categories)
+                            @foreach (var item in categories.OrderBy(o => o.OrderNo))
                             {
                                 <li><a href="/@item.Link">@item.Name<span></span></a></li>
                             }
@@ -98,13 +98,9 @@
                                         <a href="/@item.Link" title="Devamını okumak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
                                     </div>
                                     <div class="widget_social_inks pull-right">
-                                        <ul class="social-icons social-square social-dark m-b0">
-                                            <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
-                                        </ul>
+                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@("http://interal.zonagency.com/"+@item.Link)'>
+                                            @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")
+                                        </div>
                                     </div>
                                 </div>
                             </div>

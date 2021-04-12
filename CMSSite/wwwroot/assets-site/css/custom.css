@@ -11,3 +11,12 @@
 font-size:23px; 
 }
 
+.social-icons {
+    list-style: none;
+    font-size: 30px !important;
+    margin-top: 25px !important;
+}
+    .social-icons li {
+     
+        padding: 10px !important;
+    }

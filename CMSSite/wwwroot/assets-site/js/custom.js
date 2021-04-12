@@ -744,6 +744,33 @@ All JavaScript fuctions Start
         document.ready ALL FUNCTION START
     ---------------------------------------------------------------------------------------------*/
     jQuery(document).ready(function () {
+
+        $(".copy-to-clipboard").click(function () {
+            var link = this.getAttribute("data-link");
+            console.log("sharing");
+
+            const el = document.createElement('textarea');
+            el.value = link;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            const selected =
+                document.getSelection().rangeCount > 0
+                    ? document.getSelection().getRangeAt(0)
+                    : false;
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            if (selected) {
+                document.getSelection().removeAllRanges();
+                document.getSelection().addRange(selected);
+            }
+            $(this).hide().delay(4000).fadeIn(1000);
+            $(this).prev().fadeIn(1000).delay(2000).fadeOut(1000);
+          
+        });
+
         //________Top Search bar Show Hide function by = custom.js ________//	 		
         site_search(),
             contact_slide(),
@@ -866,10 +893,12 @@ All JavaScript fuctions Start
             success: function (data) {
                 jQuery('.loading-area').hide();
                 if (data.ResultType.RType == 1) {
-                    jQuery("<div class='alert alert-success'>" + "Success Send..." + "</div>").insertBefore('form.cons-contact-form');
+                    jQuery("<div class='alert alert-success'>" + "Mesajınız gönderilmiştir..." + "</div>").insertBefore('form.cons-contact-form');
                 } else {
-                    jQuery("<div class='alert alert-danger'>" + data.MessageList + "</div>").insertBefore('form.cons-contact-form');
+                    jQuery("<div class='alert alert-danger'>Mesajınız gönderilirken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</div>").insertBefore('form.cons-contact-form');
                 }
+                $("html, body").animate({
+                    scrollTop: 0;
             }
         });
         jQuery('.cons-contact-form').trigger("reset");

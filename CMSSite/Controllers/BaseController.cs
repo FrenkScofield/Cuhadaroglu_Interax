@@ -90,8 +90,16 @@ namespace CMSSite.Controllers
 
         public IActionResult FormSave(Forms postModel)
         {
-            var result = _IFormsService.InsertOrUpdate(postModel);
-            return Json(result);
+            if (!string.IsNullOrEmpty(postModel.Custom3) && postModel.Custom3 == "true")
+            {
+
+                var result = _IFormsService.InsertOrUpdate(postModel);
+                return Json(result);
+            }
+            else
+            {
+                return Json("NO");
+            }
         }
 
         public IActionResult BaseContent()

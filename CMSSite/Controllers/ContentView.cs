@@ -103,30 +103,35 @@ namespace CMSSite.Components
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
 
-
+            List<ContentPage> FilteredCP = new List<ContentPage>();
             ViewBag.LanguageID = langID;
             ViewBag.Pages = contentPages.ToList();
             switch (currState)
             {
                 case "Uygulayıcı":
                     isBayi = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsBayi == isBayi).ToList();
+                    ViewBag.contentPages = FilteredCP;
                     break;
                 case "Endüstriyel":
                     isEndustri = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
+                    ViewBag.contentPages = FilteredCP;
                     break;
                 case "Mimarlar":
                     isMimar = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    ViewBag.contentPages = FilteredCP;
                     break;
                 case "Bireysel":
                     isBireysel = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    ViewBag.contentPages = FilteredCP;
                     break;
                 case "-":
                     isMimar = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    ViewBag.contentPages = FilteredCP;
                     break;
                 default:
                     isMimar = true;
@@ -152,7 +157,7 @@ namespace CMSSite.Components
             else if (TemplateType == TemplateType.UrunListeleme)
             {
 
-                List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
+                List<ContentPage> currList = FilteredCP.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
          
                 List<int> relSpecListIds = Specs.Where(x => x.ParentId != 15).Select(s => s.Id).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Where(k=>relSpecListIds.Contains(k.SpecId) && k.ContentValue == "true").Select(s => s.SpecId).Distinct().ToList();

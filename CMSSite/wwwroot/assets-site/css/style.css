@@ -7417,8 +7417,19 @@ blockquote.author-quote .fa-quote-left {
 		display: none;
 	}
 }
-
-
+.copy-to-clipboard {
+	cursor: pointer;
+}
+.copied{display:none;}
+.widget_social_inks .copied, .sx-share {
+	writing-mode: vertical-rl;
+	text-orientation: mixed;
+	padding: 13px;
+}
+.sx-post-title h4.post-title {
+	overflow: hidden;
+	height: 55px;
+}
 
 
 /*-------------------------------------
@@ -13458,6 +13469,12 @@ background: #000;
 	margin-bottom:0px;
 }
 
+@media only screen and (min-width:2000px) {
+	.flex-slide p {
+		line-height: 75px !important;
+		font-size:0.8em;
+	}
+}
 
 @media only screen and (max-width:991px) {
 .video-section-full{

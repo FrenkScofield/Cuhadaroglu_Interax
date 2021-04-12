@@ -203,8 +203,6 @@ function alerts(message, button, call) {
 (function ($) {
     "use strict";
 
-
-
     var postArray = [];
     $.ajx = function (url, data, successMethod, error) {
         //if (typeof data != "string" && data != null) {

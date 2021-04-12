@@ -31,14 +31,9 @@
                         <div class="m-b0">
                             <div class="sx-divider divider-1px  bg-black"><i class="icon-dot c-square"></i></div>
                         </div>
-                        <ul class="social-icons social-square social-darkest m-b0">
-                            <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
-                            <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
-                            <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
-                            <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
-                            <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
-                            <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
-                        </ul>
+                        <div class="copied site-button">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard site-button" data-link='@("http://interal.zonagency.com/"+content.Link)'>
+                            @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")<img src="/assets-site/images/share.svg" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,13 +139,13 @@
                                     </div>
                                 </div>
 
-                                <div class="sx-icon-box-wraper left">
+                                @*<div class="sx-icon-box-wraper left">
                                     <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
                                     <div class="icon-content">
                                         <h5 class="m-t0">Adres</h5>
                                         <p>@Html.Raw(SessionRequest.config.Adress)</p>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
