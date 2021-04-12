@@ -67,11 +67,11 @@
                         <form class="form" novalidate="novalidate" id="kt_login_signin_form">
                             <!--begin::Title-->
                             <div class="pb-13 pt-lg-0 pt-5">
-                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to HYBRO</h3>
+                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to @SessionRequest.siteConfig?.Title</h3>
                                 @*<span class="text-muted font-weight-bold font-size-h4">
-                                    New Here?
-                                    <a href="javascript:;" id="kt_login_signup" class="text-primary font-weight-bolder">Create an Account</a>
-                                </span>*@
+                                        New Here?
+                                        <a href="javascript:;" id="kt_login_signup" class="text-primary font-weight-bolder">Create an Account</a>
+                                    </span>*@
                             </div>
                             <!--begin::Title-->
                             <!--begin::Form group-->
@@ -192,7 +192,7 @@
                 <!--begin::Content footer-->
                 <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
                     <div class="text-dark-50 font-size-lg font-weight-bolder mr-10">
-                        <a href="/" class="text-dark-75 text-hover-primary">@Html.Raw(SessionRequest.copyright)</a>
+                        <a href="/" class="text-dark-75 text-hover-primary">@Html.Raw(SessionRequest.siteConfig.Copyright)</a>
                     </div>
 
                 </div>

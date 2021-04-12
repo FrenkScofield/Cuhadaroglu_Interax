@@ -20,7 +20,6 @@ public static class SessionRequest
     public static string StartPage = "Base";
     public static string StartAction = "Index";
     public static string version = DateTime.Now.ToString().Replace("-", "").Replace(":", "").Replace(".", "").Replace(" ", "");
-    public static string copyright = $"{DateTime.Now.Year} © Yazılım&Tasarım (Software&Design)  <a target='_blank' href='#'> by Hybrid</a>";
     public static string layoutID = "4";
     public static string layoutUrlBase = $"";
     public static string layoutUrl = $"";
