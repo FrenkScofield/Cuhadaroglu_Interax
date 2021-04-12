@@ -99,6 +99,14 @@
 
         var siteConfig =  @Json.Serialize(SessionRequest.siteConfig);
 
+        var SpecTypeAll = [];
+        function getSpecTypeAll() {
+            $.ajx("/Spec/GetSpecType", {}, function (result) {
+                SpecTypeAll = result;
+            }, function () { });
+        }
+        getSpecTypeAll();
+
         var TemplateTypeAll = [];
         function getTemplateTypeAll() {
             $.ajx("/ContentPage/getTemplateType", {}, function (result) {
