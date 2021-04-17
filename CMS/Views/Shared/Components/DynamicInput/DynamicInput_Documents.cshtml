@@ -93,7 +93,6 @@
                                 {
                                     if (prpName == "Gallery" || prpName == "Documents")
                                     {
-
                                         <div class="card card-custom gutter-b example example-compact col-md-12">
 
                                             <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
@@ -101,7 +100,66 @@
                                                     <!--begin::Info-->
                                                     <div class="d-flex align-items-center flex-wrap mr-2">
                                                         <!--begin::Page Title-->
-                                                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName == "Galeri" ? "Galeri" : "Döküman")</h5>
+                                                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName)</h5>
+                                                        <!--end::Page Title-->
+                                                        <!--begin::Action-->
+                                                        <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+                                                        @if (idval > 0)
+                                                        {
+                                                            <a href="/FileManagerData/FileManager?id=@idval&name=@prpName&cont=@Model.controllerName" class="mymodal btn-bg-success">
+                                                                Yeni Ekle
+                                                            </a>
+                                                        }
+                                                        <!--end::Action-->
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-md-12">
+
+
+                                                        @(Html.Kendo().Grid<Documents>()
+                                                        .Name("Grid_"+prpName)
+                                                        .Columns(columns => {
+                                                            columns.Bound(o => o.Id).Groupable(false);
+                                                            columns.Bound(o => o.Name);
+                                                            columns.Bound(o => o.Alt);
+                                                            columns.Bound(o => o.Title);
+                                                            columns.Bound(o => o.OrderNo);
+                                                            columns.Bound(o => o.CreaDate);
+                                                            columns.Command(command => command.Destroy()).Width(120).Title("İşlemler");
+                                                        })
+                                                        .Pageable()
+                                                        .Sortable()
+                                                         .Editable(editable => editable.Mode(GridEditMode.InLine))
+                                                        .Filterable()
+                                                        .Scrollable()
+                                                        .DataSource(dataSource =>dataSource.Ajax()
+                                                        .Read(read => read.Action("Get" +prpName , "ContentPage", new {id= idval }))
+                                                        .PageSize(15)
+                                                           .Destroy(update => update.Action("DeleteImage", "ContentPage", new { id = idval }).Type(HttpVerbs.Post))
+                                                        .Events(events => events.Error("error_handler"))
+                                                        ))
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                    else if ((prpName == "CadDatas" || prpName == "TechnicalProperties" || prpName == "BIMFiles" || prpName == "TechnicalDocuments") && Model.model.GetPropValue("ContentTypesId").ToString() == "3")
+                                    {
+                                        <div class="card card-custom gutter-b example example-compact col-md-12">
+
+                                            <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+                                                <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                                                    <!--begin::Info-->
+                                                    <div class="d-flex align-items-center flex-wrap mr-2">
+                                                        <!--begin::Page Title-->
+                                                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName)</h5>
                                                         <!--end::Page Title-->
                                                         <!--begin::Action-->
                                                         <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
@@ -135,19 +193,20 @@
                                                         .Pageable()
                                                         .Sortable()
                                                         .Filterable()
+                                                         //.Editable(e => e.Mode(GridEditMode.PopUp))
+                                                         .Editable(editable => editable.Mode(GridEditMode.InLine))
                                                         .Scrollable()
                                                         .DataSource(dataSource =>dataSource.Ajax()
-                                                        .Read(read => read.Action("Get" +prpName , "ContentPage", new {id= idval }))
+                                                        .Read(read => read.Action("Get" + prpName , "ContentPage", new {id= idval }))
                                                         .PageSize(15)
-                                                        .Destroy("delete"+prpName, "ContentPage")
+                                                        .Destroy(update => update.Action("DeleteImage", "ContentPage", new { id = idval }).Type(HttpVerbs.Post))
+                                                        //  .Destroy("DeleteImage", "ContentPage",new {id = idval })
                                                         .Events(events => events.Error("error_handler"))
                                                         ))
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     }
                                     else if (prpName == "BannerImage" || prpName == "Picture" || prpName == "ThumbImage")
                                     {
@@ -214,6 +273,24 @@
                                                             {
                                                                 <input type="hidden" id="file_ThumbImageId_@prp.Name" name="file_id_@prp.Name" value="@doc?.ThumbImageId" />
                                                             }
+
+                                                            @if (prp.Name == "TechnicalDocumentId")
+                                                            {
+                                                                <input type="hidden" id="file_TechnicalDocumentId_@prp.Name" name="file_id_@prp.Name" value="@doc?.TechnicalDocumentId" />
+                                                            }
+                                                            @if (prp.Name == "BIMFileId")
+                                                            {
+                                                                <input type="hidden" id="file_BIMFileId_@prp.Name" name="file_id_@prp.Name" value="@doc?.BIMFileId" />
+                                                            }
+                                                            @if (prp.Name == "CadDataId")
+                                                            {
+                                                                <input type="hidden" id="file_CadDataId_@prp.Name" name="file_id_@prp.Name" value="@doc?.CadDataId" />
+                                                            }
+                                                            @if (prp.Name == "TechnicalPropertyId")
+                                                            {
+                                                                <input type="hidden" id="file_TechnicalPropertyId_@prp.Name" name="file_id_@prp.Name" value="@doc?.TechnicalPropertyId" />
+                                                            }
+
 
 
                                                             Adı<input name="file_name_@prp.Name" id="file_name_@prp.Name" value="@doc?.Name" class="form-control form-control-solid form-control-sm" type="text" />

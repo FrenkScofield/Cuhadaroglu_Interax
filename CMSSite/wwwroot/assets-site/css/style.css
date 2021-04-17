@@ -7419,14 +7419,18 @@ blockquote.author-quote .fa-quote-left {
 }
 .copy-to-clipboard {
 	cursor: pointer;
+	margin-bottom: 30px;
 }
-.copied{display:none;}
+.copied {
+	display: none;
+	margin-bottom: 30px;
+}
 .widget_social_inks .copied, .sx-share {
 	writing-mode: vertical-rl;
 	text-orientation: mixed;
 	padding: 13px;
 }
-.sx-post-title h4.post-title {
+.sx-post-title h4 {
 	overflow: hidden;
 	height: 55px;
 }

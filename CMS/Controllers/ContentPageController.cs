@@ -142,6 +142,77 @@ namespace CMS.Controllers
             return Json(result);
         }
 
+        public ActionResult GetTechnicalProperties([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var orders = _IDocumentsService.Where(o => o.TechnicalPropertyId == id).Result;
+            orders = orders.ApplyOrdersFiltering(request.Filters);
+            var total = orders.Count();
+            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+            if (!request.Sorts.Any() && !request.Groups.Any())
+                orders = orders.OrderByDescending(o => o.CreaDate);
+            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+            var data = orders.ApplyOrdersGrouping(request.Groups);
+            var result = new DataSourceResult()
+            {
+                Data = data,
+                Total = total
+            };
+            return Json(result);
+        }
+
+        public ActionResult GetCadDatas([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var orders = _IDocumentsService.Where(o => o.CadDataId == id).Result;
+            orders = orders.ApplyOrdersFiltering(request.Filters);
+            var total = orders.Count();
+            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+            if (!request.Sorts.Any() && !request.Groups.Any())
+                orders = orders.OrderByDescending(o => o.CreaDate);
+            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+            var data = orders.ApplyOrdersGrouping(request.Groups);
+            var result = new DataSourceResult()
+            {
+                Data = data,
+                Total = total
+            };
+            return Json(result);
+        }
+
+        public ActionResult GetBIMFiles([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var orders = _IDocumentsService.Where(o => o.BIMFileId == id).Result;
+            orders = orders.ApplyOrdersFiltering(request.Filters);
+            var total = orders.Count();
+            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+            if (!request.Sorts.Any() && !request.Groups.Any())
+                orders = orders.OrderByDescending(o => o.CreaDate);
+            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+            var data = orders.ApplyOrdersGrouping(request.Groups);
+            var result = new DataSourceResult()
+            {
+                Data = data,
+                Total = total
+            };
+            return Json(result);
+        }
+
+        public ActionResult GetTechnicalDocuments([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var orders = _IDocumentsService.Where(o => o.TechnicalDocumentId == id).Result;
+            orders = orders.ApplyOrdersFiltering(request.Filters);
+            var total = orders.Count();
+            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+            if (!request.Sorts.Any() && !request.Groups.Any())
+                orders = orders.OrderByDescending(o => o.CreaDate);
+            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+            var data = orders.ApplyOrdersGrouping(request.Groups);
+            var result = new DataSourceResult()
+            {
+                Data = data,
+                Total = total
+            };
+            return Json(result);
+        }
 
 
 

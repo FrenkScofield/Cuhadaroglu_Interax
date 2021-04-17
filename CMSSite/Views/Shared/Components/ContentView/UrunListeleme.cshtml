@@ -12,6 +12,7 @@
     List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
     List<int> subSpecListFilter = Specs.Where(x => (x.ParentId !=15)).Select(s => s.Id).ToList();
     List<int> currSpecList = ViewBag.currSpecList as List<int>;
+
     int parentCheck = 0;
     var currParent = "";
 }
@@ -40,7 +41,7 @@
                     <!-- FILTERS -->
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Filtreler</h4>
-                        @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)).OrderBy(o=>o.OrderNo))
+                        @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)))
                         {
                             if (item.ParentId != parentCheck)
                             {
@@ -55,7 +56,7 @@
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Kategoriler</h4>
                         <ul class="p-a10 bg-white">
-                            @foreach (var item in categories.OrderBy(o => o.OrderNo))
+                            @foreach (var item in categories)
                             {
                                 <li><a href="/@item.Link">@item.Name<span></span></a></li>
                             }

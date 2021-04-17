@@ -6,6 +6,8 @@
     var Specs = ViewBag.Specs as List<Spec>;
     var ProjectList = ViewBag.ProjectList as List<ProjectProduct>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
+
+    string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
 <!-- SECTION CONTENT START -->
@@ -140,12 +142,12 @@
                                 </div>
 
                                 @*<div class="sx-icon-box-wraper left">
-                                    <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Adres</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Adress)</p>
-                                    </div>
-                                </div>*@
+                                        <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
+                                        <div class="icon-content">
+                                            <h5 class="m-t0">Adres</h5>
+                                            <p>@Html.Raw(SessionRequest.config.Adress)</p>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -205,7 +207,7 @@
                                 <div class="acod-head">
                                     <h4 class="acod-title">
                                         <a data-toggle="collapse" href="#collapseThree5" class="collapsed" data-parent="#accordion5">
-                                            Ürün Teknik Özellikler
+                                            Ürün Katalogları
                                             <span class="indicator"><i class="fa fa-plus"></i></span>
                                         </a>
                                     </h4>
@@ -239,96 +241,98 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (currState != "Bireysel")
+                            {
+                                <div class="panel sx-panel">
+                                    <div class="acod-head">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
+                                                CAD Verileri
+                                                <span class="indicator"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour5" class="acod-body collapse">
+                                        <div class="acod-content p-tb15">
+                                            @foreach (var item in content.CadDatas)
+                                            {
+                                                <div class="col-md-3 m-b30">
+                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+                                                            <h4 class="sx-tilte">@item.Name</h4>
 
-                            <div class="panel sx-panel">
-                                <div class="acod-head">
-                                    <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
-                                            CAD Verileri
-                                            <span class="indicator"><i class="fa fa-plus"></i></span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseFour5" class="acod-body collapse">
-                                    <div class="acod-content p-tb15">
-                                        @foreach (var item in content.CadDatas)
-                                        {
-                                            <div class="col-md-3 m-b30">
-                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                    </div>
-                                                    <div class="icon-content">
-                                                        <h4 class="sx-tilte">@item.Name</h4>
-
-                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="panel sx-panel">
-                                <div class="acod-head">
-                                    <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="#collapseFive5" class="collapsed" data-parent="#accordion5">
-                                            BİM Dosyaları
-                                            <span class="indicator"><i class="fa fa-plus"></i></span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseFive5" class="acod-body collapse">
-                                    <div class="acod-content p-tb15">
-                                        @foreach (var item in content.BIMFiles)
-                                        {
-                                            <div class="col-md-3 m-b30">
-                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                    </div>
-                                                    <div class="icon-content">
-                                                        <h4 class="sx-tilte">@item.Name</h4>
+                                <div class="panel sx-panel">
+                                    <div class="acod-head">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="#collapseFive5" class="collapsed" data-parent="#accordion5">
+                                                BİM Dosyaları
+                                                <span class="indicator"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFive5" class="acod-body collapse">
+                                        <div class="acod-content p-tb15">
+                                            @foreach (var item in content.BIMFiles)
+                                            {
+                                                <div class="col-md-3 m-b30">
+                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+                                                            <h4 class="sx-tilte">@item.Name</h4>
 
-                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="panel sx-panel">
-                                <div class="acod-head">
-                                    <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="#collapseFive6" class="collapsed" data-parent="#accordion5">
-                                            Teknik Dökümanlar
-                                            <span class="indicator"><i class="fa fa-plus"></i></span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseFive6" class="acod-body collapse">
-                                    <div class="acod-content p-tb15">
-                                        @foreach (var item in content.TechnicalDocuments)
-                                        {
-                                            <div class="col-md-3 m-b30">
-                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                    </div>
-                                                    <div class="icon-content">
-                                                        <h4 class="sx-tilte">@item.Name</h4>
+                                <div class="panel sx-panel">
+                                    <div class="acod-head">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="#collapseFive6" class="collapsed" data-parent="#accordion5">
+                                                Teknik Dökümanlar
+                                                <span class="indicator"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFive6" class="acod-body collapse">
+                                        <div class="acod-content p-tb15">
+                                            @foreach (var item in content.TechnicalDocuments)
+                                            {
+                                                <div class="col-md-3 m-b30">
+                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
+                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+                                                            <h4 class="sx-tilte">@item.Name</h4>
 
-                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         }
                         else
                         {
@@ -336,43 +340,45 @@
                                 <div class="acod-head acc-actives">
                                     <h4 class="acod-title">
                                         <a href="/login">
-                                            Ürün Teknik Özellikler
+                                            Ürün Katalogları
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
                                     </h4>
                                 </div>
                             </div>
-                            <div class="panel sx-panel">
-                                <div class="acod-head acc-actives">
-                                    <h4 class="acod-title">
-                                        <a href="/login">
-                                            CAD Verileri
-                                            <span class="indicator"><i class="fa fa-lock"></i></span>
-                                        </a>
-                                    </h4>
+                            @if (currState != "Bireysel")
+                            {
+                                <div class="panel sx-panel">
+                                    <div class="acod-head acc-actives">
+                                        <h4 class="acod-title">
+                                            <a href="/login">
+                                                CAD Verileri
+                                                <span class="indicator"><i class="fa fa-lock"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="panel sx-panel">
-                                <div class="acod-head acc-actives">
-                                    <h4 class="acod-title">
-                                        <a href="/login">
-                                            BİM Dosyaları
-                                            <span class="indicator"><i class="fa fa-lock"></i></span>
-                                        </a>
-                                    </h4>
+                                <div class="panel sx-panel">
+                                    <div class="acod-head acc-actives">
+                                        <h4 class="acod-title">
+                                            <a href="/login">
+                                                BİM Dosyaları
+                                                <span class="indicator"><i class="fa fa-lock"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="panel sx-panel">
-                                <div class="acod-head acc-actives">
-                                    <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="/login" data-parent="#locked">
-                                            Teknik Dökümanlar
-                                            <span class="indicator"><i class="fa fa-lock"></i></span>
-                                        </a>
-                                    </h4>
+                                <div class="panel sx-panel">
+                                    <div class="acod-head acc-actives">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="/login" data-parent="#locked">
+                                                Teknik Dökümanlar
+                                                <span class="indicator"><i class="fa fa-lock"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
                                 </div>
-                            </div>
-
+                            }
 
                         }
 

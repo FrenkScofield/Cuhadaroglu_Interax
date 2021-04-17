@@ -206,7 +206,7 @@ public partial class ContentPage : BaseModel
 
                           
     [Column(Order = 3)]
-    [DisplayName("Ürün Teknik Özellikler")]
+    [DisplayName("Ürün Katalogları")]
     public virtual ICollection<Documents> TechnicalProperties { get; set; }
     [Column(Order = 3)]
     [DisplayName("CAD Verileri")]

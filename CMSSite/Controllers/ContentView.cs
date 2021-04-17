@@ -98,8 +98,7 @@ namespace CMSSite.Components
             bool isBireysel = false;
 
             contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsActive == true && x.IsInteral == true, true, false,
-                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
-
+                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList(); 
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
 
@@ -125,7 +124,7 @@ namespace CMSSite.Components
                     break;
                 case "Bireysel":
                     isBireysel = true;
-                    FilteredCP = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+                    FilteredCP = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
                     ViewBag.contentPages = FilteredCP;
                     break;
                 case "-":
@@ -143,12 +142,15 @@ namespace CMSSite.Components
 
             if (TemplateType == TemplateType.ProjeListeleme)
             {
+ 
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
 
                 ViewBag.subPages = currList;
                 ViewBag.currSpecList = currSpecList;
+
+
             }
             else if (TemplateType == TemplateType.BlogListeleme)
             {
@@ -158,9 +160,11 @@ namespace CMSSite.Components
             {
 
                 List<ContentPage> currList = FilteredCP.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
-         
+                List<int> currListIds = currList.Select(x => x.Id).ToList();
                 List<int> relSpecListIds = Specs.Where(x => x.ParentId != 15).Select(s => s.Id).ToList();
-                List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Where(k=>relSpecListIds.Contains(k.SpecId) && k.ContentValue == "true").Select(s => s.SpecId).Distinct().ToList();
+                //Spec List
+                var currSpecListObj = currList.SelectMany(x => x.SpecContentValue).Where(k => relSpecListIds.Contains(k.SpecId) && currListIds.Contains(k.ContentPageId) && k.ContentValue == "true");
+                List<int> currSpecList = currSpecListObj.Select(s => s.SpecId).Distinct().ToList();
                  
                 ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent.Id && x.IsDeleted == null).ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();

@@ -44,6 +44,7 @@ public partial class SiteConfig : BaseModel
     public string Youtube { get; set; }
     public string GooglePlus { get; set; }
     public string Tumblr { get; set; }
+    public string Pinterest { get; set; }
 
     public string HeadScript { get; set; }
     public string HeadStyle { get; set; }

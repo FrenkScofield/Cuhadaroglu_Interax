@@ -500,7 +500,7 @@ namespace CMSSite.Controllers
 
         public IActionResult Logout()
         {
-            _httpContextAccessor.HttpContext.Session.Set("fUser", "");
+            _httpContextAccessor.HttpContext.Session.Set("fUser", null);
             return Redirect("/");
         }
 

@@ -20,3 +20,7 @@ font-size:23px;
      
         padding: 10px !important;
     }
+.sx-post-title h4 {
+    overflow: hidden;
+    height: 55px;
+}

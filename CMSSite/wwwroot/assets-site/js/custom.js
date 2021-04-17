@@ -898,7 +898,8 @@ All JavaScript fuctions Start
                     jQuery("<div class='alert alert-danger'>Mesajınız gönderilirken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</div>").insertBefore('form.cons-contact-form');
                 }
                 $("html, body").animate({
-                    scrollTop: 0;
+                    scrollTop: 0
+                })
             }
         });
         jQuery('.cons-contact-form').trigger("reset");

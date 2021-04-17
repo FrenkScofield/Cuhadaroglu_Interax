@@ -187,7 +187,7 @@
                         $.each(data, function (i, row) {
                             var detail = '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="/' + controllerName_Content + '/InsertOrUpdatePage?id=' + row.Id + '&' + 'selectid=' + row.Id + '&selectname=' + selectname_ContentPage + '&selecttype=' + selecttype_ContentPage + '&descname=' + descname_ContentPage + '" title="Edit"><i class="la la-edit"></i></a>';
 
-                            detail += '<a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' + website + row.Link + '" title="Önizleme"><i class="fa fa-eye"></i></a>';
+                            detail += '<a target="_blank" class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' + website +"/"+ row.Link + '" title="Önizleme"><i class="fa fa-eye"></i></a>';
 
                             if (row.IsActive == true) {
                                 detail += '<label class="checkbox checkbox-success" style="display:inline-flex"><input disabled type="checkbox" name="" checked="checked"><span></span></label>';

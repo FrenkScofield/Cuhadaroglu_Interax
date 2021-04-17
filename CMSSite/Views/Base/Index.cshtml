@@ -5,15 +5,18 @@
     int LanguageID = ViewBag.LanguageID;
     var content = ViewBag.currContent as ContentPage;
     string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string;
+
+
     ContentPage homeIntro = contentPages.FirstOrDefault(x => x.ContentPageId == 12);
     var Projects = Pages.Where(x => x.ContentTypesId == 5).ToList();
     var Sliders = contentPages.Where(x => x.ContentTypesId == 4).ToList();
-    var Categories = Pages.Where(x => x.ContentPageId == 2).Take(3).OrderBy(o => o.ContentOrderNo).ToList();
+    var Categories = Pages.Where(x => x.ContentPageId == 2 && (currState == "Bireysel" ? x.Id != 5 : true)).Take(3).OrderBy(o => o.ContentOrderNo).ToList();
     var Blogs = Pages.Where(x => x.ContentPageId == 16).ToList();
+
+
     //   var ProjectFilters = Pages.Where(x => x.ContentTypesId == 5).ToList();
     // var Projects = Pages.Where(x => ProjectFilters.Select(s => s.Id).ToList().Contains(x.ContentPageId ?? 0));
     var x = "asd";
-
 }
 
 
@@ -265,45 +268,49 @@
     </div>
 }
 <!-- ABOUT COMPANY END -->
-<!-- WHAT WE DO START -->
-<div class="section-full  mobile-page-padding bg-white  p-t80 p-b30 bg-repeat overflow-hide" style="background-image:url(images/background/bg-5.png);">
 
-    <div class="container right-half-bg-image-outer">
-        <div class="right-half-bg-image bg-parallax bg-fixed bg-top-right" data-stellar-background-ratio="0" style=" background-size: contain; background-image: url(images/background/bg-2.jpg)"></div>
-        <!-- TITLE START -->
-        <div class="section-head">
-            <div class="sx-separator-outer separator-left">
-                <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                    <h3 class="sep-line-one">Sistemlerimiz</h3>
+
+@if (currState != "Endüstriyel")
+{
+    <div class="section-full  mobile-page-padding bg-white  p-t80 p-b30 bg-repeat overflow-hide" style="background-image:url(images/background/bg-5.png);">
+
+        <div class="container right-half-bg-image-outer">
+            <div class="right-half-bg-image bg-parallax bg-fixed bg-top-right" data-stellar-background-ratio="0" style=" background-size: contain; background-image: url(images/background/bg-2.jpg)"></div>
+            <!-- TITLE START -->
+            <div class="section-head">
+                <div class="sx-separator-outer separator-left">
+                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                        <h3 class="sep-line-one">Sistemlerimiz</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- TITLE END -->
+            <div class="section-content">
+                <div class="row number-block-one-outer justify-content-center">
+                    @{ var i = 0;}
+                    @foreach (var item in Categories)
+                    {
+                        i++;
+                        <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                            <div class="number-block-one animate-in-to-top">
+                                <a href="/@item.Link">
+                                    <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
+                                    <div class="figcaption bg-white text-center p-a20">
+                                        <h4 class="m-a0">@item.Name</h4>
+                                    </div>
+                                    <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
+                                        <span>0@(i)</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
-        <!-- TITLE END -->
-        <div class="section-content">
-            <div class="row number-block-one-outer justify-content-center">
-                @{ var i = 0;}
-                @foreach (var item in Categories)
-                {
-                    i++;
-                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
-                        <div class="number-block-one animate-in-to-top">
-                            <a href="/@item.Link">
-                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
-                                <div class="figcaption bg-white text-center p-a20">
-                                    <h4 class="m-a0">@item.Name</h4>
-                                </div>
-                                <div class="figcaption-number text-center sx-text-primary animate-in-to-top-content">
-                                    <span>0@(i)</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
     </div>
-</div> 
-<!-- WHAT WE DO END -->
+}
+
 <!-- PROJECTS START -->
 <div class="section-full mobile-page-padding  p-t80 p-b50 bg-white" id="proContent">
     <div class="section-content">
