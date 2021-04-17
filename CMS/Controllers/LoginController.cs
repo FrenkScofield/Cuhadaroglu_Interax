@@ -12,17 +12,13 @@ namespace CMS.Controllers
         ILangService _ILangService;
         IContentTypesService _IContentTypesService;
         IHttpContextAccessor _httpContextAccessor;
-#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IHostingEnvironment _IHostingEnvironment;
-#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
         IFormTypeService _IFormTypeService;
         public LoginController(
             ISiteConfigService _ISiteConfigService,
          IUserService _IUserService,
          IHttpContextAccessor _IHttpContextAccessor,
-#pragma warning disable CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
          IHostingEnvironment _IHostingEnvironment,
-#pragma warning restore CS0618 // 'IHostingEnvironment' artık kullanılmıyor: 'This type is obsolete and will be removed in a future version. The recommended alternative is Microsoft.AspNetCore.Hosting.IWebHostEnvironment.'
          IContentTypesService _IContentTypesService,
          ILangService _ILangService,
          IFormTypeService _IFormTypeService
@@ -40,6 +36,9 @@ namespace CMS.Controllers
 
         public IActionResult Login1()
         {
+            var siteConfig = _ISiteConfigService.Where().Result.FirstOrDefault();
+            _httpContextAccessor.HttpContext.Session.Set("siteConfig", siteConfig);
+
             if (_httpContextAccessor.HttpContext.Session.Get("_user") != null)
             {
                 return RedirectToAction("Index", "Base");

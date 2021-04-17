@@ -17,6 +17,7 @@ public partial class SiteConfig : BaseModel
     [Required()] public string layoutUrl { get; set; }
     [Required()] public string Logo { get; set; }
 
+    public string Copyright { get; set; }
     public string Map { get; set; }
     public string DefaultImage { get; set; }
     [Required()] public string BaseUrl { get; set; }

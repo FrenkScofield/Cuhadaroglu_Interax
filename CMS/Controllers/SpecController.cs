@@ -1,6 +1,7 @@
 ﻿using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -14,23 +15,14 @@ namespace CMS.Controllers
             this._ISpecService = _ISpecService;
         }
 
-        public ActionResult GetPaging([DataSourceRequest] DataSourceRequest request)
+        [HttpPost]
+        public JsonResult GetPaging(DTParameters<Spec> param, int selectid)
         {
-            var orders = _ISpecService.Where(null, true, false, o => o.Parent, o => o.Orj).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderBy(o => o.Id);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _ISpecService.GetPaging(null, true, param, false, o => o.Parent, o => o.Orj, o => o.Lang);
 
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
+
         }
 
         [HttpPost]
@@ -103,6 +95,24 @@ namespace CMS.Controllers
         {
             ViewBag.postModel = Get(Request.Query["id"].ToInt());
             return View();
+        }
+
+
+        public IActionResult UpdateOrder(List<OrderUpdateModel> postModel)
+        {
+            var rows = _ISpecService.Where().Result.ToList();
+            postModel.ForEach(o =>
+            {
+                var row = rows.FirstOrDefault(r => r.Id == o.Id);
+                if (row != null)
+                {
+                    row.OrderNo = o.OrderNo;
+                    _ISpecService.Update(row);
+                    _ISpecService.SaveChanges();
+                }
+            });
+
+            return Json("ok");
         }
 
 
