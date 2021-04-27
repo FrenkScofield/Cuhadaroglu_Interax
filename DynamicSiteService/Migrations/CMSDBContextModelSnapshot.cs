@@ -1166,6 +1166,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("IsDeleted")
                         .HasColumnType("datetime2");
 
@@ -1227,6 +1230,9 @@ namespace DynamicSiteService.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserType")

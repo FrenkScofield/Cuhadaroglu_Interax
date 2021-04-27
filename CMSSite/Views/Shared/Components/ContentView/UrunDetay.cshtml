@@ -41,14 +41,13 @@
             </div>
             <div class="col-lg-5 col-md-5 ">
                 <div class="project-detail-outer">
-                    @foreach (var item in content.Gallery)
-                    {
-                        <div class="project-detail-pic m-b30">
-                            <div class="sx-media">
-                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
-                            </div>
+
+                    <div class="project-detail-pic m-b30">
+                        <div class="sx-media">
+                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(content.Picture!=null?content.Picture.Link:"")" alt="@content.Name">
                         </div>
-                    }
+                    </div>
+
                 </div>
             </div>
 
@@ -71,7 +70,7 @@
                                     <div class="sx-separator-outer separator-left">
                                         <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
                                             <h3 class="sep-line-one">
-                                                @Html.Raw(content.FormType.DescName) Formu
+                                                @Html.Raw(content.FormType.DescName)
                                             </h3>
                                         </div>
                                     </div>
@@ -99,6 +98,75 @@
                                 </div>
 
                                 <div class="text-right">
+
+                                    <div class="text-right">
+                                        <input type="checkbox" name="Custom3" required="" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
+                                        <div id="test-modal" class="white-popup mfp-hide">
+                                            <h3>Kullanım Koşulları</h3>
+                                            <p>KİŞİSEL VERİLERİN İŞLENMESİ VE GÜVENLİĞİ FORMU Bu dokumanı onaylayarak 6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 5. Maddesi kapsamında Şirketimize iletmiş olduğunuz kişisel verilerinizin, hizmetlerimiz hakkında bilgi vermek ve sizlerle iletişime geçmek için kullanımına açıkça rıza göstermektesiniz.</p>
+                                            <p>Kişisel verileriniz kanuni düzenlemelere uygun olarak ticari teamüllerde öngörülen sürelerde işlenecektir.</p>
+                                            <p>Kanun kapsamında Veri Sorumlusu Şirketimiz; CUHADAROĞLU olup Kanun’daki tüm sorumluluk ve yükümlülüklerine uymayı kabul etmektedir. Kişisel Verilerinizin, Veri Sorumlusu Şirketimizin belirleyeceği yurtiçi veya yurtdışında bulunan 3. kişilere işbu verilerin saklanması, depolanması ve açık rıza gösterilen amaçlarla işlenmesi için aktarılmasına açıkça onay vermektesiniz. Kanuni haklarınız kapsamında; dilediğiniz zaman Veri Sorumlusu Şirketimize başvurarak tarafınıza ait kişisel verilerin işlenip işlenmediğini öğrenme, işlenen kişisel verileri varsa bunlara ilişkin bilgi talep etme, kişisel verilerin işlenme amacını ve bu verilerin amaca uygun kullanılıp kullanılmadığını öğrenme, kişisel verilerinin aktarıldığı üçüncü kişileri bilme, kişisel verilerindeki hataların düzeltilmesini ve eğer aktarım yapılmışsa ilgili üçüncü kişiden bu düzeltmenin istenmesini talep etme, kişisel verilerin işlenmesini gerektiren sebeplerin ortadan kalkması halinde bu verilerin silinmesini, yok edilmesini ya da anonim hale getirilmesini isteme ve eğer aktarım yapılmışsa bu talebin aktarılan üçüncü kişiye iletilmesini isteme, işlenen verilerin neticesinde kişi ile ilintili olumsuz bir sonuç çıkmasına itiraz etme, Kanun’a aykırı veri işleme nedeniyle zararının ortaya çıkması halinde zararını yasalar çerçevesinde talep etme hakkınız mevcuttur.</p>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('.popup-modal').magnificPopup({
+                                                type: 'inline',
+                                                midClick: true,
+                                                mainClass: 'mfp-fade'
+                                            });
+                                        })
+                                    </script>
+                                    <style>
+
+                                        .white-popup {
+                                            position: relative;
+                                            background: #FFF;
+                                            padding: 40px;
+                                            width: auto;
+                                            max-width: 500px;
+                                            margin: 20px auto;
+                                            transition: 1s all;
+                                        }
+
+                                        .mfp-bg {
+                                        }
+
+                                        .mfp-fade.mfp-bg {
+                                            opacity: 0;
+                                            -webkit-transition: all 0.15s ease-out;
+                                            -moz-transition: all 0.15s ease-out;
+                                            transition: all 0.15s ease-out;
+                                        }
+
+
+                                            /* overlay animate in */
+
+                                            .mfp-fade.mfp-bg.mfp-ready {
+                                                opacity: 0.8;
+                                            }
+
+
+                                            /* overlay animate out */
+
+                                            .mfp-fade.mfp-bg.mfp-removing {
+                                                opacity: 0;
+                                            }
+
+                                        .mfp-fade.mfp-wrap .mfp-content {
+                                            opacity: 0;
+                                            transition: all 0.4s ease-out;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+                                            opacity: 1;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+                                            opacity: 0;
+                                        }
+                                    </style>
+
                                     <button name="submit" type="submit" value="Submit" class="site-button btn-half">
                                         <span> Gönder</span>
                                     </button>
@@ -110,47 +178,7 @@
                     </div>
 
 
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="contact-info block-shadow bg-white bg-center p-a40" style="background-image:url(images/background/bg-map.png)">
 
-                            <div>
-                                <!-- TITLE START -->
-                                <div class="section-head">
-                                    <div class="sx-separator-outer separator-left">
-                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
-                                            <h3 class="sep-line-one">
-                                                @Html.Raw(content.FormType.DescName)
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- TITLE END -->
-                                <div class="sx-icon-box-wraper left p-b30">
-                                    <div class="icon-xs"><i class="fa fa-phone"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Telefon</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Phone)</p>
-                                    </div>
-                                </div>
-
-                                <div class="sx-icon-box-wraper left p-b30">
-                                    <div class="icon-xs"><i class="fa fa-envelope"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Mail</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Mail)</p>
-                                    </div>
-                                </div>
-
-                                @*<div class="sx-icon-box-wraper left">
-                                        <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
-                                        <div class="icon-content">
-                                            <h5 class="m-t0">Adres</h5>
-                                            <p>@Html.Raw(SessionRequest.config.Adress)</p>
-                                        </div>
-                                    </div>*@
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -190,12 +218,32 @@
                             </div>
                             <div id="collapseThree55" class="acod-body collapse">
                                 <div class="acod-content p-tb15">
-                                    @foreach (var item in content.Gallery)
-                                    {
-                                        <div class="col-md-3">
-                                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                                    <div class=" filter-carousal-1-outer relative z-index1">
+                                        <!-- TITLE END -->
+                                        <div class="filter-carousal-1  container-fluid p-b30">
+                                            <!-- IMAGE CAROUSEL START -->
+                                            <div class="section-content ">
+                                                <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
+                                                    @foreach (var item in content.Gallery)
+                                                    {
+                                                        <div class="item fadingcol col-one overflow-hide">
+                                                            <div class="sx-box   image-hover-block">
+                                                                <div class="sx-thum-bx">
+                                                                    <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                                                                </div>
+                                                                <div class="sx-info  p-t20 text-white">
+                                                                    <h4 class="sx-tilte"><a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank"><i class="fa fa-search"></i> Görüntüle</a></h4>
+                                                                    <p class="m-b0"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
+
+
 
                                 </div>
                             </div>
@@ -392,44 +440,46 @@
     </div>
 </div>
 <!-- SECTION CONTENT END -->
-
-<div class="section-full mobile-page-padding p-b50 bg-white" id="proContent">
-    <div class="section-content">
-        <div class="container">
-            <!-- TITLE START -->
-            <div class="section-head">
-                <div class="sx-separator-outer separator-center">
-                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                        <h3 class="sep-line-one">@content.Name'in kullanıldığı projeler</h3>
+@if (ProjectList != null && ProjectList.Count > 0)
+{
+    <div class="section-full mobile-page-padding p-b50 bg-white" id="proContent">
+        <div class="section-content">
+            <div class="container">
+                <!-- TITLE START -->
+                <div class="section-head">
+                    <div class="sx-separator-outer separator-center">
+                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                            <h3 class="sep-line-one">@content.Name'in kullanıldığı projeler</h3>
+                        </div>
                     </div>
                 </div>
+                <!-- TITLE END -->
             </div>
-            <!-- TITLE END -->
-        </div>
 
-        <div class=" filter-carousal-1-outer relative z-index1">
-            <!-- TITLE END -->
-            <div class="filter-carousal-1  container-fluid p-b30">
-                <!-- IMAGE CAROUSEL START -->
-                <div class="section-content ">
-                    <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
-                        @foreach (var item in ProjectList)
-                        {
-                            <div class="item fadingcol col-one overflow-hide">
-                                <div class="sx-box   image-hover-block">
-                                    <div class="sx-thum-bx">
-                                        <img src="@(item.Project.ThumbImage!=null?"http://interalcms.zonagency.com/fileupload/UserFiles/Folders/"+item.Project.ThumbImage.Link:"/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.Project.ThumbImage!=null?item.Project.ThumbImage.Alt:item.Project.Name)">
-                                    </div>
-                                    <div class="sx-info  p-t20 text-white">
-                                        <h4 class="sx-tilte"><a href="/@item.Project.Link">@item.Project.Name</a></h4>
-                                        <p class="m-b0"></p>
+            <div class=" filter-carousal-1-outer relative z-index1">
+                <!-- TITLE END -->
+                <div class="filter-carousal-1  container-fluid p-b30">
+                    <!-- IMAGE CAROUSEL START -->
+                    <div class="section-content ">
+                        <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
+                            @foreach (var item in ProjectList)
+                            {
+                                <div class="item fadingcol col-one overflow-hide">
+                                    <div class="sx-box   image-hover-block">
+                                        <div class="sx-thum-bx">
+                                            <img src="@(item.Project.ThumbImage != null ? "http://interalcms.zonagency.com/fileupload/UserFiles/Folders/" + item.Project.ThumbImage.Link : "/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.Project.ThumbImage != null ? item.Project.ThumbImage.Alt : item.Project.Name)">
+                                        </div>
+                                        <div class="sx-info  p-t20 text-white">
+                                            <h4 class="sx-tilte"><a href="/@item.Project.Link">@item.Project.Name</a></h4>
+                                            <p class="m-b0"></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}

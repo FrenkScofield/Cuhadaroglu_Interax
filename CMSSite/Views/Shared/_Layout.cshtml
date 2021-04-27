@@ -318,7 +318,7 @@
                                 <p>
                                     Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.
                                 </p>
-
+                                 Twitter Facebook Linkedin GooglePlus Tumblr Pinterest
                                 <ul class="social-icons  sx-social-links">
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                     {
@@ -332,7 +332,14 @@
                                     {
                                         <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
                                     }
-
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Twitter))
+                                    {
+                                        <li><a href="@SessionRequest.config.Twitter" class="fa fa-twitter"></a></li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Pinterest))
+                                    {
+                                        <li><a href="@SessionRequest.config.Pinterest" class="fa fa-pinterest"></a></li>
+                                    }
 
 
                                 </ul>

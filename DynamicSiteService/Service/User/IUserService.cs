@@ -8,7 +8,7 @@ using System;
 
 public interface IUserService : IGenericRepo<User>
 {
-    RModel<UserModel> InsertOrUpdate(User model);
+    RModel<User> InsertOrUpdate(User model);
 
 }
 

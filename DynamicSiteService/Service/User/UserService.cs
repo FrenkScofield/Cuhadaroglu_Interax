@@ -13,9 +13,9 @@ using System;
         public UserService(CMSDBContext context, IBaseSession sessionInfo) : base(context, sessionInfo)
         {
         }
-        public RModel<UserModel> InsertOrUpdate(User model)
+        public RModel<User> InsertOrUpdate(User model)
         {
-            RModel<UserModel> res = new RModel<UserModel>();
+            RModel<User> res = new RModel<User>();
             res.ResultType = new ResultType();
             res.ResultType.MessageList = new List<string>();
 
@@ -25,17 +25,17 @@ using System;
             {
                 res.ResultType.RType = RType.Warning;
                 res.ResultType.MessageList.Add("Duplicate");
-                res.ResultRow = modelControl as UserModel;
+                res.ResultRow = modelControl;
             }
             else
             {
                 if (model.Id > 0)
                 {
-                    res.ResultRow = Update(model) as UserModel;
+                    res.ResultRow = Update(model);
                 }
                 else
                 {
-                    res.ResultRow = Add(model) as UserModel;
+                    res.ResultRow = Add(model);
                 }
                 SaveChanges();
                 res.ResultType.RType = RType.OK;

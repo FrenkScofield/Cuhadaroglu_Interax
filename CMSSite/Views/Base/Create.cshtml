@@ -1,16 +1,23 @@
 ﻿
-<script src="~/general.js"></script>
 @{
     Layout = "_Layout";
 
 }
+
+<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#8950FC", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#E1E9FF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
 <script src="~/assets-site/css/login/classic/plugins.bundle.js"></script>
 <script src="~/assets-site/css/login/classic/prismjs.bundle.js"></script>
 <script src="~/assets-site/css/login/plugins.bundle.js"></script>
 <script src="~/assets-site/css/login/classic/general.js"></script>
 <link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" />
+<link href="~/assets-site/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/assets-site/plugins/sweetalert/sweetalert.min.js"></script>
 
-<script src="~/general.js"></script>
+<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.all.js"></script>
 
 
 <div class="section-full p-tb80 inner-page-padding stick_in_parent ">
@@ -35,7 +42,7 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label class="font-size-h6 font-weight-bolder text-dark">Mail</label>
-                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="email" name="Mail1" id="Mail1" autocomplete="off" />
+                                        <input required class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="email" name="UserName" id="UserName" autocomplete="off" />
                                     </div>
                                 </div>
 
@@ -86,11 +93,83 @@
                                     </div>
                                 </div>
 
+                                <div class="row form-group">
+                                    <div class="col-md-12">
 
+                                        <div class="text-right-remov">
+                                            <input type="checkbox" name="Custom3" required="" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
+                                            <div id="test-modal" class="white-popup mfp-hide">
+                                                <h3>Kullanım Koşulları</h3>
+                                                <p>KİŞİSEL VERİLERİN İŞLENMESİ VE GÜVENLİĞİ FORMU Bu dokumanı onaylayarak 6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 5. Maddesi kapsamında Şirketimize iletmiş olduğunuz kişisel verilerinizin, hizmetlerimiz hakkında bilgi vermek ve sizlerle iletişime geçmek için kullanımına açıkça rıza göstermektesiniz.</p>
+                                                <p>Kişisel verileriniz kanuni düzenlemelere uygun olarak ticari teamüllerde öngörülen sürelerde işlenecektir.</p>
+                                                <p>Kanun kapsamında Veri Sorumlusu Şirketimiz; CUHADAROĞLU olup Kanun’daki tüm sorumluluk ve yükümlülüklerine uymayı kabul etmektedir. Kişisel Verilerinizin, Veri Sorumlusu Şirketimizin belirleyeceği yurtiçi veya yurtdışında bulunan 3. kişilere işbu verilerin saklanması, depolanması ve açık rıza gösterilen amaçlarla işlenmesi için aktarılmasına açıkça onay vermektesiniz. Kanuni haklarınız kapsamında; dilediğiniz zaman Veri Sorumlusu Şirketimize başvurarak tarafınıza ait kişisel verilerin işlenip işlenmediğini öğrenme, işlenen kişisel verileri varsa bunlara ilişkin bilgi talep etme, kişisel verilerin işlenme amacını ve bu verilerin amaca uygun kullanılıp kullanılmadığını öğrenme, kişisel verilerinin aktarıldığı üçüncü kişileri bilme, kişisel verilerindeki hataların düzeltilmesini ve eğer aktarım yapılmışsa ilgili üçüncü kişiden bu düzeltmenin istenmesini talep etme, kişisel verilerin işlenmesini gerektiren sebeplerin ortadan kalkması halinde bu verilerin silinmesini, yok edilmesini ya da anonim hale getirilmesini isteme ve eğer aktarım yapılmışsa bu talebin aktarılan üçüncü kişiye iletilmesini isteme, işlenen verilerin neticesinde kişi ile ilintili olumsuz bir sonuç çıkmasına itiraz etme, Kanun’a aykırı veri işleme nedeniyle zararının ortaya çıkması halinde zararını yasalar çerçevesinde talep etme hakkınız mevcuttur.</p>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('.popup-modal').magnificPopup({
+                                                    type: 'inline',
+                                                    midClick: true,
+                                                    mainClass: 'mfp-fade'
+                                                });
+                                            })
+                                        </script>
+                                        <style>
+
+                                            .white-popup {
+                                                position: relative;
+                                                background: #FFF;
+                                                padding: 40px;
+                                                width: auto;
+                                                max-width: 500px;
+                                                margin: 20px auto;
+                                                transition: 1s all;
+                                            }
+
+                                            .mfp-bg {
+                                            }
+
+                                            .mfp-fade.mfp-bg {
+                                                opacity: 0;
+                                                -webkit-transition: all 0.15s ease-out;
+                                                -moz-transition: all 0.15s ease-out;
+                                                transition: all 0.15s ease-out;
+                                            }
+
+
+                                                /* overlay animate in */
+
+                                                .mfp-fade.mfp-bg.mfp-ready {
+                                                    opacity: 0.8;
+                                                }
+
+
+                                                /* overlay animate out */
+
+                                                .mfp-fade.mfp-bg.mfp-removing {
+                                                    opacity: 0;
+                                                }
+
+                                            .mfp-fade.mfp-wrap .mfp-content {
+                                                opacity: 0;
+                                                transition: all 0.4s ease-out;
+                                            }
+
+                                            .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+                                                opacity: 1;
+                                            }
+
+                                            .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+                                                opacity: 0;
+                                            }
+                                        </style>
+
+                                    </div>
+                                </div>
 
                                 <!--end::Form group-->
                                 <!--begin::Action-->
-                                <div class="pb-lg-0 pb-5">
+                                <div class="pb-lg-0 pb-5 ">
                                     <button type="button" id="f-login" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Kaydet</button>
                                 </div>
                                 <!--end::Action-->
@@ -171,7 +250,7 @@
                                 }
                             }
                         },
-                        Mail1: {
+                        UserName: {
                             validators: {
                                 notEmpty: {
                                     message: 'Mail Adresi Giriniz'
@@ -189,6 +268,13 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Firma Giriniz'
+                                }
+                            }
+                        },
+                        Custom3: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Lütfen Kullanım Koşullarını Onaylayınız'
                                 }
                             }
                         },
@@ -230,13 +316,35 @@
 
                             debugger;
                             if (result?.ResultType?.RType == 1) {
+                                swal.fire({
+                                    text: "Üyelik kaydınız başarıyla oluşturulmuştur. Yetkili birim en kısa sürede onaylayacaktır.",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Tamam",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                    window.location.reload();
+                                });
 
-                                alert('Üyelik kaydınız başarıyla oluşturulmuştur. Yetkili birim en kısa sürede onaylayacaktır.');
-                                location.reload();
+                                
                             }
-                            else if (result == "Dublicate") {
+                            else if (result == "Duplicate") {
                                 KTUtil.scrollTop();
-                                alert('Aynı kullanıcı adı mevcut');
+                                swal.fire({
+                                    text: "Bu üye kayıtlı. Lütfen farklı bir e-posta adresi ile deneyiniz.",
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Tamam",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                    window.location.reload();
+                                });
                             }
 
                         });
@@ -439,8 +547,9 @@
                 _login = $('#kt_login');
 
                 _handleSignInForm();
-                _handleSignUpForm();
-                _handleForgotForm();
+                console.log("DOne-1");
+                // _handleSignUpForm();
+                // _handleForgotForm();
             }
         };
     }();

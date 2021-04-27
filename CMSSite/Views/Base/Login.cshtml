@@ -1,12 +1,21 @@
 ﻿@{
     Layout = "_Layout";
-
 }
+<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#8950FC", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#E1E9FF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
 <script src="~/assets-site/css/login/classic/plugins.bundle.js"></script>
 <script src="~/assets-site/css/login/classic/prismjs.bundle.js"></script>
 <script src="~/assets-site/css/login/plugins.bundle.js"></script>
-<script src="~/assets-site/css/login/classic/general.js"></script> 
-<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" /> 
+<script src="~/assets-site/css/login/classic/general.js"></script>
+<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" />
+<link href="~/assets-site/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/assets-site/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+<script src="~/assets-site/js/sweetalert2.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.all.js"></script>
 <div class="section-full p-tb80 inner-page-padding stick_in_parent ">
     <div class="container">
         <div class="row ">
@@ -50,17 +59,44 @@
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--end::Signin--> 
+                        <!--end::Signin-->
+                        <!--begin::Forgot-->
+                        <div class="login-form login-forgot">
+                            <!--begin::Form-->
+                            <form class="form" novalidate="novalidate" id="kt_login_forgot_form">
+                                <!--begin::Title-->
+                                <div class="pb-13 pt-lg-0 pt-5">
+                                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Şifrenizi mi unuttunuz?</h3>
+                                    <p class="text-muted font-weight-bold font-size-h4">Şifrenizi resetlemek için lütfen mail adresinizi giriniz.</p>
+                                </div>
+                                <!--end::Title-->
+                                <!--begin::Form group-->
+                                <div class="form-group">
+                                    <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" id="forgot-input" type="email" placeholder="Email" name="email" autocomplete="off" />
+                                </div>
+                                <!--end::Form group-->
+                                <!--begin::Form group-->
+                                <div class="form-group d-flex flex-wrap pb-lg-0">
+                                    <button type="button" id="kt_login_forgot_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Gönder</button>
+                                    <button type="button" id="kt_login_forgot_cancel" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">İptal</button>
+                                </div>
+                                <!--end::Form group-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Forgot-->
+
+
                     </div>
-                    <!--end::Content body--> 
+                    <!--end::Content body-->
                 </div>
                 <!--end::Content-->
             </div>
         </div>
     </div>
-</div> 
+</div>
 <link href="/assets-site/css/login/login-1.css" rel="stylesheet" />
-<script src="/assets-site/css/login/login-1.js"></script>  
+<script src="/assets-site/css/login/login-1.js"></script>
 <script type="text/javascript">
 
     "use strict";
@@ -70,6 +106,7 @@
         var _login;
 
         var _showForm = function (form) {
+            console.log("SHOW FORM - " + form);
             var cls = 'login-' + form + '-on';
             var form = 'kt_login_' + form + '_form';
 
@@ -79,14 +116,14 @@
 
             _login.addClass(cls);
 
-           KTUtil.animateClass(KTUtil.getById(form), 'animate__animated animate__backInUp');
+            KTUtil.animateClass(KTUtil.getById(form), 'animate__animated animate__backInUp');
         }
 
         var _handleSignInForm = function () {
             var validation;
             debugger;
             // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-            validation = FormValidation.formValidation( 
+            validation = FormValidation.formValidation(
                 KTUtil.getById('kt_login_signin_form'),
                 {
                     fields: {
@@ -120,7 +157,7 @@
                 debugger;
                 validation.validate().then(function (status) {
                     console.log("afterValidate");
-                    console.log("status "+status);
+                    console.log("status " + status);
                     if (status == 'Valid') {
 
                         $.ajx('/Base/Validate', { user: $('#username').val(), pass: $('#pass').val() }, function (result) {
@@ -144,39 +181,49 @@
                                 location.reload();
                             }
                             else {
-                                alert("Hata, lütfen daha sonra tekrar deneyiniz.")
-                             //   swal.fire({
-                             //       text: "Hata, lütfen daha sonra tekrar deneyiniz.",
-                             //       icon: "error",
-                             //       buttonsStyling: false,
-                             //       confirmButtonText: "Tamam",
-                             //       customClass: {
-                             //           confirmButton: "btn font-weight-bold btn-light-primary"
-                             //       }
-                             //   }).then(function () {
-                             //       KTUtil.scrollTop();
-                             //   });
+
+                                swal.fire({
+                                    text: "Hata, lütfen daha sonra tekrar deneyiniz.",
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Tamam",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                });
                             }
 
                         });
 
 
                     } else {
-                     //  swal.fire({
-                     //      text: "Hata, lütfen daha sonra tekrar deneyiniz.",
-                     //      icon: "error",
-                     //      buttonsStyling: false,
-                     //      confirmButtonText: "Tamam",
-                     //      customClass: {
-                     //          confirmButton: "btn font-weight-bold btn-light-primary"
-                     //      }
-                     //  }).then(function () {
-                     //      KTUtil.scrollTop();
-                     //  });
+                        swal.fire({
+                            text: "Hata, lütfen daha sonra tekrar deneyiniz.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Tamam",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
+                            KTUtil.scrollTop();
+                        });
                     }
                 });
             });
 
+            $(document).on('keypress', function (e) {
+                if (e.which == 13) {
+                    setLogin(e);
+                }
+            });
+
+
+            $('#kt_login_signin_submit').on('click', function (e) {
+                setLogin(e);
+            });
 
             // Handle forgot button
             $('#kt_login_forgot').on('click', function (e) {
@@ -203,24 +250,24 @@
                         fullname: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Username is required'
+                                    message: 'Bu alan gereklidir.'
                                 }
                             }
                         },
                         email: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Email address is required'
+                                    message: 'E-Posta adresinizi giriniz.'
                                 },
                                 emailAddress: {
-                                    message: 'The value is not a valid email address'
+                                    message: 'Lütfen geçerli bir e-posta adresi giriniz.'
                                 }
                             }
                         },
                         password: {
                             validators: {
                                 notEmpty: {
-                                    message: 'The password is required'
+                                    message: 'Bu alan gereklidir.'
                                 }
                             }
                         },
@@ -303,10 +350,10 @@
                         email: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Email address is required'
+                                    message: 'E-Posta adresinizi giriniz.'
                                 },
                                 emailAddress: {
-                                    message: 'The value is not a valid email address'
+                                    message: 'Lütfen geçerli bir e-posta adresi giriniz.'
                                 }
                             }
                         }
@@ -324,21 +371,46 @@
                 validation.validate().then(function (status) {
                     if (status == 'Valid') {
 
+                        $.ajx('/Base/UserForgot', {
+                            mail: $("#forgot-input").val()
+                        }, function (result) {
+                            debugger;
+                            if (result == "OK") {
 
+                                swal.fire({
+                                    text: "Şifre sıfırlama linki mail adresinize gönderilmiştir.",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Tamam",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                    window.location.reload();
+                                });
+                            }
+                            else {
+
+                                swal.fire({
+                                    text: "Hata oluştu, lütfen daha sonra tekrar deneyiniz.",
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                    window.location.reload();
+                                });
+                            }
+
+                        });
 
 
                     } else {
-                        swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn font-weight-bold btn-light-primary"
-                            }
-                        }).then(function () {
-                            KTUtil.scrollTop();
-                        });
+                        KTUtil.scrollTop();
                     }
                 });
             });
@@ -358,8 +430,11 @@
                 _login = $('#kt_login');
 
                 _handleSignInForm();
-                _handleSignUpForm();
+                console.log("DOne-1")
+                // _handleSignUpForm();
+                // console.log("DOne-2")
                 _handleForgotForm();
+                console.log("DOne-3")
             }
         };
     }();

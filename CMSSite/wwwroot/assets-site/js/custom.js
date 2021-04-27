@@ -876,6 +876,7 @@ All JavaScript fuctions Start
 
     //________ Contact form function by = custom.js________//		
     jQuery(document).on('submit', 'form.cons-contact-form', function (e) {
+        console.log("sending")
         e.preventDefault();
         var formid = '#' + this.id;
         var postModel = $.fn.toForm(formid);
@@ -886,10 +887,13 @@ All JavaScript fuctions Start
             data: postModel,
             type: 'POST',
             dataType: 'JSON',
-            beforeSend: function () {
-                jQuery('.loading-area').show();
+            headers:
+            {
+                "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
             },
-
+            beforeSend: function (xhr) { 
+                jQuery('.loading-area').show();
+            }, 
             success: function (data) {
                 jQuery('.loading-area').hide();
                 if (data.ResultType.RType == 1) {

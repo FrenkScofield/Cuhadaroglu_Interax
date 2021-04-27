@@ -5,8 +5,6 @@ using System.Net.Mail;
 
 public class SendMail : ISendMail
 {
-
-
     public string Send(MailModelCustom postModel)
     {
         try
@@ -20,11 +18,15 @@ public class SendMail : ISendMail
             //mail kimden geliyor, hangi ifNamee görünsün?
             mail.From = new MailAddress(postModel.SmtpMail, postModel.MailGorunenAd, System.Text.Encoding.UTF8);
             mail.Subject = postModel.Konu;//mailin konusu
-            foreach (var item in postModel.cc)
+
+            if (postModel.cc != null)
             {
-                if (!string.IsNullOrEmpty(item))
+                foreach (var item in postModel.cc)
                 {
-                    mail.CC.Add(item.Trim()); //CC.
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        mail.CC.Add(item.Trim()); //CC.
+                    }
                 }
             }
             //mailin içeriği.. Bu alan isteğe göre genişletilip daraltılabilir.
@@ -36,10 +38,8 @@ public class SendMail : ISendMail
             smp.Credentials = new NetworkCredential(postModel.SmtpMail, postModel.SmtpMailPass);
             smp.Port = postModel.SmtpPort.ToInt();
             smp.Host = postModel.SmtpHost;//gmail üzerinden gönderiliyor.
-          //  smp.EnableSsl = postModel.SmtpSSL == null ? false : (postModel.SmtpSSL == true ? true : false);
-            smp.Send(mail);//mail isimli mail gönderiliyor.
-
-
+            //smp.EnableSsl = postModel.SmtpSSL == null ? false : (postModel.SmtpSSL == true ? true : false);
+            smp.Send(mail);//mail isimli mail gönderiliyor.  
             //Server does not support secure connections.
 
             //enablessl false
@@ -49,10 +49,9 @@ public class SendMail : ISendMail
         }
         catch (Exception ex)
         {
-            return "err-"+ex.Message + " - "+ postModel.SmtpMail +" - " + postModel.MailGorunenAd+" - "+ postModel.SmtpHost+" - "+ postModel.SmtpPort;
+            return "err-" + ex.Message + " - " + postModel.SmtpMail + " - " + postModel.MailGorunenAd + " - " + postModel.SmtpHost + " - " + postModel.SmtpPort;
             throw ex;
         }
-
 
     }
 

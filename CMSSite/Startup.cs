@@ -71,11 +71,12 @@ namespace CMSSite
 
             services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>(opt =>
             opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
-
+            services.AddScoped(typeof(ISendMail), typeof(SendMail));
 
             services.AddScoped(typeof(IBaseSession), typeof(BaseSession));
             services.AddScoped(typeof(IGenericRepo<IBaseModel>), typeof(GenericRepo<CMSDBContext, IBaseModel>));
             #endregion
+
 
 
             var allprops = AppDomain.CurrentDomain.GetAssemblies();
@@ -90,9 +91,6 @@ namespace CMSSite
             services.AddAuthentication(IISDefaults.AuthenticationScheme);
 
             services.AddKendo();
-
-
-
 
         }
 
@@ -144,6 +142,11 @@ namespace CMSSite
                  new { controller = "Base", action = "Create" }
                         );
 
+                routes.MapRoute(
+               name: "Recover",
+               template: "Recover/{*token}",
+               defaults: new { controller = "Base", action = "Recover", token = "" }
+               );
 
 
                 routes.MapRoute(
@@ -151,6 +154,10 @@ namespace CMSSite
               template: "Search/{*search}",
               defaults: new { controller = "Base", action = "Search", search = "" }
           );
+
+
+
+
 
 
                 routes.MapRoute(

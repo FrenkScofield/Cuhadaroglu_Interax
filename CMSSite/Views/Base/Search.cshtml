@@ -9,7 +9,9 @@
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
     var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
     List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
+    List<int> subSpecListFilter = Specs.Where(x => (x.ParentId != 15)).Select(s => s.Id).ToList();
     List<int> currSpecList = ViewBag.currSpecList as List<int>;
+
     int parentCheck = 0;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
@@ -18,7 +20,7 @@
     <!-- GALLERY CONTENT START -->
     <div class="container">
         <div class="row">
-            
+
             <!-- SIDE BAR END -->
 
 
@@ -27,38 +29,30 @@
 
                     @foreach (var item in subPages)
                     {
-
-                        <div class="blog-post blog-lg date-style-3 block-shadow @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && x.ContentValue=="true").Select(s=>"chk_"+s.SpecId).ToArray())  )">
-
-
+                        <div class="blog-post blog-lg date-style-3 block-shadow @(String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && x.ContentValue=="true" && subSpecListFilter.Contains(x.SpecId)  ).Select(s=>"chk_"+Specs.FirstOrDefault(o=>o.Id==s.SpecId).ParentId+"_"+s.SpecId).ToArray())  )">
                             <div class="sx-post-info  bg-white">
                                 <div class="sx-post-meta ">
                                     <h4 class="post-title pt-3">@Html.Raw(item.Name)</h4>
                                 </div>
-                                @*<div class="sx-post-title ">
-                                    </div>*@
+                                @*<div class="sx-post-title ">  </div>*@
                                 <div class="sx-post-text">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
+                                        <div class="col-md-8">
                                             <div class="row">
                                                 <div class="col-md-12 mb-15">
-                                                    @if (item.TemplateType == TemplateType.UrunDetay)
-                                                    {
-                                                        @Html.Raw(item.ContentShort)
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.Raw(item.Description)
-                                                    }
-
+                                                    @Html.Raw(item.ContentShort)
                                                 </div>
                                             </div>
-                                            @foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
+                                            @if (categories.Any(x => x.Id == item.ContentPageId))
                                             {
-                                                <div class="row">
-                                                    <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
-                                                    <div class="col-md-6">@specItem.ContentValue</div>
-                                                </div>
+                                                foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
+                                                        <div class="col-md-6">@specItem.ContentValue</div>
+                                                    </div>
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -68,13 +62,9 @@
                                         <a href="/@item.Link" title="Devamını okumak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
                                     </div>
                                     <div class="widget_social_inks pull-right">
-                                        <ul class="social-icons social-square social-dark m-b0">
-                                            <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
-                                            <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
-                                        </ul>
+                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@("http://interal.zonagency.com/"+@item.Link)'>
+                                            @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")
+                                        </div>
                                     </div>
                                 </div>
                             </div>

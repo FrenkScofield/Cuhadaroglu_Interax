@@ -56,12 +56,16 @@ public partial class User : BaseModel
     [DisplayName("Açıklama")]
     //[Column(TypeName = "Text")]
     public string Description { get; set; }
+    [DisplayName("Token")]
+    //[Column(TypeName = "Text")]
+    public string UserToken { get; set; }
 
-    public UserType? UserType { get; set; }
+    public UserType? UserType { get; set; } 
 
     public bool? IsActive { get; set; }
     public bool? IsKvk { get; set; }
     public bool? IsIletisimIzın { get; set; }
+    public bool? IsApproved { get; set; }
 
     public virtual ICollection<ServiceConfigAuth> ServiceConfigAuth { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
