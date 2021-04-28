@@ -106,113 +106,168 @@ namespace CMS.Controllers
         //    return Json(result);
         //}
 
-        public ActionResult GetGallery([DataSourceRequest] DataSourceRequest request, int id)
+
+        [HttpPost]
+        public JsonResult GetGallery(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.GalleryId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.GalleryId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
-        public ActionResult GetDocuments([DataSourceRequest] DataSourceRequest request, int id)
+
+
+        [HttpPost]
+        public JsonResult GetDocuments(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.DocumentId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.DocumentId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
-        public ActionResult GetTechnicalProperties([DataSourceRequest] DataSourceRequest request, int id)
+        [HttpPost]
+        public JsonResult GetTechnicalProperties(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.TechnicalPropertyId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.TechnicalPropertyId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
-        public ActionResult GetCadDatas([DataSourceRequest] DataSourceRequest request, int id)
+
+        [HttpPost]
+        public JsonResult GetCadDatas(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.CadDataId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.CadDataId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
-        public ActionResult GetBIMFiles([DataSourceRequest] DataSourceRequest request, int id)
+        [HttpPost]
+        public JsonResult GetBIMFiles(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.BIMFileId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.BIMFileId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
 
-        public ActionResult GetTechnicalDocuments([DataSourceRequest] DataSourceRequest request, int id)
+        [HttpPost]
+        public JsonResult GetTechnicalDocuments(DTParameters<Documents> param, int selectid)
         {
-            var orders = _IDocumentsService.Where(o => o.TechnicalDocumentId == id).Result;
-            orders = orders.ApplyOrdersFiltering(request.Filters);
-            var total = orders.Count();
-            orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
-            if (!request.Sorts.Any() && !request.Groups.Any())
-                orders = orders.OrderByDescending(o => o.CreaDate);
-            orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
-            var data = orders.ApplyOrdersGrouping(request.Groups);
-            var result = new DataSourceResult()
-            {
-                Data = data,
-                Total = total
-            };
+            var result = _IDocumentsService.GetPaging(o => o.TechnicalDocumentId == selectid, true, param);
+            result.data = result.data.OrderBy(o => o.OrderNo).ToList();
             return Json(result);
         }
+
+
+
+
+        //public ActionResult GetGallery([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.GalleryId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
+
+        //public ActionResult GetDocuments([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.DocumentId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
+
+        //public ActionResult GetTechnicalProperties([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.TechnicalPropertyId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
+
+        //public ActionResult GetCadDatas([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.CadDataId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
+
+        //public ActionResult GetBIMFiles([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.BIMFileId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
+
+        //public ActionResult GetTechnicalDocuments([DataSourceRequest] DataSourceRequest request, int id)
+        //{
+        //    var orders = _IDocumentsService.Where(o => o.TechnicalDocumentId == id).Result;
+        //    orders = orders.ApplyOrdersFiltering(request.Filters);
+        //    var total = orders.Count();
+        //    orders = orders.ApplyOrdersSorting(request.Groups, request.Sorts);
+        //    if (!request.Sorts.Any() && !request.Groups.Any())
+        //        orders = orders.OrderByDescending(o => o.CreaDate);
+        //    orders = orders.ApplyOrdersPaging(request.Page, request.PageSize);
+        //    var data = orders.ApplyOrdersGrouping(request.Groups);
+        //    var result = new DataSourceResult()
+        //    {
+        //        Data = data,
+        //        Total = total
+        //    };
+        //    return Json(result);
+        //}
 
 
 
@@ -384,10 +439,29 @@ namespace CMS.Controllers
 
         }
 
+
         [HttpPost]
-        public JsonResult DeleteImage(int id)
+        public ActionResult EditingCustom_Destroy([DataSourceRequest] DataSourceRequest request, Documents row)
         {
-            var result = _IDocumentsService.Where(o => o.Types == "ContentPage" && o.Id == id).Result.FirstOrDefault();
+            if (row != null)
+            {
+                var path = this.GetPathAndFilename(row.Link);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                _IDocumentsService.Delete(row);
+                var res = _IDocumentsService.SaveChanges();
+                //write your code for delete action;
+            }
+
+            return Json(ModelState.ToDataSourceResult());
+        }
+
+        [HttpPost]
+        public ActionResult DeleteImage(int id)
+        {
+            var result = _IDocumentsService.Where(o => o.Id == id).Result.FirstOrDefault();
             var path = this.GetPathAndFilename(result.Link);
             if (System.IO.File.Exists(path))
             {
@@ -395,7 +469,7 @@ namespace CMS.Controllers
             }
             _IDocumentsService.Delete(result);
             var res = _IDocumentsService.SaveChanges();
-            return Json(result.Id);
+            return Json(res);
         }
 
         public JsonResult DeleteImageAll(int id)
