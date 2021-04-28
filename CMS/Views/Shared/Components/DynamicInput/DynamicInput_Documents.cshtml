@@ -98,7 +98,7 @@
                                             <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
                                                 <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                                                     <!--begin::Info-->
-                                                    <div class="d-flex align-items-center flex-wrap mr-2">
+                                                    <div class="d-flex align-items-center flex-wrap mr-2 11asd">
                                                         <!--begin::Page Title-->
                                                         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName)</h5>
                                                         <!--end::Page Title-->
@@ -134,13 +134,15 @@
                                                         })
                                                         .Pageable()
                                                         .Sortable()
-                                                         .Editable(editable => editable.Mode(GridEditMode.InLine))
                                                         .Filterable()
+                                                         //.Editable(e => e.Mode(GridEditMode.PopUp))
+                                                         .Editable(editable => editable.Mode(GridEditMode.InLine))
                                                         .Scrollable()
                                                         .DataSource(dataSource =>dataSource.Ajax()
-                                                        .Read(read => read.Action("Get" +prpName , "ContentPage", new {id= idval }))
+                                                        .Read(read => read.Action("Get" + prpName , "ContentPage", new {id= idval }))
                                                         .PageSize(15)
-                                                           .Destroy(update => update.Action("DeleteImage", "ContentPage", new { id = idval }).Type(HttpVerbs.Post))
+                                                        .Destroy(update => update.Action("DeleteImage", "ContentPage", new { id = idval }).Type(HttpVerbs.Post))
+                                                        //  .Destroy("DeleteImage", "ContentPage",new {id = idval })
                                                         .Events(events => events.Error("error_handler"))
                                                         ))
                                                     </div>
@@ -157,7 +159,7 @@
                                             <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
                                                 <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                                                     <!--begin::Info-->
-                                                    <div class="d-flex align-items-center flex-wrap mr-2">
+                                                    <div class="d-flex align-items-center flex-wrap mr-2 12asd">
                                                         <!--begin::Page Title-->
                                                         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName)</h5>
                                                         <!--end::Page Title-->
@@ -178,7 +180,6 @@
                                             <div class="card-body">
                                                 <div class="form-group row">
                                                     <div class="col-md-12">
-
                                                         @(Html.Kendo().Grid<Documents>()
                                                         .Name("Grid_"+prpName)
                                                         .Columns(columns => {

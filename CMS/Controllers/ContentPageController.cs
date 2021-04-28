@@ -384,7 +384,7 @@ namespace CMS.Controllers
 
         }
 
-
+        [HttpPost]
         public JsonResult DeleteImage(int id)
         {
             var result = _IDocumentsService.Where(o => o.Types == "ContentPage" && o.Id == id).Result.FirstOrDefault();
