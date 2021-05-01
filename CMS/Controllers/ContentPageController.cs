@@ -440,23 +440,6 @@ namespace CMS.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult EditingCustom_Destroy([DataSourceRequest] DataSourceRequest request, Documents row)
-        {
-            if (row != null)
-            {
-                var path = this.GetPathAndFilename(row.Link);
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
-                _IDocumentsService.Delete(row);
-                var res = _IDocumentsService.SaveChanges();
-                //write your code for delete action;
-            }
-
-            return Json(ModelState.ToDataSourceResult());
-        }
 
         [HttpPost]
         public ActionResult DeleteImage(int id)
@@ -474,7 +457,7 @@ namespace CMS.Controllers
 
         public JsonResult DeleteImageAll(int id)
         {
-            var resultList = _IDocumentsService.Where(o => o.Types == "ContentPage" && o.DocumentId == id).Result.ToList();
+            var resultList = _IDocumentsService.Where(o =>  o.DocumentId == id).Result.ToList();
 
             resultList.ForEach(result =>
             {
