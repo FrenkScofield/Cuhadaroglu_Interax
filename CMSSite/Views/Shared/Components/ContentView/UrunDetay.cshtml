@@ -33,7 +33,7 @@
                         <div class="m-b0">
                             <div class="sx-divider divider-1px  bg-black"><i class="icon-dot c-square"></i></div>
                         </div>
-                        <div class="copied site-button">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard site-button" data-link='@("http://interal.zonagency.com/"+content.Link)'>
+                        <div class="copied site-button">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard site-button" data-link='@(SessionRequest.config.BaseUrl+"/"+content.Link)'>
                             @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")<img src="/assets-site/images/share.svg" alt="">
                         </div>
                     </div>
@@ -44,7 +44,7 @@
 
                     <div class="project-detail-pic m-b30">
                         <div class="sx-media">
-                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(content.Picture!=null?content.Picture.Link:"")" alt="@content.Name">
+                            <img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@(content.Picture!=null?content.Picture.Link:"")" alt="@content.Name">
                         </div>
                     </div>
 
@@ -53,6 +53,375 @@
 
         </div>
 
+
+
+
+
+
+    </div>
+</div>
+<!-- SECTION CONTENT END  -->
+<!-- SECTION CONTENTG START -->
+<div class="section-full p-b80 inner-page-padding">
+    <div class="container">
+
+        <div class="faq-1 p-b80">
+            <!-- TITLE START -->
+            <div class="section-head">
+                <div class="sx-separator-outer separator-left">
+                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                        <h3 class="sep-line-one">Dokümanlar</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- TITLE END -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Accordion -->
+                    <div class="sx-accordion acc-bg-gray" id="accordion5">
+                        @if (content.Gallery != null && content.Gallery.Count > 0)
+                        {
+                            <div class="panel sx-panel">
+                                <div class="acod-head">
+                                    <h4 class="acod-title">
+                                        <a data-toggle="collapse" href="#collapseThree55" class="collapsed" data-parent="#accordion5">
+                                            Galeri
+                                            <span class="indicator"><i class="fa fa-plus"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree55" class="acod-body collapse">
+                                    <div class="acod-content p-tb15 row">
+                                        <div class=" filter-carousal-1-outer relative z-index1">
+                                            <!-- TITLE END -->
+                                            <div class="filter-carousal-1  container-fluid p-b30">
+                                                <!-- IMAGE CAROUSEL START -->
+                                                <div class="section-content ">
+                                                    <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
+                                                        @foreach (var item in content.Gallery)
+                                                        {
+                                                            <div class="item fadingcol col-one overflow-hide">
+                                                                <div class="sx-box   image-hover-block">
+                                                                    <div class="sx-thum-bx">
+                                                                        <img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                                                                    </div>
+                                                                    <div class="sx-info  p-t20 text-white">
+                                                                        <h4 class="sx-tilte"><a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank"><i class="fa fa-search"></i> Görüntüle</a></h4>
+                                                                        <p class="m-b0"></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        @if (content.Documents != null && content.Documents.Count > 0)
+                        {
+                            <div class="panel sx-panel">
+                                <div class="acod-head">
+                                    <h4 class="acod-title">
+                                        <a data-toggle="collapse" href="#collapseThree5" class="collapsed" data-parent="#accordion5">
+                                            Ürün Katalogları
+                                            <span class="indicator"><i class="fa fa-plus"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree5" class="acod-body collapse">
+
+
+                                    <div class="acod-content p-tb15 row">
+                                        @foreach (var item in content.Documents)
+                                        {
+                                            var exNa = "";
+                                            switch (item.Link.Split('.')[1].ToLower())
+                                            {
+                                                case "zip":
+                                                    exNa = "fa-file-zip-o";
+                                                    break;
+                                                case "rar":
+                                                    exNa = "fa-file-zip-o";
+                                                    break;
+                                                case "pdf":
+                                                    exNa = "fa-file-pdf-o";
+                                                    break;
+                                                default:
+                                                    exNa = "fa-file-o";
+                                                    break;
+                                            }
+                                            <div class="col-md-12">
+                                                <div class="docCont">
+                                                    <h5 class="m-b0">
+                                                        @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                    </h5>
+
+
+                                                </div>
+                                            </div>
+
+                                        }
+
+
+ 
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (SessionRequest.fUser != null)
+                        {
+                            @if (content.TechnicalProperties != null && content.TechnicalProperties.Count > 0)
+                            {
+                                <div class="panel sx-panel">
+                                    <div class="acod-head">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
+                                                Sipariş Katalogları (CAD)
+                                                <span class="indicator"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour5" class="acod-body collapse">
+                                        <div class="acod-content p-tb15 row">
+                                            @foreach (var item in content.TechnicalProperties)
+                                            {
+                                                var exNa = "";
+                                                switch (item.Link.Split('.')[1].ToLower())
+                                                {
+                                                    case "zip":
+                                                        exNa = "fa-file-zip-o";
+                                                        break;
+                                                    case "rar":
+                                                        exNa = "fa-file-zip-o";
+                                                        break;
+                                                    case "pdf":
+                                                        exNa = "fa-file-pdf-o";
+                                                        break;
+                                                    default:
+                                                        exNa = "fa-file-o";
+                                                        break;
+                                                }
+                                                <div class="col-md-12">
+                                                    <div class="docCont">
+                                                        <h5 class="m-b0">
+                                                            @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                        </h5>
+
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            if (SessionRequest.fUser.UserType != UserType.Mimar)
+                            {
+                                if (content.CadDatas != null && content.CadDatas.Count > 0)
+                                {
+                                    <div class="panel sx-panel">
+                                        <div class="acod-head">
+                                            <h4 class="acod-title">
+                                                <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
+                                                    Uygulama Katalogları (CAD)
+                                                    <span class="indicator"><i class="fa fa-plus"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFour5" class="acod-body collapse">
+                                            <div class="acod-content p-tb15 row">
+                                                @foreach (var item in content.CadDatas)
+                                                {
+                                                    var exNa = "";
+                                                    switch (item.Link.Split('.')[1].ToLower())
+                                                    {
+                                                        case "zip":
+                                                            exNa = "fa-file-zip-o";
+                                                            break;
+                                                        case "rar":
+                                                            exNa = "fa-file-zip-o";
+                                                            break;
+                                                        case "pdf":
+                                                            exNa = "fa-file-pdf-o";
+                                                            break;
+                                                        default:
+                                                            exNa = "fa-file-o";
+                                                            break;
+                                                    }
+                                                    <div class="col-md-12">
+                                                        <div class="docCont">
+                                                            <h5 class="m-b0">
+                                                                @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                            </h5>
+
+
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            @if (content.BIMFiles != null && content.BIMFiles.Count > 0)
+                            {
+                                <div class="panel sx-panel">
+                                    <div class="acod-head">
+                                        <h4 class="acod-title">
+                                            <a data-toggle="collapse" href="#collapseFive5" class="collapsed" data-parent="#accordion5">
+                                                BİM Dosyaları
+                                                <span class="indicator"><i class="fa fa-plus"></i></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFive5" class="acod-body collapse">
+                                        <div class="acod-content p-tb15 row">
+                                            @foreach (var item in content.BIMFiles)
+                                            {
+                                                var exNa = "";
+                                                switch (item.Link.Split('.')[1].ToLower())
+                                                {
+                                                    case "zip":
+                                                        exNa = "fa-file-zip-o";
+                                                        break;
+                                                    case "rar":
+                                                        exNa = "fa-file-zip-o";
+                                                        break;
+                                                    case "pdf":
+                                                        exNa = "fa-file-pdf-o";
+                                                        break;
+                                                    default:
+                                                        exNa = "fa-file-o";
+                                                        break;
+                                                }
+                                                <div class="col-md-12">
+                                                    <div class="docCont">
+                                                        <h5 class="m-b0">
+                                                            @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                        </h5>
+
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            if (SessionRequest.fUser.UserType != UserType.Mimar)
+                            {
+                                if (content.TechnicalDocuments != null && content.TechnicalDocuments.Count > 0)
+                                {
+                                    <div class="panel sx-panel">
+                                        <div class="acod-head">
+                                            <h4 class="acod-title">
+                                                <a data-toggle="collapse" href="#collapseFive6" class="collapsed" data-parent="#accordion5">
+                                                    Teknik Dokümanlar
+                                                    <span class="indicator"><i class="fa fa-plus"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFive6" class="acod-body collapse">
+                                            <div class="acod-content p-tb15 row">
+                                                @foreach (var item in content.TechnicalDocuments)
+                                                {
+                                                    var exNa = "";
+                                                    switch (item.Link.Split('.')[1].ToLower())
+                                                    {
+                                                        case "zip":
+                                                            exNa = "fa-file-zip-o";
+                                                            break;
+                                                        case "rar":
+                                                            exNa = "fa-file-zip-o";
+                                                            break;
+                                                        case "pdf":
+                                                            exNa = "fa-file-pdf-o";
+                                                            break;
+                                                        default:
+                                                            exNa = "fa-file-o";
+                                                            break;
+                                                    }
+                                                    <div class="col-md-12">
+                                                        <div class="docCont">
+                                                            <h5 class="m-b0">
+                                                                @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                            </h5>
+
+
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        }
+                        else
+                        {
+
+                            <div class="panel sx-panel">
+                                <div class="acod-head acc-actives">
+                                    <h4 class="acod-title">
+                                        <a href="/login">
+                                            Sipariş Katalogları (CAD)
+                                            <span class="indicator"><i class="fa fa-lock"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="panel sx-panel">
+                                <div class="acod-head acc-actives">
+                                    <h4 class="acod-title">
+                                        <a href="/login">
+                                            Uygulama Katalogları (CAD)
+                                            <span class="indicator"><i class="fa fa-lock"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="panel sx-panel">
+                                <div class="acod-head acc-actives">
+                                    <h4 class="acod-title">
+                                        <a href="/login">
+                                            BİM Dosyaları
+                                            <span class="indicator"><i class="fa fa-lock"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="panel sx-panel">
+                                <div class="acod-head acc-actives">
+                                    <h4 class="acod-title">
+                                        <a data-toggle="collapse" href="/login" data-parent="#locked">
+                                            Teknik Dokümanlar
+                                            <span class="indicator"><i class="fa fa-lock"></i></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
 
@@ -76,7 +445,7 @@
                                     </div>
                                 </div>
                                 <!-- TITLE END -->
-
+                                <input name="headLine" type="hidden" required="" value="@Html.Raw(content.FormType?.Name)">
                                 <div class="form-group">
                                     <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
                                 </div>
@@ -90,7 +459,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu">
+                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu" value="@(content.Name+" hakkında detaylı bilgi talebi")">
                                 </div>
 
                                 <div class="form-group">
@@ -183,260 +552,6 @@
             </div>
 
         }
-
-
-
-    </div>
-</div>
-<!-- SECTION CONTENT END  -->
-<!-- SECTION CONTENTG START -->
-<div class="section-full p-b80 inner-page-padding">
-    <div class="container">
-
-        <div class="faq-1">
-            <!-- TITLE START -->
-            <div class="section-head">
-                <div class="sx-separator-outer separator-left">
-                    <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
-                        <h3 class="sep-line-one">Dökümanlar</h3>
-                    </div>
-                </div>
-            </div>
-            <!-- TITLE END -->
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Accordion -->
-                    <div class="sx-accordion acc-bg-gray" id="accordion5">
-                        <div class="panel sx-panel">
-                            <div class="acod-head">
-                                <h4 class="acod-title">
-                                    <a data-toggle="collapse" href="#collapseThree55" class="collapsed" data-parent="#accordion5">
-                                        Galeri
-                                        <span class="indicator"><i class="fa fa-plus"></i></span>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree55" class="acod-body collapse">
-                                <div class="acod-content p-tb15">
-                                    <div class=" filter-carousal-1-outer relative z-index1">
-                                        <!-- TITLE END -->
-                                        <div class="filter-carousal-1  container-fluid p-b30">
-                                            <!-- IMAGE CAROUSEL START -->
-                                            <div class="section-content ">
-                                                <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
-                                                    @foreach (var item in content.Gallery)
-                                                    {
-                                                        <div class="item fadingcol col-one overflow-hide">
-                                                            <div class="sx-box   image-hover-block">
-                                                                <div class="sx-thum-bx">
-                                                                    <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
-                                                                </div>
-                                                                <div class="sx-info  p-t20 text-white">
-                                                                    <h4 class="sx-tilte"><a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank"><i class="fa fa-search"></i> Görüntüle</a></h4>
-                                                                    <p class="m-b0"></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-
-                        @if (SessionRequest.fUser != null)
-                        {
-                            <div class="panel sx-panel">
-                                <div class="acod-head">
-                                    <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="#collapseThree5" class="collapsed" data-parent="#accordion5">
-                                            Ürün Katalogları
-                                            <span class="indicator"><i class="fa fa-plus"></i></span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree5" class="acod-body collapse">
-                                    <div class="acod-content p-tb15">
-                                        @foreach (var item in content.TechnicalProperties)
-                                        {
-                                            <div class="col-md-3 m-b30">
-                                                <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                    <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                        <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                    </div>
-                                                    <div class="icon-content">
-                                                        <h4 class="sx-tilte">@item.Name</h4>
-
-                                                        <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*<div class="col-md-4 m-b30">
-                                                    <div class="wt-icon-box-wraper left  p-a15 m-b10">
-                                                        <a href="" class="btn-block">
-                                                            <span class="text-black m-r10"><i class="fa fa-file-pdf-o"></i></span>
-                                                            <strong class="text-uppercase text-black"></strong>
-                                                        </a>
-                                                    </div>
-                                                </div>*@
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                            @if (currState != "Bireysel")
-                            {
-                                <div class="panel sx-panel">
-                                    <div class="acod-head">
-                                        <h4 class="acod-title">
-                                            <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
-                                                CAD Verileri
-                                                <span class="indicator"><i class="fa fa-plus"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFour5" class="acod-body collapse">
-                                        <div class="acod-content p-tb15">
-                                            @foreach (var item in content.CadDatas)
-                                            {
-                                                <div class="col-md-3 m-b30">
-                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                        </div>
-                                                        <div class="icon-content">
-                                                            <h4 class="sx-tilte">@item.Name</h4>
-
-                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel sx-panel">
-                                    <div class="acod-head">
-                                        <h4 class="acod-title">
-                                            <a data-toggle="collapse" href="#collapseFive5" class="collapsed" data-parent="#accordion5">
-                                                BİM Dosyaları
-                                                <span class="indicator"><i class="fa fa-plus"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFive5" class="acod-body collapse">
-                                        <div class="acod-content p-tb15">
-                                            @foreach (var item in content.BIMFiles)
-                                            {
-                                                <div class="col-md-3 m-b30">
-                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                        </div>
-                                                        <div class="icon-content">
-                                                            <h4 class="sx-tilte">@item.Name</h4>
-
-                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel sx-panel">
-                                    <div class="acod-head">
-                                        <h4 class="acod-title">
-                                            <a data-toggle="collapse" href="#collapseFive6" class="collapsed" data-parent="#accordion5">
-                                                Teknik Dökümanlar
-                                                <span class="indicator"><i class="fa fa-plus"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFive6" class="acod-body collapse">
-                                        <div class="acod-content p-tb15">
-                                            @foreach (var item in content.TechnicalDocuments)
-                                            {
-                                                <div class="col-md-3 m-b30">
-                                                    <div class="sx-icon-box-wraper p-a30  center bg-white shadow">
-                                                        <div class="sx-icon-box-lg inline-icon text-primary  m-b20 radius bg-secondry  scale-in-center">
-                                                            <span class="icon-cell sx-text-primary"><i class="flaticon-contract"></i></span>
-                                                        </div>
-                                                        <div class="icon-content">
-                                                            <h4 class="sx-tilte">@item.Name</h4>
-
-                                                            <a href="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link">İNDİR</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="panel sx-panel">
-                                <div class="acod-head acc-actives">
-                                    <h4 class="acod-title">
-                                        <a href="/login">
-                                            Ürün Katalogları
-                                            <span class="indicator"><i class="fa fa-lock"></i></span>
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            @if (currState != "Bireysel")
-                            {
-                                <div class="panel sx-panel">
-                                    <div class="acod-head acc-actives">
-                                        <h4 class="acod-title">
-                                            <a href="/login">
-                                                CAD Verileri
-                                                <span class="indicator"><i class="fa fa-lock"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div class="panel sx-panel">
-                                    <div class="acod-head acc-actives">
-                                        <h4 class="acod-title">
-                                            <a href="/login">
-                                                BİM Dosyaları
-                                                <span class="indicator"><i class="fa fa-lock"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div class="panel sx-panel">
-                                    <div class="acod-head acc-actives">
-                                        <h4 class="acod-title">
-                                            <a data-toggle="collapse" href="/login" data-parent="#locked">
-                                                Teknik Dökümanlar
-                                                <span class="indicator"><i class="fa fa-lock"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            }
-
-                        }
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
     </div>
 </div>
 <!-- SECTION CONTENT END -->
@@ -467,7 +582,7 @@
                                 <div class="item fadingcol col-one overflow-hide">
                                     <div class="sx-box   image-hover-block">
                                         <div class="sx-thum-bx">
-                                            <img src="@(item.Project.ThumbImage != null ? "http://interalcms.zonagency.com/fileupload/UserFiles/Folders/" + item.Project.ThumbImage.Link : "/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.Project.ThumbImage != null ? item.Project.ThumbImage.Alt : item.Project.Name)">
+                                            <img src="@(item.Project.ThumbImage != null ? "@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/" + item.Project.ThumbImage.Link : "/assets-site/images/projects/portrait/pic1.jpg")" alt="@(item.Project.ThumbImage != null ? item.Project.ThumbImage.Alt : item.Project.Name)">
                                         </div>
                                         <div class="sx-info  p-t20 text-white">
                                             <h4 class="sx-tilte"><a href="/@item.Project.Link">@item.Project.Name</a></h4>

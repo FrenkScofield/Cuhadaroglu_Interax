@@ -1,0 +1,26 @@
+.contentTypes
+{
+    cursor:pointer;
+}
+
+.mb-15{
+    margin-bottom:15px;
+}
+
+.sx-tilte { 
+font-size:23px; 
+}
+
+.social-icons {
+    list-style: none;
+    font-size: 30px !important;
+    margin-top: 25px !important;
+}
+    .social-icons li {
+     
+        padding: 10px !important;
+    }
+.sx-post-title h4 {
+    overflow: hidden;
+    height: 55px;
+}

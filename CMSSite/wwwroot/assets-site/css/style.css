@@ -6182,7 +6182,7 @@ btn-half {
     list-style: none;
     margin-left: -3px;
     margin-right: -3px;
-    max-width: 200px;
+    max-width: 300px;
     font-size: 12px;
     margin: 0px;
 }
@@ -7780,7 +7780,13 @@ ol.comment-list {
         margin-bottom: -10px;
     }
 }
+@media only screen and (max-width: 480px) {
 
+
+    .widget_social_inks .copied, .sx-share {
+        writing-mode: inherit !important;
+    }
+}
 @media only screen and (max-width: 500px) {
     ol.comment-list {
         padding: 15px;
@@ -9005,7 +9011,7 @@ HEADER (top part of page)
                 padding: 0px;
                 position: absolute;
                 visibility: hidden;
-                width: 220px;
+                width: 230px;
                 z-index: 10;
             }
 
@@ -16130,3 +16136,29 @@ large-title-block
     background-color: #2e313b;
     padding: 0px 10px;
 }
+.center-img img {
+    margin:0 auto;
+    display:block;
+}
+
+
+
+.docCont {
+    padding: 20px 30px 20px 100px;
+    color: #000;
+    margin: 15px 0;
+    clear: both;
+    border: 1px solid #ccc;
+    position: relative;
+}
+    .docCont h5{font-size:14px;font-weight:400;}
+    .docCont i {
+        font-size: 36px;
+        position: absolute;
+        top: 10px;
+        left: 30px;
+        color: #23252d;
+        padding-left: 0;
+        opacity: 0.2;
+        margin-right: 15px;
+    }

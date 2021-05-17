@@ -313,6 +313,29 @@ namespace CMS.Controllers
             throw new Exception("Forbidden");
         }
 
+
+        public virtual JsonResult ReadEditor(string path)
+        {
+            var pathDec = NormalizePath(path);
+
+            if (Authorize(pathDec))
+            {
+                try
+                {
+                    var files = directoryBrowser.GetEditorFiles(pathDec, Filter);
+                    var directories = directoryBrowser.GetEditorDirectories(pathDec);
+                    //  var result = files.Concat(directories).Select(VirtualizePath);
+                    var result = files.Concat(directories);
+                    return Json(result.ToArray());
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    throw new Exception("File Not Found");
+                }
+            }
+
+            throw new Exception("Forbidden");
+        }
         /// <summary>
         /// Updates an entry with a given entry.
         /// </summary>
@@ -481,7 +504,31 @@ namespace CMS.Controllers
                     ModifiedUtc = file.LastWriteTimeUtc
                 });
         }
+        public IEnumerable<FileBrowserEntry> GetEditorFiles(string path, string filter)
+        {
+            var directory = new DirectoryInfo(path);
 
+            var extensions = (filter ?? "*").Split(new string[] { ", ", ",", "; ", ";" }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            return extensions.SelectMany(directory.GetFiles)
+                .Select(file => new FileBrowserEntry
+                {
+                    Name = file.Name,
+                    Size = file.Length,
+                    EntryType = FileBrowserEntryType.File
+                });
+        }
+        public IEnumerable<FileBrowserEntry> GetEditorDirectories(string path)
+        {
+            var directory = new DirectoryInfo(path);
+
+            return directory.GetDirectories()
+                .Select(subDirectory => new FileBrowserEntry
+                {
+                    Name = subDirectory.Name,
+                    EntryType = FileBrowserEntryType.Directory
+                });
+        }
         public IEnumerable<FileManagerEntry> GetDirectories(string path)
         {
             var directory = new DirectoryInfo(path);

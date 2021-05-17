@@ -318,7 +318,6 @@
                                 <p>
                                     Dokunarak bırakılacak her iz, öncesinde köklü ve güçlü bir değişimi gerektirecektir.
                                 </p>
-                                 Twitter Facebook Linkedin GooglePlus Tumblr Pinterest
                                 <ul class="social-icons  sx-social-links">
                                     @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                     {
@@ -340,6 +339,10 @@
                                     {
                                         <li><a href="@SessionRequest.config.Pinterest" class="fa fa-pinterest"></a></li>
                                     }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Youtube))
+                                    {
+                                        <li><a href="@SessionRequest.config.Youtube" class="fa fa-youtube"></a></li>
+                                    }
 
 
                                 </ul>
@@ -350,7 +353,7 @@
                             <!-- RESENT POST -->
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="widget recent-posts-entry-date">
-                                    <h5 class="widget-title">Son Yazılar</h5>
+                                    <h5 class="widget-title p-b15">Son Yazılar</h5>
                                     <div class="widget-post-bx">
 
                                         @foreach (var item in Blogs.Take(3).OrderByDescending(x => x.CreaDate))
@@ -381,7 +384,7 @@
                             <!-- USEFUL LINKS -->
                             <div class="col-lg-3 col-md-6 col-sm-6 footer-col-3">
                                 <div class="widget widget_services inline-links">
-                                    <h5 class="widget-title">Linkler</h5>
+                                    <h5 class="widget-title p-b15">Linkler</h5>
                                     <ul>
                                         @foreach (var item in Pages.Where(x => x.IsHeaderMenu == true && x.ContentPageId == null).OrderBy(o => o.ContentOrderNo))
                                         {
@@ -395,11 +398,29 @@
                         <!-- CONTACT US -->
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="widget widget_address_outer">
-                                <h5 class="widget-title">Bize Ulaşın</h5>
+                                <h5 class="widget-title p-b15">Bize Ulaşın</h5>
                                 <ul class="widget_address">
-                                    <li>@Html.Raw(SessionRequest.config.Adress)</li>
-                                    <li>@Html.Raw(SessionRequest.config.Mail)</li>
-                                    <li>@Html.Raw(SessionRequest.config.Phone)</li>
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.SiteHeader))
+                                    {
+                                        <li>@Html.Raw(SessionRequest.config.SiteHeader)</li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Adress))
+                                    {
+                                        <li>@Html.Raw(SessionRequest.config.Adress)</li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Website))
+                                    {
+                                        <li>@Html.Raw(SessionRequest.config.Website)</li>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Mail))
+                                    {
+                                        <li>@Html.Raw(SessionRequest.config.Mail)</li>
+                                    }
+                                    @if (!string.IsNullOrEmpty(SessionRequest.config.Phone))
+                                    {
+                                        <li>@Html.Raw(SessionRequest.config.Phone)</li>
+                                    }
                                 </ul>
 
                             </div>
@@ -417,7 +438,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="sx-footer-bot-left">
-                            <span class="copyrights-text">© 2021 Cuhadaroğlu. Designed By Hybrid.</span>
+                            <span class="copyrights-text">@(SessionRequest.config.FooterScript)</span>
                         </div>
                     </div>
                 </div>

@@ -72,6 +72,7 @@ namespace CMS
             services.AddEntityFrameworkSqlServer().AddDbContext<CMSDBContext>(opt =>
             opt.UseSqlServer(Configuration.GetConnectionString("CMSDBContext"), b => b.MigrationsAssembly("CMSDBContext")));
 
+            services.AddScoped(typeof(ISendMail), typeof(SendMail));
 
             services.AddScoped(typeof(IBaseSession), typeof(BaseSession));
             services.AddScoped(typeof(IGenericRepo<IBaseModel>), typeof(GenericRepo<CMSDBContext, IBaseModel>));

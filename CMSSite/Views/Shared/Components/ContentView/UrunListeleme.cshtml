@@ -8,10 +8,14 @@
     // int[] specList = new int[] { 16, 17, 64, 63 };
     var Specs = ViewBag.Specs as List<Spec>;
     List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
-    var subSpecs = Specs.Where(x => (x.ParentId !=15) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
+    var subSpecs = Specs.Where(x => (x.ParentId != 15) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
     List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
-    List<int> subSpecListFilter = Specs.Where(x => (x.ParentId !=15)).Select(s => s.Id).ToList();
+    List<int> subSpecListFilter = Specs.Where(x => (x.ParentId != 15)).Select(s => s.Id).ToList();
     List<int> currSpecList = ViewBag.currSpecList as List<int>;
+
+    var cepheAttrCheck = false;
+    if (subPages != null && subPages.Count > 0 && subPages.FirstOrDefault().Parent.Id == 3)
+        cepheAttrCheck = true;
 
     int parentCheck = 0;
     var currParent = "";
@@ -24,19 +28,34 @@
         <div class="row">
             <div class="col-lg-4 col-md-12 col-sm-12 sticky_column">
                 <div class="side-bar p-a30 bg-gray">
-                   
+
                     <!-- FILTERS -->
                     <div class="widget widget_services ">
                         <h4 class="widget-title">Filtreler</h4>
                         @foreach (var item in subSpecs.Where(x => currSpecList.Contains(x.Id)))
                         {
-                            if (item.ParentId != parentCheck)
+                            if (cepheAttrCheck && item.Parent.Id != 23)
                             {
-                                currParent = item.Parent.Id.ToString();
-                                <h5 class="widget-title h1_@item.ParentId">@item.Parent.Name</h5>
+                                if (item.ParentId != parentCheck)
+                                {
+                                    currParent = item.Parent.Id.ToString();
+                                    <h5 class="widget-title h1_@item.ParentId">@item.Parent.Name</h5>
+                                }
+                                <p><input type="checkbox" name="chk_@item.Id" value="@(currParent+"_"+item.Id)" class="filterSpecs" /> &nbsp;@item.Name</p>
+                                parentCheck = item.ParentId ?? 0;
                             }
-                            <p> <input type="checkbox" name="chk_@item.Id" value="@(currParent+"_"+item.Id)" class="filterSpecs" /> &nbsp;@item.Name</p>
-                            parentCheck = item.ParentId ?? 0;
+                            else if (!cepheAttrCheck)
+                            {
+                                if (item.ParentId != parentCheck)
+                                {
+                                    currParent = item.Parent.Id.ToString();
+                                    <h5 class="widget-title h1_@item.ParentId">@item.Parent.Name</h5>
+                                }
+                                <p><input type="checkbox" name="chk_@item.Id" value="@(currParent+"_"+item.Id)" class="filterSpecs" /> &nbsp;@item.Name</p>
+                                parentCheck = item.ParentId ?? 0;
+                            }
+
+
                         }
                     </div>
                     <!-- Categories  -->
@@ -64,7 +83,7 @@
                                 @*<div class="sx-post-title ">  </div>*@
                                 <div class="sx-post-text">
                                     <div class="row">
-                                        <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
+                                        <div class="col-md-4"><img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
                                         <div class="col-md-8">
                                             <div class="row">
                                                 <div class="col-md-12 mb-15">
@@ -73,10 +92,13 @@
                                             </div>
                                             @foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
                                             {
-                                                <div class="row">
-                                                    <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
-                                                    <div class="col-md-6">@specItem.ContentValue</div>
-                                                </div>
+                                                if (!string.IsNullOrEmpty(specItem.ContentValue) && specItem.ContentValue != "-")
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
+                                                        <div class="col-md-6">@specItem.ContentValue</div>
+                                                    </div>
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -86,7 +108,7 @@
                                         <a href="/@item.Link" title="Devamını okumak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
                                     </div>
                                     <div class="widget_social_inks pull-right">
-                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@("http://interal.zonagency.com/"+@item.Link)'>
+                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@(SessionRequest.config.BaseUrl+"/"+item.Link)'>
                                             @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")
                                         </div>
                                     </div>

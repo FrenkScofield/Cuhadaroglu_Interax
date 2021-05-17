@@ -17,7 +17,7 @@ public class FormsService : GenericRepo<CMSDBContext, Forms>, IFormsService
         res.ResultType.MessageList = new List<string>();
 
         //Duplicate Control
-        //var modelControl = Where(o => o.Id != model.Id && o.Name == model.Name, false).Result.FirstOrDefault();
+         var modelControl = Where(o => o.Id != model.Id, true,false,i=>i.FormType).Result.FirstOrDefault();
         //if (modelControl != null)
         //{
         //    res.ResultType.RType = RType.Warning;
@@ -35,7 +35,9 @@ public class FormsService : GenericRepo<CMSDBContext, Forms>, IFormsService
             else
             {
                 res.ResultRow = Add(model);
+              
             }
+            res.ResultRow = modelControl;
             SaveChanges();
             res.ResultType.RType = RType.OK;
         }

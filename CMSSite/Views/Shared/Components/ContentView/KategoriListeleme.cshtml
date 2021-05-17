@@ -4,7 +4,7 @@
     var Pages = ViewBag.contentPages as List<ContentPage>;
     var subPages = ViewBag.subPages as List<ContentPage>;
 
-   
+
     int LanguageID = (int)ViewBag.LanguageID;
     // int[] specList = new int[] { 16, 17, 64, 63 };
     var Specs = ViewBag.Specs as List<Spec>;
@@ -58,7 +58,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 m-b30">
                         <div class="number-block-one animate-in-to-top">
                             <a href="/@item.Link">
-                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
+                                <img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"defaultImage")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")" />
                                 <div class="figcaption bg-white text-center p-a20">
                                     <h4 class="m-a0">@item.Name</h4>
                                 </div>
@@ -73,3 +73,4 @@
         </div>
     </div>
 </div>
+ 

@@ -896,14 +896,11 @@ All JavaScript fuctions Start
             }, 
             success: function (data) {
                 jQuery('.loading-area').hide();
-                if (data.ResultType.RType == 1) {
-                    jQuery("<div class='alert alert-success'>" + "Mesajınız gönderilmiştir..." + "</div>").insertBefore('form.cons-contact-form');
+                if (data=="OK") {
+                    jQuery("<div class='alert alert-success'>" + "Mesajınız gönderilmiştir..." + "</div>").insertAfter('form.cons-contact-form');
                 } else {
-                    jQuery("<div class='alert alert-danger'>Mesajınız gönderilirken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</div>").insertBefore('form.cons-contact-form');
+                    jQuery("<div class='alert alert-danger'>Mesajınız gönderilirken hata oluştu. Lütfen daha sonra tekrar deneyiniz.</div>").insertAfter('form.cons-contact-form');
                 }
-                $("html, body").animate({
-                    scrollTop: 0
-                })
             }
         });
         jQuery('.cons-contact-form').trigger("reset");

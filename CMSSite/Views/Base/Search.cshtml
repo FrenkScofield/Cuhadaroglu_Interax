@@ -37,7 +37,7 @@
                                 @*<div class="sx-post-title ">  </div>*@
                                 <div class="sx-post-text">
                                     <div class="row">
-                                        <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
+                                        <div class="col-md-4"><img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
                                         <div class="col-md-8">
                                             <div class="row">
                                                 <div class="col-md-12 mb-15">
@@ -48,10 +48,13 @@
                                             {
                                                 foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
                                                 {
-                                                    <div class="row">
-                                                        <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
-                                                        <div class="col-md-6">@specItem.ContentValue</div>
-                                                    </div>
+                                                    if (!string.IsNullOrEmpty(specItem.ContentValue) && specItem.ContentValue != "-")
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
+                                                            <div class="col-md-6">@specItem.ContentValue</div>
+                                                        </div>
+                                                    }
                                                 }
                                             }
                                         </div>
@@ -62,7 +65,7 @@
                                         <a href="/@item.Link" title="Devamını okumak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
                                     </div>
                                     <div class="widget_social_inks pull-right">
-                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@("http://interal.zonagency.com/"+@item.Link)'>
+                                        <div class="copied">@(LanguageID == 1 ? "Paylaşım adresi kopyalandı." : "Share link copied.")</div><div class="copy-to-clipboard sx-share" data-link='@(SessionRequest.config.BaseUrl+"/"+@item.Link)'>
                                             @(LanguageID == 1 ? "Bağlantıyı Paylaş" : "Share Link")
                                         </div>
                                     </div>

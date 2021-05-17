@@ -1,5 +1,13 @@
 ﻿@{
-    User us = SessionRequest._User;
+    User us = null;
+    if ( SessionRequest._User != null)
+    {
+        us = SessionRequest._User;
+    }
+
+
+
+
 }
 <!DOCTYPE html>
 
@@ -682,15 +690,23 @@
                             </div>
                             <!--end::Search-->
                             <!--begin::User-->
-                            <div class="topbar-item">
-                                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
-                                    <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Merhaba,</span>
-                                    <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">@us.Name</span>
-                                    <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                        <span class="symbol-label font-size-h5 font-weight-bold">@us.Name.Substring(0, 1).ToUpper()</span>
-                                    </span>
+                            @if (us != null)
+                            {
+
+                                <div class="topbar-item">
+                                    <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
+                                        <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Merhaba,</span>
+                                        <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">@us.Name</span>
+                                        <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
+                                            <span class="symbol-label font-size-h5 font-weight-bold">@us.Name.Substring(0, 1).ToUpper()</span>
+                                        </span>
+                                        <span class="symbol symbol-lg-35 symbol-25 symbol-light-danger">
+
+                                            <a href="/Base/Logout" title="Çıkış Yap" >  <span style="margin-left:15px" class="symbol-label font-size-h5 font-weight-bold">X</span></a>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             <!--end::User-->
                         </div>
                         <!--end::Topbar-->

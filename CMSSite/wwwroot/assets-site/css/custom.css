@@ -24,3 +24,10 @@ font-size:23px;
     overflow: hidden;
     height: 55px;
 }
+
+
+
+
+.owl-carousel.owl-drag .owl-item, .owl-carousel .owl-stage {
+    min-width: 150px;
+}

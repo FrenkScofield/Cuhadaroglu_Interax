@@ -360,6 +360,12 @@ namespace DynamicSiteService.Migrations
                     b.Property<int?>("LoginCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Mail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MailCC")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ModDate")
                         .HasColumnType("datetime2");
 
@@ -863,6 +869,9 @@ namespace DynamicSiteService.Migrations
                     b.Property<string>("Pinterest")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SiteHeader")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SmtpHost")
                         .HasColumnType("nvarchar(max)");
 
@@ -894,6 +903,9 @@ namespace DynamicSiteService.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Youtube")

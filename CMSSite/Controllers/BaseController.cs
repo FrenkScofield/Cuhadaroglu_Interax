@@ -103,24 +103,36 @@ namespace CMSSite.Controllers
                 mF.Message = postModel["Message"];
                 mF.IsRead = "Okunmadı";
                 mF.Subject = postModel["Subject"];
-
+                mF.FormTypeId = Convert.ToInt32(postModel["FormTypeId"]);
                 var result = _IFormsService.InsertOrUpdate(mF);
-
+                var headLine = postModel["headLine"];
 
                 var config = _ISiteConfigService.Where(null, true, false, null).Result.FirstOrDefault();
 
-                config.Mail = "ahmetkund@hotmail.com";
-                config.SmtpMail = "admin@hybro.systems";
-                config.SmtpMailPass = "@sK5ng8=mY3B=E7-";
-                config.SmtpHost = "mail.hybro.systems";
+                config.Mail = result.ResultRow.FormType.Mail ?? config.Mail;
+                config.SmtpMail = config.SmtpMail;
+                config.SmtpMailPass = config.SmtpMailPass;
+                config.SmtpHost = config.SmtpHost;
                 config.SmtpPort = "587";
+                config.MailGorunenAd = config.MailGorunenAd;
                 config.SmtpSSL = false;
-                config.MailGorunenAd = "Form Mail Name";
+
+                string[] ccListStr;
+                if (string.IsNullOrEmpty(result.ResultRow.FormType.MailCC))
+                {
+                    ccListStr = null;
+                }
+                else
+                {
+                    ccListStr = result.ResultRow.FormType.MailCC.Split(',');
+
+                }
+
 
                 var mailStr = "<!DOCTYPE html><html><head><style>th, td {  border: 1px solid #eee;}table{max-width:800px;}td{color:#000;}</style></head><body>";
 
                 mailStr += "<table  width'100%'>";
-                List<string> ccList = new List<string>();
+
                 //http://interalcms.zonagency.com
 
 
@@ -152,7 +164,7 @@ namespace CMSSite.Controllers
 
                 mailStr += "</table></body></html>";
 
-                string mailResult = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = null, Icerik = mailStr, Konu = "Yeni Kullanıcı", MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = false });
+                string mailResult = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = ccListStr, Icerik = mailStr, Konu = headLine, MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = false });
 
                 return Json("OK");
             }
@@ -274,30 +286,33 @@ namespace CMSSite.Controllers
                 var rs = _IUserService.InsertOrUpdate(postModel);
                 var config = _ISiteConfigService.Where(null, true, false, null).Result.FirstOrDefault();
 
-                config.Mail = "ahmetkund@hotmail.com";
-                config.SmtpMail = "admin@hybro.systems";
-                config.SmtpMailPass = "@sK5ng8=mY3B=E7-";
-                config.SmtpHost = "mail.hybro.systems";
+                config.Mail = config.Mail;
+
+                config.SmtpMail = config.SmtpMail;
+                config.SmtpMailPass = config.SmtpMailPass;
+                config.SmtpHost = config.SmtpHost;
                 config.SmtpPort = "587";
+                config.MailGorunenAd = config.MailGorunenAd;
                 config.SmtpSSL = false;
-                config.MailGorunenAd = "Form Mail Name";
+
+
+                //string[] ccListStr = { "ali_senatli@cuhadaroglu.com", "saniye.aktas@hybrid.rocks" };
 
                 var mailStr = "<!DOCTYPE html><html><head><style>th, td {  border: 1px solid #eee;}table{max-width:800px;}td{color:#000;}</style></head><body>";
 
                 mailStr += "<table  width'100%'>";
-                List<string> ccList = new List<string>();
+
                 //http://interalcms.zonagency.com
                 mailStr += "  <tr>";
-                mailStr += "    <td><strong>Kullanıcı:</strong></td>";
-                mailStr += "    <td>" + postModel.Name + " " + postModel.Surname + "</td>";
+                mailStr += "    <td>Yeni bir kullanıcı üye oldu, aşağıdaki linkten tıklayarak, üyelik bilgileirni kontrol edip, üyeliği onaylayabilirsiniz.</td>";
+                mailStr += "    <td></td>";
                 mailStr += "  </tr>";
                 mailStr += "  <tr>";
-                mailStr += "    <td><strong>Üye Linki:</strong></td>";
                 mailStr += "    <td><a target='_blank' href='" + config.ImageUrl + "/User/InsertOrUpdatePage?id=" + rs.ResultRow.Id + "'>Yeni Üye</a></td>";
                 mailStr += "  </tr>";
                 mailStr += "</table></body></html>";
 
-                string result = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = null, Icerik = mailStr, Konu = "Yeni Kullanıcı", MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = false });
+                string result = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = null, Icerik = mailStr, Konu = "Yeni bir üyelik var!", MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = false });
 
                 return Json(rs);
             }
@@ -313,23 +328,32 @@ namespace CMSSite.Controllers
                     row.UserToken = guid;
 
                     _IUserService.InsertOrUpdate(row);
-                
+
 
                     var config = _ISiteConfigService.Where(null, true, false, null).Result.FirstOrDefault();
-                    config.Mail = "ahmetkund@hotmail.com";
-                    config.SmtpMail = "admin@hybro.systems";
-                    config.SmtpMailPass = "@sK5ng8=mY3B=E7-";
-                    config.SmtpHost = "mail.hybro.systems";
+                    config.Mail = row.UserName;
+                    config.SmtpMail = config.SmtpMail;
+                    config.SmtpMailPass = config.SmtpMailPass;
+                    config.SmtpHost = config.SmtpHost;
                     config.SmtpPort = "587";
+                    config.MailGorunenAd = config.MailGorunenAd;
                     config.SmtpSSL = false;
-                    config.MailGorunenAd = "interal Şifremi Unuttum Servisi";
+
+                    //   config.Mail = row.Mail1;
+                    //   config.SmtpMail = "admin@hybro.systems";
+                    //   config.SmtpMailPass = "@sK5ng8=mY3B=E7-";
+                    //   config.SmtpHost = "mail.hybro.systems";
+                    //   config.SmtpPort = "587";
+                    //   config.MailGorunenAd = "admin@hybro.systems";
+                    //   config.SmtpSSL = false;
+
+                    //  string[] ccListStr = { "ali_senatli@cuhadaroglu.com", "saniye.aktas@hybrid.rocks" };
                     var mailStr = "<!DOCTYPE html><html><head><style>th, td {  border: 1px solid #eee;}table{max-width:800px;}td{color:#000;}</style></head><body>";
 
                     mailStr += "<table  width'100%'>";
-                    List<string> ccList = new List<string>();
                     //http://interalcms.zonagency.com
                     mailStr += "  <tr>";
-                    mailStr += "    <td><strong>Kullanıcı:</strong></td>";
+                    mailStr += "    <td><strong>Ad Soyad:</strong></td>";
                     mailStr += "    <td>" + row.Name + " " + row.Surname + "</td>";
                     mailStr += "  </tr>";
                     mailStr += "  <tr>";
@@ -690,7 +714,10 @@ namespace CMSSite.Controllers
 
         public IActionResult Logout()
         {
-            _httpContextAccessor.HttpContext.Session.Set("fUser", null);
+
+            var currState = _httpContextAccessor.HttpContext.Session.Get("currState");
+            _httpContextAccessor.HttpContext.Session.Clear();
+            _httpContextAccessor.HttpContext.Session.Set("currState", currState);
             return Redirect("/");
         }
 
@@ -700,12 +727,14 @@ namespace CMSSite.Controllers
 
             var config = _ISiteConfigService.Where(null, true, false, null).Result.FirstOrDefault();
 
-            config.Mail = "ahmetkund@hotmail.com";
-            config.SmtpMail = "admin@hybro.systems";
-            config.SmtpMailPass = "@sK5ng8=mY3B=E7-";
-            config.SmtpHost = "mail.hybro.systems";
+            config.Mail = config.Mail;
+            config.SmtpMail = config.SmtpMail;
+            config.SmtpMailPass = config.SmtpMailPass;
+            config.SmtpHost = config.SmtpHost;
             config.SmtpPort = "587";
-            config.SmtpSSL = true;
+            config.MailGorunenAd = config.MailGorunenAd;
+            config.SmtpSSL = false;
+
             long size = 0;
             string mailContent = "";
             string links = "";
@@ -730,7 +759,6 @@ namespace CMSSite.Controllers
             var keyStr = "";
             var keyVal = "";
             string ccMail = "";
-            List<string> ccList = new List<string>();
             foreach (var item in form)
             {
                 mailStr += "  <tr>";
@@ -742,7 +770,7 @@ namespace CMSSite.Controllers
             mailStr += "</table></body></html>";
 
             //
-            string result = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = ccList.ToArray(), Icerik = mailStr, Konu = "", MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = true });
+            string result = _ISendMail.Send(new MailModelCustom { Alicilar = new string[] { config.Mail }, cc = null, Icerik = mailStr, Konu = "", MailGorunenAd = config.MailGorunenAd, SmtpHost = config.SmtpHost, SmtpMail = config.SmtpMail, SmtpMailPass = config.SmtpMailPass, SmtpPort = config.SmtpPort, SmtpSSL = config.SmtpSSL, SmtpUseDefaultCredentials = true });
             return Json(result);
 
         }

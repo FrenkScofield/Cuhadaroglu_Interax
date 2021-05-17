@@ -19,8 +19,10 @@ public partial class FormType : BaseModel
 
     [DisplayName("Açıklama")]
     public string DescName { get; set; }
-
-
+    [DisplayName("E-Posta")]
+    public string Mail { get; set; }
+    [DisplayName("E-Posta CC")]
+    public string MailCC { get; set; }
     [DisplayName("Formlar")]
     public virtual ICollection<Forms> Forms { get; set; }
     public virtual ICollection<ContentPage> ContentPage { get; set; }

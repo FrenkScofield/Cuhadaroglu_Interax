@@ -359,16 +359,16 @@
                                                             .TableEditing()
                                                             .FontName()
                                                             .FontSize()
-                                                            .FontColor().BackColor().JustifyFull().ViewHtml()
+                                                            .FontColor().BackColor().JustifyFull().ViewHtml().Formatting()
                                                           )
                                                           .ImageBrowser(imageBrowser =>
                                                           {
-                                                              imageBrowser.Image("~/fileupload/UserFiles/Folders/{0}");
-                                                              imageBrowser.Read("Read", "FileManagerData");
+                                                              imageBrowser.Image(SessionRequest.siteConfig.ImageUrl+"/fileupload/UserFiles/Folders/{0}");
+                                                              imageBrowser.Read("ReadEditor", "FileManagerData");
                                                               imageBrowser.Create("Create", "FileManagerData");
                                                               imageBrowser.Destroy("Destroy", "FileManagerData");
                                                               imageBrowser.Upload("Upload", "FileManagerData");
-                                                              //imageBrowser.Thumbnail("Thumbnail", "FileManagerData");
+                                                             // imageBrowser.Thumbnail("Thumbnail", "FileManagerData");
                                                           }
                                                       )
                                                       .Value(value.ToStr())

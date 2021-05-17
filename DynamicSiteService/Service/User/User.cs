@@ -56,8 +56,8 @@ public partial class User : BaseModel
     [DisplayName("Açıklama")]
     //[Column(TypeName = "Text")]
     public string Description { get; set; }
+
     [DisplayName("Token")]
-    //[Column(TypeName = "Text")]
     public string UserToken { get; set; }
 
     public UserType? UserType { get; set; } 

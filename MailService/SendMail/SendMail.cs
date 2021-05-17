@@ -11,10 +11,11 @@ public class SendMail : ISendMail
         {
             MailMessage mail = new MailMessage(); //yeni bir mail nesnesi Oluşturuldu.
             mail.IsBodyHtml = true; //mail içeriğinde html etiketleri kullanılsın mı?
-            foreach (var item in postModel.Alicilar)
-            {
-                mail.To.Add(item.Trim()); //Kime mail gönderilecek.
-            }
+            if (postModel.Alicilar != null)
+                foreach (var item in postModel.Alicilar)
+                {
+                    mail.To.Add(item.Trim()); //Kime mail gönderilecek.
+                }
             //mail kimden geliyor, hangi ifNamee görünsün?
             mail.From = new MailAddress(postModel.SmtpMail, postModel.MailGorunenAd, System.Text.Encoding.UTF8);
             mail.Subject = postModel.Konu;//mailin konusu

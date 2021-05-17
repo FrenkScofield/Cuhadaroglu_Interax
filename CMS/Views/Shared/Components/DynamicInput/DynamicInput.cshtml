@@ -197,7 +197,46 @@
                                                         </span>
                                                     </div>
                                                 </div>
+                                                @if (prp.Name == "IsApproved")
+                                                {
+            <script>
+    $('#IsApproved').change(function () {
+                                                if (this.checked) {
+                                                    swal.fire({
+                                                        text: "Üye onay maili göndermek ister misiniz?",
+                                                        icon: "warning",
+                                                        buttonsStyling: false,
+                                                        showCancelButton: true,
+                                                        cancelButtonText: "İptal",
+                                                        confirmButtonText: "Gönder",
+                                                        customClass:
+                                                        {
+                                                            confirmButton: "btn font-weight-bold btn-light-primary",
+                                                            cancelButton: "btn font-weight-bold btn-light-primary"
+                                                        }
+                                                    }).then(function (isConfirm) {
+                                                        if (isConfirm) {
+                                                               $.ajx('/User/Approve', { id: @idval }, function (resultData) {
 
+                                                                   swal.fire({
+                                                                       title: 'Üye Onaylanmıştır!',
+                                                                       text: 'Üye bilgilendirme maili gönderilmiştir.',
+                                                                       icon: 'success'
+                                                                   }).then(function () {
+
+
+                                                                   });
+
+                                                                    });
+                                                           
+                                                        }
+                                                    });
+                                                }
+
+                                            });
+
+            </script>
+                                                }
                                             }
                                             if (prp.PropertyType.GenericTypeArguments.Any(o => o.Name == "Int32"))
                                             {
@@ -247,7 +286,7 @@
                                     //    (props.Count(o => o.PropertyType.GenericTypeArguments.Any(o => o.Name == "Boolean")) <=0  ?
                                     //    props.Count(o => o.PropertyType.Name == "Boolean")
                                     //    : 1) ;
-
+                                    //APPROVE
                                     <div class="">
                                         <label style="margin-bottom: 0 !important;" class="col-md-12">@Html.Raw(DisplayName)</label>
                                         <div class="col-3">
@@ -259,6 +298,7 @@
                                             </span>
                                         </div>
                                     </div>
+                                   
                                 }
                                 break;
                             case TypeCode.Int32:
@@ -328,6 +368,8 @@
                                                         </span>
                                                     </div>
                                                 </div>
+
+                                                
                                             }
                                             if (prp.PropertyType.GenericTypeArguments.Any(o => o.Name == "Int32"))
                                             {
@@ -442,7 +484,7 @@
                                                        name="@prp.Name"
                                                        placeholder="@Html.Raw(placeholder)"
                                                        value="@System.Uri.UnescapeDataString(value.ToStr())"
-                                                       type="@((prp.Name == "Pass" || prp.Name == "Password" || prp.Name == "Sifre") ? "password" : "text" ))">
+                                                       type="@((prp.Name == "Pass" || prp.Name == "Password" || prp.Name == "Sifre") ? "password" : "text")">
                                             </div>
                                         </div>
 

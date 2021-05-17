@@ -16,8 +16,7 @@ public partial class ContentPage : BaseModel
     }
 
     //1. Sayfa Yapısı
-    //[Display(Description ="", Order = 1)]
-
+    //[Display(Description ="", Order = 1)] 
     [Column(Order = 1)]
     [DisplayName("Başlık")]
     [Required()]
@@ -201,21 +200,23 @@ public partial class ContentPage : BaseModel
     public virtual ICollection<Documents> Gallery { get; set; }
 
     [Column(Order = 3)]
-    [DisplayName("Dökümanlar")]
+    [DisplayName("Dokümanlar")]
     public virtual ICollection<Documents> Documents { get; set; }
 
                           
     [Column(Order = 3)]
-    [DisplayName("Ürün Katalogları")]
+    [DisplayName("Sipariş Katalogları (CAD) (Mimarlar ve Uygulamacılar)")]
     public virtual ICollection<Documents> TechnicalProperties { get; set; }
     [Column(Order = 3)]
-    [DisplayName("CAD Verileri")]
+    [DisplayName("Uygulama Katalogları (CAD) (Sadece Uygulamacılar)")]
     public virtual ICollection<Documents> CadDatas { get; set; }
+ 
+
     [Column(Order = 3)]
-    [DisplayName("BİM Dosyaları")]
+    [DisplayName("BİM Dosyaları (Mimarlar ve Uygulamacılar)")]
     public virtual ICollection<Documents> BIMFiles { get; set; }
     [Column(Order = 3)]
-    [DisplayName("Teknik Dökümanlar")]
+    [DisplayName("Teknik Dokümanlar (Sadece Uygulamacılar)")]
     public virtual ICollection<Documents> TechnicalDocuments { get; set; }
 
 

@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                                 <!-- TITLE END -->
-
+                                <input name="headLine" type="hidden" required="" value="@Html.Raw(content.FormType?.Name)">
                                 <div class="form-group">
                                     <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
                                 </div>
@@ -172,17 +172,29 @@
                                     <ul class="social-icons social-square social-dark m-b0">
                                         @if (!string.IsNullOrEmpty(SessionRequest.config.Facebook))
                                         {
-                                            <li><a href="@Html.Raw(SessionRequest.config.Facebook)" target="_blank" class="fa fa-facebook"></a></li>
+                                            <li><a href="@SessionRequest.config.Facebook" class="fa fa-facebook"></a></li>
                                         }
-
                                         @if (!string.IsNullOrEmpty(SessionRequest.config.Linkedin))
                                         {
-                                            <li><a href="@Html.Raw(SessionRequest.config.Linkedin)" target="_blank" class="fa fa-linkedin"></a></li>
+                                            <li><a href="@SessionRequest.config.Linkedin" class="fa fa-linkedin"></a></li>
                                         }
                                         @if (!string.IsNullOrEmpty(SessionRequest.config.Instagram))
                                         {
-                                            <li><a href="@Html.Raw(SessionRequest.config.Instagram)" target="_blank" class="fa fa-instagram"></a></li>
+                                            <li><a href="@SessionRequest.config.Instagram" class="fa fa-instagram"></a></li>
                                         }
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Twitter))
+                                        {
+                                            <li><a href="@SessionRequest.config.Twitter" class="fa fa-twitter"></a></li>
+                                        }
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Pinterest))
+                                        {
+                                            <li><a href="@SessionRequest.config.Pinterest" class="fa fa-pinterest"></a></li>
+                                        }
+                                        @if (!string.IsNullOrEmpty(SessionRequest.config.Youtube))
+                                        {
+                                            <li><a href="@SessionRequest.config.Youtube" class="fa fa-youtube"></a></li>
+                                        }
+
 
 
                                     </ul>
