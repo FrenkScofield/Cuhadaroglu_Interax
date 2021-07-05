@@ -533,7 +533,6 @@
                                                                 $("#form_" + "@prp.Name").submit(function (e) {
                                                                     e.preventDefault();
                                                                     var postModel = $.fn.toForm("#form_" + "@prp.Name" + "'");
-                                                                    debugger;
                                                                     $.ajx('/ContentPage/SaveSingleImage', { postModel: postModel }, function (resultData) {
                                                                         debugger;
 
