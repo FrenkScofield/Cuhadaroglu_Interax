@@ -53,11 +53,10 @@ namespace CMSSite.Components
 
             List<ContentPage> contentPages = new List<ContentPage>();
             var content = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsActive == true, true, false,
-                o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.TechnicalProperties, o => o.TechnicalDocuments,
-                o => o.CadDatas, o => o.BIMFiles, o => o.ThumbImage, o => o.Picture, o => o.BannerImage, o => o.SpecContentValue, o => o.FormType
-                )
+           o => o.Parent,o => o.Picture,
+                o => o.BannerImage,
+                o => o.SpecContentValue,o=>o.FormType)
                 .Result.FirstOrDefault();
-
 
 
 
@@ -98,7 +97,7 @@ namespace CMSSite.Components
             bool isBireysel = false;
 
             contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsActive == true && x.IsInteral == true, true, false,
-                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList(); 
+                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent,  o => o.ThumbImage).Result.ToList();
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
 
@@ -142,7 +141,7 @@ namespace CMSSite.Components
 
             if (TemplateType == TemplateType.ProjeListeleme)
             {
- 
+
                 List<ContentPage> currList = contentPages.Where(x => x.ContentPageId == content.Id && x.IsDeleted == null).ToList();
                 List<int> currSpecList = currList.SelectMany(x => x.SpecContentValue).Select(s => s.SpecId).Distinct().ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
@@ -151,6 +150,24 @@ namespace CMSSite.Components
                 ViewBag.currSpecList = currSpecList;
 
 
+            }
+            else if (TemplateType == TemplateType.UrunDetay)
+            {
+
+                if (ViewBag.contentDetails == null)
+                {
+                    var contentDetails = _IContentPageService.Where(o => o.Link.ToLower() == link.ToLower() && o.IsActive == true, true, false,
+                   o => o.TechnicalProperties,
+                   o => o.TechnicalDocuments,
+                   o => o.CadDatas,
+                   o => o.BIMFiles,
+                o => o.Gallery,
+                o => o.Documents
+                   )
+                   .Result.FirstOrDefault();
+
+                    ViewBag.contentDetails = contentDetails;
+                }
             }
             else if (TemplateType == TemplateType.BlogListeleme)
             {
@@ -165,12 +182,14 @@ namespace CMSSite.Components
                 //Spec List
                 var currSpecListObj = currList.SelectMany(x => x.SpecContentValue).Where(k => relSpecListIds.Contains(k.SpecId) && currListIds.Contains(k.ContentPageId) && k.ContentValue == "true");
                 List<int> currSpecList = currSpecListObj.Select(s => s.SpecId).Distinct().ToList();
-                 
+
                 ViewBag.categories = contentPages.Where(x => x.ContentPageId == content.Parent.Id && x.IsDeleted == null).ToList();
                 //ViewBag.contentPages = contentPages.Where(x => currContentList.Contains(x.ContentPageId ?? 0) && x.IsDeleted == null).OrderBy(o => o.ContentOrderNo).ToList();
                 ViewBag.subPages = currList;
-                ViewBag.currSpecList = currSpecList; 
+                ViewBag.currSpecList = currSpecList;
                 //select Distinct SpecId from SpecContentValue
+
+
             }
             else if (TemplateType == TemplateType.KategoriListeleme)
             {

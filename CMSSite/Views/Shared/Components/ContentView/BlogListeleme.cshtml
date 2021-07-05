@@ -24,7 +24,7 @@
                         <div class="sx-post-info p-t30">
                       
                             <div class="sx-post-title ">
-                                <h4 class="post-title"><a href="/@item.Link">@(item.ContentShort.Length>59?item.ContentShort.Substring(0,57)+"...":item.ContentShort)</a></h4>
+                                <h4 class="post-title"><a href="/@item.Link">@((item.ContentShort!=null&&item.ContentShort.Length>59)?item.ContentShort.Substring(0,57)+"...":item.ContentShort)</a></h4>
                             </div>
 
                             <div class="sx-post-readmore">

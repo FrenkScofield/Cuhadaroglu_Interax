@@ -18,7 +18,6 @@ using System;
             RModel<User> res = new RModel<User>();
             res.ResultType = new ResultType();
             res.ResultType.MessageList = new List<string>();
-
             //Duplicate Control
             var modelControl = Where(o => o.Id != model.Id &&  o.UserName == model.UserName, false).Result.FirstOrDefault();
             if (modelControl != null)
@@ -42,11 +41,5 @@ using System;
             }
             return res;
         }
-
-
-
-
-
-
-    }
+}
 

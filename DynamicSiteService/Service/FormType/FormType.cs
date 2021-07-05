@@ -15,8 +15,7 @@ public partial class FormType : BaseModel
 
     [DisplayName("Ad")]
     [Required]
-    public string Name { get; set; }
-
+    public string Name { get; set; } 
     [DisplayName("Açıklama")]
     public string DescName { get; set; }
     [DisplayName("E-Posta")]

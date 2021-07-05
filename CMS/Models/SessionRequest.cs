@@ -37,7 +37,14 @@ public static class SessionRequest
         }
         set { }
     }
-
+    public static User _DocUser
+    {
+        get
+        {
+            return _IHttpContextAccessor.HttpContext.Session.Get<User>("_docuser");
+        }
+        set { }
+    }
 
     public static User _User
     {

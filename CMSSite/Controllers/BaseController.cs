@@ -270,6 +270,33 @@ namespace CMSSite.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult GetDocToken()
+        {
+            User currUser = _httpContextAccessor.HttpContext.Session.Get<User>("fUser");
+            if (currUser != null)
+            {
+                try
+                {
+                    var guid = Guid.NewGuid().ToString();
+                    currUser.UserDocToken = guid;
+                    _IUserService.InsertOrUpdate(currUser);
+                    _IUserService.SaveChanges();
+
+                    return Json(guid);
+                }
+                catch (Exception)
+                {
+
+                    return Json("NOK");
+                }
+            }
+            else
+            {
+                return Json("Login");
+            }
+
+        }
         public IActionResult UserCreate(User postModel)
         {
             var row = _IUserService.Where(o => o.UserName == postModel.UserName).Result.FirstOrDefault();

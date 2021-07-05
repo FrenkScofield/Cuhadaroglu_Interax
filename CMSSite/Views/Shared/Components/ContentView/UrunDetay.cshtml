@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "_Layout";
     var content = ViewBag.content as ContentPage;
+    var contentDocs = ViewBag.contentDetails as ContentPage;
     var contents = ViewBag.contents as List<ContentPage>;
     int LanguageID = (int)ViewBag.LanguageID;
     var Specs = ViewBag.Specs as List<Spec>;
@@ -10,6 +11,18 @@
     string currState = (string.IsNullOrEmpty(ViewBag.currState) ? "Bayi" : ViewBag.currState) as string;
 }
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+
+<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#8950FC", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#E1E9FF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+<script src="~/assets-site/css/login/classic/plugins.bundle.js"></script>
+<script src="~/assets-site/css/login/classic/prismjs.bundle.js"></script>
+<script src="~/assets-site/css/login/plugins.bundle.js"></script>
+<script src="~/assets-site/css/login/classic/general.js"></script>
+<link href="/assets-site/css/fstyle.bundle.css" rel="stylesheet" />
+<link href="~/assets-site/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/assets-site/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="~/assets-site/js/sweetalert2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.16.6/sweetalert2.all.js"></script>
 <!-- SECTION CONTENT START -->
 <div class="section-full p-tb80 inner-page-padding stick_in_parent">
     <div class="container">
@@ -23,10 +36,13 @@
                             <ul>
                                 @foreach (var specItem in content.SpecContentValue.Where(x => x.ContentPageId == content.Id && specList.Contains(x.SpecId)).ToList())
                                 {
-                                    <li>
-                                        <h4 class="m-b10">@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</h4>
-                                        <p>@specItem.ContentValue</p>
-                                    </li>
+                                    if (!string.IsNullOrEmpty(specItem.ContentValue) && specItem.ContentValue != "-")
+                                    {
+                                        <li>
+                                            <h4 class="m-b10">@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</h4>
+                                            <p>@specItem.ContentValue</p>
+                                        </li>
+                                    }
                                 }
                             </ul>
                         </div>
@@ -41,30 +57,20 @@
             </div>
             <div class="col-lg-5 col-md-5 ">
                 <div class="project-detail-outer">
-
                     <div class="project-detail-pic m-b30">
                         <div class="sx-media">
                             <img src="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@(content.Picture!=null?content.Picture.Link:"")" alt="@content.Name">
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-
-
-
-
-
     </div>
 </div>
 <!-- SECTION CONTENT END  -->
 <!-- SECTION CONTENTG START -->
-<div class="section-full p-b80 inner-page-padding">
+<div class="section-full p-b80 inner-page-padding docsTap">
     <div class="container">
-
         <div class="faq-1 p-b80">
             <!-- TITLE START -->
             <div class="section-head">
@@ -79,7 +85,7 @@
                 <div class="col-md-12">
                     <!-- Accordion -->
                     <div class="sx-accordion acc-bg-gray" id="accordion5">
-                        @if (content.Gallery != null && content.Gallery.Count > 0)
+                        @if (contentDocs.Gallery != null && contentDocs.Gallery.Count > 0)
                         {
                             <div class="panel sx-panel">
                                 <div class="acod-head">
@@ -98,7 +104,7 @@
                                                 <!-- IMAGE CAROUSEL START -->
                                                 <div class="section-content ">
                                                     <div class="owl-carousel owl-carousel-filter  owl-btn-bottom-center mfp-gallery navigation-with-name">
-                                                        @foreach (var item in content.Gallery)
+                                                        @foreach (var item in contentDocs.Gallery)
                                                         {
                                                             <div class="item fadingcol col-one overflow-hide">
                                                                 <div class="sx-box   image-hover-block">
@@ -116,16 +122,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>
-
                         }
 
-                        @if (content.Documents != null && content.Documents.Count > 0)
+                        @if (contentDocs.Documents != null && contentDocs.Documents.Count > 0)
                         {
                             <div class="panel sx-panel">
                                 <div class="acod-head">
@@ -140,7 +142,7 @@
 
 
                                     <div class="acod-content p-tb15 row">
-                                        @foreach (var item in content.Documents)
+                                        @foreach (var item in contentDocs.Documents)
                                         {
                                             var exNa = "";
                                             switch (item.Link.Split('.')[1].ToLower())
@@ -171,14 +173,14 @@
                                         }
 
 
- 
+
                                     </div>
                                 </div>
                             </div>
                         }
                         @if (SessionRequest.fUser != null)
                         {
-                            @if (content.TechnicalProperties != null && content.TechnicalProperties.Count > 0)
+                            @if (contentDocs.TechnicalProperties != null && contentDocs.TechnicalProperties.Count > 0)
                             {
                                 <div class="panel sx-panel">
                                     <div class="acod-head">
@@ -191,7 +193,9 @@
                                     </div>
                                     <div id="collapseFour5" class="acod-body collapse">
                                         <div class="acod-content p-tb15 row">
-                                            @foreach (var item in content.TechnicalProperties)
+                                            <div class="col-md-12"><a class="site-button btn-half pull-right downloadMultipleFile" data-group="CAD_Files"> <span> Seçilen Dokümanları İndir</span> </a></div>
+
+                                            @foreach (var item in contentDocs.TechnicalProperties)
                                             {
                                                 var exNa = "";
                                                 switch (item.Link.Split('.')[1].ToLower())
@@ -212,7 +216,7 @@
                                                 <div class="col-md-12">
                                                     <div class="docCont">
                                                         <h5 class="m-b0">
-                                                            @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                            @item.Name  <input type="checkbox" name="CAD_Files" value="@item.Id" class="docCheck pull-right" /> <a href="#" class="site-button-link pull-right downloadFile" data-filename="@(item.Link)">İNDİR</a> <i class="fa @exNa"></i>
                                                         </h5>
 
 
@@ -225,20 +229,21 @@
                             }
                             if (SessionRequest.fUser.UserType != UserType.Mimar)
                             {
-                                if (content.CadDatas != null && content.CadDatas.Count > 0)
+                                if (contentDocs.CadDatas != null && contentDocs.CadDatas.Count > 0)
                                 {
                                     <div class="panel sx-panel">
                                         <div class="acod-head">
                                             <h4 class="acod-title">
-                                                <a data-toggle="collapse" href="#collapseFour5" class="collapsed" data-parent="#accordion5">
+                                                <a data-toggle="collapse" href="#collapseFour56" class="collapsed" data-parent="#accordion5">
                                                     Uygulama Katalogları (CAD)
                                                     <span class="indicator"><i class="fa fa-plus"></i></span>
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="collapseFour5" class="acod-body collapse">
+                                        <div id="collapseFour56" class="acod-body collapse">
                                             <div class="acod-content p-tb15 row">
-                                                @foreach (var item in content.CadDatas)
+                                                <div class="col-md-12"><a class="site-button btn-half pull-right downloadMultipleFile" data-group="CAD_Catalogs"> <span> Seçilen Dokümanları İndir</span> </a></div>
+                                                @foreach (var item in contentDocs.CadDatas)
                                                 {
                                                     var exNa = "";
                                                     switch (item.Link.Split('.')[1].ToLower())
@@ -259,7 +264,7 @@
                                                     <div class="col-md-12">
                                                         <div class="docCont">
                                                             <h5 class="m-b0">
-                                                                @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                                @item.Name   <input type="checkbox" name="CAD_Catalogs" value="@item.Id" class="docCheck pull-right" /><a href="#" class="site-button-link pull-right downloadFile" data-filename="@(item.Link)">İNDİR</a> <i class="fa @exNa"></i>
                                                             </h5>
 
 
@@ -272,7 +277,7 @@
                                 }
                             }
 
-                            @if (content.BIMFiles != null && content.BIMFiles.Count > 0)
+                            @if (contentDocs.BIMFiles != null && contentDocs.BIMFiles.Count > 0)
                             {
                                 <div class="panel sx-panel">
                                     <div class="acod-head">
@@ -285,7 +290,8 @@
                                     </div>
                                     <div id="collapseFive5" class="acod-body collapse">
                                         <div class="acod-content p-tb15 row">
-                                            @foreach (var item in content.BIMFiles)
+                                            <div class="col-md-12"><a class="site-button btn-half pull-right downloadMultipleFile" data-group="BIM_Files"> <span> Seçilen Dokümanları İndir</span> </a></div>
+                                            @foreach (var item in contentDocs.BIMFiles)
                                             {
                                                 var exNa = "";
                                                 switch (item.Link.Split('.')[1].ToLower())
@@ -306,7 +312,7 @@
                                                 <div class="col-md-12">
                                                     <div class="docCont">
                                                         <h5 class="m-b0">
-                                                            @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                            @item.Name   <input type="checkbox" name="BIM_Files" value="@item.Id" class="docCheck pull-right" /><a href="#" class="site-button-link pull-right downloadFile" data-filename="@(item.Link)">İNDİR</a> <i class="fa @exNa"></i>
                                                         </h5>
 
 
@@ -319,7 +325,7 @@
                             }
                             if (SessionRequest.fUser.UserType != UserType.Mimar)
                             {
-                                if (content.TechnicalDocuments != null && content.TechnicalDocuments.Count > 0)
+                                if (contentDocs.TechnicalDocuments != null && contentDocs.TechnicalDocuments.Count > 0)
                                 {
                                     <div class="panel sx-panel">
                                         <div class="acod-head">
@@ -332,7 +338,8 @@
                                         </div>
                                         <div id="collapseFive6" class="acod-body collapse">
                                             <div class="acod-content p-tb15 row">
-                                                @foreach (var item in content.TechnicalDocuments)
+                                                <div class="col-md-12"><a class="site-button btn-half pull-right downloadMultipleFile" data-group="Tech_Files"> <span> Seçilen Dokümanları İndir</span> </a></div>
+                                                @foreach (var item in contentDocs.TechnicalDocuments)
                                                 {
                                                     var exNa = "";
                                                     switch (item.Link.Split('.')[1].ToLower())
@@ -353,7 +360,7 @@
                                                     <div class="col-md-12">
                                                         <div class="docCont">
                                                             <h5 class="m-b0">
-                                                                @item.Name   <a href="@SessionRequest.config.ImageUrl/fileupload/UserFiles/Folders/@item.Link" target="_blank" class="site-button-link pull-right">İNDİR</a> <i class="fa @exNa"></i>
+                                                                @item.Name   <input type="checkbox" name="Tech_Files" value="@item.Id" class="docCheck pull-right" /><a href="#" class="site-button-link pull-right downloadFile" data-filename="@(item.Link)">İNDİR</a> <i class="fa @exNa"></i>
                                                             </h5>
 
 
@@ -373,7 +380,7 @@
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
                                     <h4 class="acod-title">
-                                        <a href="/login">
+                                        <a href="/login?returnUrl=@content.Link">
                                             Sipariş Katalogları (CAD)
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
@@ -384,7 +391,7 @@
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
                                     <h4 class="acod-title">
-                                        <a href="/login">
+                                        <a href="/login?returnUrl=@content.Link">
                                             Uygulama Katalogları (CAD)
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
@@ -395,7 +402,7 @@
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
                                     <h4 class="acod-title">
-                                        <a href="/login">
+                                        <a href="/login?returnUrl=@content.Link">
                                             BİM Dosyaları
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
@@ -406,7 +413,7 @@
                             <div class="panel sx-panel">
                                 <div class="acod-head acc-actives">
                                     <h4 class="acod-title">
-                                        <a data-toggle="collapse" href="/login" data-parent="#locked">
+                                        <a data-toggle="collapse" href="/login?returnUrl=@content.Link" data-parent="#locked">
                                             Teknik Dokümanlar
                                             <span class="indicator"><i class="fa fa-lock"></i></span>
                                         </a>
@@ -598,3 +605,283 @@
         </div>
     </div>
 }
+
+
+<script>
+    $(document).ready(function () {
+        if (location.hash != "") {
+            $('html,body').animate({ scrollTop: $('.docsTap').offset().top - 100 });
+        }
+    });
+
+
+
+
+    $(".downloadMultipleFile").click(function (event) {
+        debugger;
+       var groupName = $(this).data("group");
+        console.log(groupName)
+        var checked = $('[name="' + groupName + '"]:checked');
+        var docs = [];
+        console.log(checked);
+        if (checked.length) {
+
+
+            $.ajx('/Base/GetDocToken', function (mToken) {
+            debugger;
+
+                if (mToken == "Login") {
+                console.log("00")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Uyarı',
+                    text: 'Üye Girişi Yapmanız Gerekmektedir.',
+                    footer: 'Giriş Yapmak için <a href="/login?returnUrl=@content.Link"><u>tıklayınız</u></a>.'
+                })
+
+            }
+                else if (mToken == "NOK") {
+                console.log("11")
+                swal.fire({
+                    text: "Hata, lütfen daha sonra tekrar deneyiniz.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Tamam",
+                    customClass: {
+                        confirmButton: "btn font-weight-bold btn-light-primary"
+                    }
+                })
+
+            }
+            else {
+
+
+                    var mFiles = "";
+            if (mToken != "NOK" && mToken!="NOK1") {
+                checked.each(function (i, e) {
+                    console.log($(e).val());
+                    docs.push(parseInt($(e).val()));
+                    mFiles += $(e).val() + ",";
+                })
+               // var _filesModel = { token: token, files: docs };
+                // console.log(_filesModel);
+                if (mFiles.substr(mFiles.length - 1, 1) == ",") {
+                    mFiles = mFiles.substr(0, mFiles.length - 1);
+                }
+
+                var recursiveDecoded = decodeURIComponent(docs);
+                console.log(recursiveDecoded);
+                console.log("DOCS HERE INT------------");
+                console.log(docs);
+                var _filesModelTest = { token: mToken, files: recursiveDecoded };
+                console.log(_filesModelTest);
+                console.log("DOCS HERE------------");
+
+
+
+                var _filesModel = { token: "49145a23-467f-4fef-9a0b-d9ddb562478a", files: [2200, 2201] };
+                console.log("Orj HERE------------");
+                console.log(_filesModel);
+                console.log("Orj HERE------------");
+              //  var recursiveEncoded = $.param(myObject);
+                const saveData = (() => {
+                    const a = document.createElement('a');
+                    a.style = 'display: none';
+                    document.body.appendChild(a);
+                    //return (data, fileName, type = 'application/zip') => { 
+                    return (data, fileName, type = 'octet/stream') => { 
+                        const blob = new Blob([data], { type });
+                        if (navigator.msSaveBlob) {
+                            return navigator.msSaveBlob(blob, fileName);
+                        }
+                        const url = URL.createObjectURL(blob);
+                        a.href = url;
+                        a.download = fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        return true;
+                    };
+                })();
+               
+                var postArray = [];
+                $.ajx = function (url, data, successMethod, error) {
+                    //if (typeof data != "string" && data != null) {
+                    //    data = JSON.stringify(data);
+                    //}
+                   //var slash = url.substr(0, 1) == "/" ? "" : "/";
+
+                    var post = $.post(url, data, successMethod)
+                        .done((dataBlob) =>
+                            saveData(dataBlob, 'myZipFile.zip')
+                        )
+                        .fail(function (e, exception) {
+                            if (error) {
+                                var errorResult = $.errorSend(e, exception);
+                                console.log(exception);
+                            }
+                        });
+                    postArray.push(post);
+                };
+
+                var _filesModel = { token: mToken, files: decodeURIComponent(mFiles) };
+
+
+
+
+                $.ajx("https://cms.interal.com.tr/Base/DownloadZip", _filesModel,null,null);
+
+           //    $.ajax({
+           //        method: "POST",
+           //       // contentType: "application/octetstream",
+           //        contentType: "application/json; charset=utf-8",
+           //        dataType: "json",
+           //        url: "https://cms.interal.com.tr/Base/DownloadZip",
+           //        data: JSON.stringify( { token: mToken, files:decodeURIComponent(mFiles) })
+           //    })
+           //        .done((data) => saveData(data, 'myDownload.zip'));
+
+             //   var postArray = [];
+             //   $.ajx = function (url, data, successMethod, error) {
+             //       //if (typeof data != "string" && data != null) {
+             //       //    data = JSON.stringify(data);
+             //       //}
+             //    //   var slash = url.substr(0, 1) == "/" ? "" : "/";
+             //
+             //       var post = $.post(url, data, successMethod)
+             //           .fail(function (e, exception) {
+             //               if (error) {
+             //                   var errorResult = $.errorSend(e, exception);
+             //                   console.log(exception);
+             //               }
+             //           });
+             //       postArray.push(post);
+             //   };
+             //
+             //   var _filesModel = { token: "49145a23-467f-4fef-9a0b-d9ddb562478a", files: [2200, 2201] };
+             //
+             //   $.ajx("https://cms.interal.com.tr/Base/DownloadZip", _filesModel, successMethod, null)
+
+
+
+               //$.ajax({
+               //    url: "https://cms.interal.com.tr/Base/DownloadZip",
+               //    type: "POST",
+               //    contentType: "application/json",
+               //    dataType: "binary",
+               //    responseType:'blob',
+               //    data: dataJson,
+               //    processData: false,
+               //    success: function (blob) {
+               //        saveAs(blob, "files.zip");
+               //    }
+               //
+               //});
+
+            }
+
+
+
+
+
+                }
+
+            });
+
+
+
+
+        }
+        else {
+              Swal.fire({
+                    icon: 'warning',
+                    title: 'Uyarı',
+                    text: 'Lütfen indirmek istediğiniz dosyaları seçiniz.'
+                })
+        }
+
+    })
+
+    function successMethod2(data,filename) {
+        const a = document.createElement('a');
+        a.style = 'display: none';
+        document.body.appendChild(a);
+        return (data, fileName, type = 'octet/stream') => {
+            const blob = new Blob([data], { type });
+            if (navigator.msSaveBlob) {
+                return navigator.msSaveBlob(blob, fileName);
+            }
+            const url = URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+            return true;
+        };
+    }
+    function successMethod(data) {
+        debugger;
+        console.log(data);
+        var blob = new Blob([data], { type: "application/octetstream" });
+        var isIE = false || !!document.documentMode;
+        window.navigator.msSaveBlob(blob, "myZip.zip");
+    }
+    $(".downloadFile").click(function () {
+        var fileName = $(this).data("filename");
+        var fileNameArr = fileName.split('/');
+        var fileNameEx = "";
+        if (fileNameArr.length > 0) {
+            fileNameEx = fileNameArr[fileNameArr.length - 1];
+
+            $.ajx('/Base/GetDocToken', function (mToken) {
+                debugger;
+
+                if (mToken == "Login") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Uyarı',
+                        text: 'Üye Girişi Yapmanız Gerekmektedir.',
+                        footer: 'Giriş Yapmak için <a href="/login?returnUrl=@content.Link"><u>tıklayınız</u></a>.'
+                    })
+
+                }
+                else if (mToken == "NOK") {
+                    swal.fire({
+                        text: "Hata, lütfen daha sonra tekrar deneyiniz.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Tamam",
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    })
+
+                }
+                else {
+
+                    window.open(
+                        "https://cms.interal.com.tr/Base/GetAuth?token=" + mToken + "&filename=" + fileNameEx,
+                        '_blank'
+                    );
+
+                }
+            })
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+        return false;
+
+    })
+
+
+
+</script>

@@ -170,7 +170,7 @@ public class GenericRepo<C, T> : IGenericRepo<T> where T : class, IBaseModel whe
         var dbEntityEntry = _context.Entry(t);
         dbEntityEntry.State = EntityState.Modified;
         dbEntityEntry.Property(o => o.CreaDate).IsModified = false;
-        t.ModUser = sessionInfo._BaseModel.Id;
+        t.ModUser = sessionInfo._BaseModel == null ? 1 : sessionInfo._BaseModel.Id;
         t.ModDate = DateTime.Now;
 
         return t;

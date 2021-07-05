@@ -4000,6 +4000,7 @@ ol.list-num-count {
     font-weight: 500;
     position: relative;
     padding-left: 0;
+    margin-right:7px;
     font-size: 14px;
     z-index: 1;
     text-transform: uppercase;
@@ -16077,7 +16078,7 @@ large-title-block
     }
 
     .get-in-touch-btn-custom:hover {
-        color: #fff;
+        color: #f5bf23;
         transition-delay: .6s;
     }
 

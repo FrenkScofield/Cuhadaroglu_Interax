@@ -22,6 +22,7 @@ using System.Web;
 using System.Linq.Dynamic.Core;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json.Converters;
+using System.IO.Compression;
 
 class ReplaceExpressionVisitor : ExpressionVisitor
 {
@@ -44,11 +45,49 @@ class ReplaceExpressionVisitor : ExpressionVisitor
         return base.Visit(node);
     }
 }
-
+public class ZipDocs
+{
+    public string Name { get; set; }
+    public Stream Content { get; set; }
+    public ZipDocs(string name, Stream content)
+    {
+        this.Name = name;
+        this.Content = content;
+    }
+    public ZipDocs(string name, string contentStr, Encoding encoding)
+    {
+        var byteArray = encoding.GetBytes(contentStr);
+        var memoryStream = new MemoryStream(byteArray);
+        this.Name = name;
+        this.Content = memoryStream;
+    }
+}
 public static class Helpers
 {
 
 
+  
+    public static class Zipper
+    {
+        public static Stream Zip(List<ZipDocs> zipItems)
+        {
+            var myZipFile = new MemoryStream();
+
+            using (var zip = new ZipArchive(myZipFile, ZipArchiveMode.Create, true))
+            {
+                foreach (var zipItem in zipItems)
+                {
+                    var entry = zip.CreateEntry(zipItem.Name);
+                    using (var entryStream = entry.Open())
+                    {
+                        zipItem.Content.CopyTo(entryStream);
+                    }
+                }
+            }
+            myZipFile.Position = 0;
+            return myZipFile;
+        }
+    }
     public static string strSqlColumn(this DataTable table)
     {
         string sql = "";

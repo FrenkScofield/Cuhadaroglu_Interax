@@ -17,8 +17,8 @@ public class AuthenticationMiddleware
 
     public Task Invoke(HttpContext httpContext)
     {
-        if (SessionRequest._User == null && !httpContext.Request.Path.Value.ToLower().Contains("/login"))
-            httpContext.Response.Redirect("/login/login1");
+     //  if (SessionRequest._User == null && !httpContext.Request.Path.Value.ToLower().Contains("/login"))
+     //      httpContext.Response.Redirect("/login/login1");
         return _next(httpContext);
     }
 }

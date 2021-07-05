@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,9 +13,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.IISIntegration;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -49,7 +52,15 @@ namespace CMS
                 options.SerializerSettings.Formatting = Formatting.Indented;
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+
             });
+
+
+
+
+
+
+
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
@@ -62,9 +73,12 @@ namespace CMS
             if (HostEnvironment.IsDevelopment())
                 mvcBuilder.AddRazorRuntimeCompilation();
 
+
+
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache();//To Store session in Memory, This is default implementation of IDistributedCache    
-            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(60));
+            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(360));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
@@ -91,7 +105,15 @@ namespace CMS
             services.AddAuthentication(IISDefaults.AuthenticationScheme);
 
             services.AddKendo();
-
+           services.AddCors();
+          //services.AddCors(options =>
+          //{
+          //    options.AddPolicy(name: "MyAllowSpecificOrigins",
+          //                      builder =>
+          //                      {
+          //                          builder.WithOrigins("https://*.mydomain.com")
+          //                      });
+          //});
 
 
 
@@ -109,6 +131,9 @@ namespace CMS
                 //app.UseHsts();
             }
             app.UseStaticFiles();
+            //   app.UseCors(x => { x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("https://*.interal.com.tr"); });
+            app.UseCors(x => { x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseSession();
@@ -123,6 +148,77 @@ namespace CMS
 
             SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
 
+
+
+            var provider = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider.Mappings[".dwg"] = "application/application/acad";
+            var provider2 = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider2.Mappings[".dwg"] = "application/application/acad";
+
+            var provider3 = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider3.Mappings[".dwg"] = "application/application/acad";
+
+            var provider4 = new FileExtensionContentTypeProvider();
+            // Add new mappings
+            provider4.Mappings[".dwg"] = "application/application/acad";
+
+
+            //TODO belirtilen folderlarda tanımlama
+            //foreach (string d in Directory.GetDirectories("wwwroot"))
+            //{
+            //    Path.GetFileName(d);
+            //
+            //
+            //}
+
+            string[] pathArr = new string[] { "wwwroot", "fileupload", "UserFiles" };
+
+            app.Use(async (context, next) =>
+            {
+                // if (!context.User.Identity.IsAuthenticated && context.Request.Path.StartsWithSegments("/CadFiles") )
+                //HttpContext.Session.GetString("Test");
+
+                if (SessionRequest._DocUser == null && context.Request.Path.StartsWithSegments("/CadFiles"))
+                {
+                    throw new Exception("Not authenticated");
+                }
+                await next.Invoke();
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "fileupload", "UserFiles", "Folders", "CAD-Cephe Sistemleri-Mimarlar ve Uygulayıcılar")),
+                RequestPath = "/CadFiles",
+                ContentTypeProvider = provider
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "fileupload", "UserFiles", "Folders", "CAD-Cephe Sistemleri-Sadece Uygulayıcılar")),
+                RequestPath = "/CadFiles",
+                ContentTypeProvider = provider2
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                   Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "fileupload", "UserFiles", "Folders", "CAD-Doğrama-Mimarlar ve Uygulayıcılar")),
+                RequestPath = "/CadFiles",
+                ContentTypeProvider = provider3
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                   Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "fileupload", "UserFiles", "Folders", "CAD-Doğrama-Sadece Uygulayıcılar")),
+                RequestPath = "/CadFiles",
+                ContentTypeProvider = provider4
+            });
 
 
             app.UseMvc(routes =>

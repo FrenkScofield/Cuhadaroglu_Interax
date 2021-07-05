@@ -64,7 +64,7 @@ namespace CMSSite
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache();//To Store session in Memory, This is default implementation of IDistributedCache    
-            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(60));
+            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(360));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
@@ -116,10 +116,8 @@ namespace CMSSite
 
             app.UseMiddleware<ErrorMid>();
 
-            //app.InitializeDatabase();
-
-            SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
-
+            //app.InitializeDatabase(); 
+            SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>()); 
             app.UseMvc(routes =>
             {
 

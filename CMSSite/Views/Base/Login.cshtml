@@ -168,17 +168,23 @@
                                     text: "Giriş Başarılı",
                                     icon: "success",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Tamam",
+                                  //  confirmButtonText: "Tamam",
+                                    showConfirmButton: false,
                                     customClass: {
                                         confirmButton: "btn font-weight-bold btn-light-primary"
                                     }
                                 }).then(function () {
-                                    KTUtil.scrollTop();
+                              
+                                   
                                 });
 
-                                // Submit form
-                                KTUtil.scrollTop();
-                                location.reload();
+                                if (location.search != "") {
+                                    window.location.href = location.search.split('=')[1] + "#docs";
+                                }
+                                else {
+                                    window.location.href = "/";
+                                }
+                                
                             }
                             else {
 

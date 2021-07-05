@@ -60,6 +60,9 @@ public partial class User : BaseModel
     [DisplayName("Token")]
     public string UserToken { get; set; }
 
+
+    public string UserDocToken { get; set; }
+
     public UserType? UserType { get; set; } 
 
     public bool? IsActive { get; set; }
