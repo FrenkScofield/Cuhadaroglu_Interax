@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -108,18 +109,15 @@ namespace CMS.Controllers
         {
             if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(filename))
             {
-
                 User currUser = _IUserService.Where(x => x.UserDocToken == token && x.IsDeleted == null && x.IsActive == true).Result.FirstOrDefault();
                 if (currUser != null)
                 {
-
                     // var encodedLocationName = WebUtility.UrlEncode(filename);
                     // var encodedLocationName2 = HttpUtility.UrlEncode(filename, System.Text.Encoding.UTF8);
                     var encodedUri = Uri.EscapeUriString(filename);
                     currUser.UserDocToken = "";
                     _IUserService.InsertOrUpdate(currUser);
                     _IUserService.SaveChanges();
-
                     _IHttpContextAccessor.HttpContext.Session.Set("_docuser", currUser);
                     return Redirect("/CadFiles/" + encodedUri);
                     //TODO redirect to file
@@ -135,13 +133,13 @@ namespace CMS.Controllers
             }
 
         }
-      public class filesModel
-      {
-          public string token { get; set; }
-          //public int[] files { set; get; }
-          public string files { set; get; }
-      
-      }
+        public class filesModel
+        {
+            public string token { get; set; }
+            //public int[] files { set; get; }
+            public string files { set; get; }
+
+        }
 
         [HttpPost]
         public async Task<IActionResult> DownloadZip(filesModel _filesModel)
@@ -152,7 +150,6 @@ namespace CMS.Controllers
             if (currUser != null)
             {
                 _IHttpContextAccessor.HttpContext.Session.Set("_docuser", currUser);
-
                 if (files != "")
                 {
                     List<int> fileArr = new List<int>();
@@ -164,59 +161,351 @@ namespace CMS.Controllers
                     {
                         fileArr.Add(Convert.ToInt32(files));
                     }
-
                     List<Documents> docsToDown = _IDocumentsService.Where(x => fileArr.Contains(x.Id) && x.IsDeleted == null).Result.ToList();
                     List<ZipDocs> myZipFile = new List<ZipDocs>();
+                    List<InMemoryFile> myZipFile2 = new List<InMemoryFile>();
+
                     string fileNamePure = "";
+                    string myPathStr = Directory.GetCurrentDirectory();
                     List<string> myArr = new List<string>();
                     myArr.Add(Directory.GetCurrentDirectory());
-                    myArr.Add("wwwroot\\fileupload\\UserFiles\\Folders");
+                    myArr.Add("\\wwwroot\\fileupload\\UserFiles\\Folders");
+                    myPathStr += "\\wwwroot\\fileupload\\UserFiles\\Folders";
                     //{ Directory.GetCurrentDirectory(),, "fileupload", "UserFiles", "Folders" };
                     string[] myArrTemp;
                     string rootPath = "";
                     foreach (var item in docsToDown)
                     {
-
                         if (item.Link.Contains('/'))
                         {
                             myArrTemp = item.Link.Split('/');
                             for (int i = 0; i < myArrTemp.Length; i++)
                             {
                                 myArr.Add(myArrTemp[i]);
+                                myPathStr += "\\" + myArrTemp[i];
                             }
-
                         }
                         else
                         {
-                            myArr.Append(item.Link);
+                            myArr.Add(item.Link);
+                            myPathStr += "\\" + item.Link;
                         }
-
 
                         if (myArr.Count() > 2)
                         {
-                            var path = Path.Combine(myArr.ToArray());
-
+                            var path2 = Path.Combine(myArr.ToArray());
+                            var path = myPathStr;
                             var memory = new MemoryStream();
 
                             var str = path;
-                           
-                            using (var stream = new FileStream(path, FileMode.Open, 
-            FileAccess.ReadWrite))
-                            {
-                                await stream.CopyToAsync(memory);
-                            }
-                            memory.Position = 0;
 
-                            ZipDocs myFile = new ZipDocs(item.Name+".dwg", memory);
-                            myZipFile.Add(myFile);
-                            myArr.RemoveRange(2, myArr.Count() - 2);
+                            if (System.IO.File.Exists(path))
+                            {
+                                using (var stream = new FileStream(path, FileMode.Open,
+                FileAccess.ReadWrite))
+                                {
+                                    await stream.CopyToAsync(memory);
+                                }
+                                memory.Position = 0;
+                                ZipDocs myFile = new ZipDocs(item.Name, memory);
+                                myZipFile.Add(myFile);
+                                InMemoryFile myFile2 = new InMemoryFile();
+                                myFile2.FileName = item.Name;
+                                myFile2.Content = ReadFully(memory);
+                                myZipFile2.Add(myFile2);
+                                myArr.RemoveRange(2, myArr.Count() - 2);
+                            }
                         }
 
                     }
-
+                    var xxx = Helpers.Zipper.Zip(myZipFile);
                     //return File(memory, GetContentType(path), Path.GetFileName(path));
-                    //return File(Helpers.Zipper.Zip(myZipFile), "application/zip", "myZipFile.zip");
-                    return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    // return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    // return File(Helpers.GetZipArchive(myZipFile2), "application/octet-stream", "myZipFile.zip");
+                    return File(Helpers.GetZipArchive(myZipFile2), "application/zip", "myZipFile.zip");
+
+                    //return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+
+
+                    // return File(Helpers.GetZipArchive2(myZipFile2), "application/zip", "myZipFile.zip");
+
+                    //  return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    //  return File(myZipFile2.FirstOrDefault().Content, "image/jpeg", "surme.jpg");
+                }
+                else
+                {
+                    return Json("NOK");
+                }
+            }
+            else
+            {
+                return Json("NOK1");
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult DownloadZipFile(string token, string files)
+        {
+
+            var currUser = _IUserService.Where(x => x.UserDocToken == token && x.IsDeleted == null && x.IsActive == true).Result.FirstOrDefault();
+            if (currUser != null)
+            {
+                _IHttpContextAccessor.HttpContext.Session.Set("_docuser", currUser);
+                if (files != "")
+                {
+                    List<int> fileArr = new List<int>();
+                    if (files.IndexOf(",") > -1)
+                    {
+                        fileArr = files.Split(',').Select(Int32.Parse).ToList();
+                    }
+                    else
+                    {
+                        fileArr.Add(Convert.ToInt32(files));
+                    }
+                    List<Documents> docsToDown = _IDocumentsService.Where(x => fileArr.Contains(x.Id) && x.IsDeleted == null).Result.ToList();
+                    List<ZipDocs> myZipFile = new List<ZipDocs>();
+                    List<InMemoryFile> myZipFile2 = new List<InMemoryFile>();
+
+                    string fileNamePure = "";
+                    string myPathStr = "";
+                    List<string> myArr = new List<string>();
+                    myArr.Add(Directory.GetCurrentDirectory());
+                    myArr.Add("\\wwwroot\\fileupload\\UserFiles\\Folders");
+
+                    //{ Directory.GetCurrentDirectory(),, "fileupload", "UserFiles", "Folders" };
+                    string[] myArrTemp;
+                    string rootPath = "";
+
+                    foreach (var item in docsToDown)
+                    {
+                        myPathStr = Directory.GetCurrentDirectory();
+                        myPathStr += "\\wwwroot\\fileupload\\UserFiles\\Folders";
+                        if (item.Link.Contains('/'))
+                        {
+                            myArrTemp = item.Link.Split('/');
+                            for (int i = 0; i < myArrTemp.Length; i++)
+                            {
+                                myArr.Add(myArrTemp[i]);
+                                myPathStr += "\\" + myArrTemp[i];
+                            }
+                        }
+                        else
+                        {
+                            myArr.Add(item.Link);
+                            myPathStr += "\\" + item.Link;
+                        }
+
+                        if (myArr.Count() > 2)
+                        {
+                            var path2 = Path.Combine(myArr.ToArray());
+                            var path = myPathStr;
+                            var memory = new MemoryStream();
+
+                            var str = path;
+
+                            if (System.IO.File.Exists(path))
+                            {
+                                using (var stream = new FileStream(path, FileMode.Open))
+                                {
+                                    stream.CopyTo(memory);
+                                }
+
+                                ZipDocs myFile = new ZipDocs(myArr[myArr.Count() - 1], memory);
+                                myZipFile.Add(myFile);
+
+                                InMemoryFile myFile2 = new InMemoryFile();
+                                myFile2.FileName = myArr[myArr.Count() - 1];
+                                //myFile2.Content = ReadFully(memory);
+                                myFile2.Content = memory.ToArray();
+                                myZipFile2.Add(myFile2);
+
+                                myArr.RemoveRange(2, myArr.Count() - 2);
+                                memory.Position = 0;
+                            }
+                        }
+
+                    }
+                    var xxx = Helpers.Zipper.Zip(myZipFile);
+                    //return File(memory, GetContentType(path), Path.GetFileName(path));
+                    // return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    // return File(Helpers.GetZipArchive(myZipFile2), "application/octet-stream", "myZipFile.zip");
+                    //  return File(Helpers.GetZipArchive(myZipFile2), "application/zip", "myZipFile.zip"); 
+                    //return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip"); 
+                    // return File(Helpers.GetZipArchive2(myZipFile2), "application/zip", "myZipFile.zip"); 
+                    //  return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    return File(Helpers.GetZipArchive(myZipFile2), "application/zip", "myZipFile.zip");
+                    //   return File(myZipFile2.FirstOrDefault().Content, "image/jpeg", "surme.jpg");
+                }
+                else
+                {
+                    return Json("NOK");
+                }
+            }
+            else
+            {
+                return Json("NOK1");
+            }
+        }
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[input.Length];
+            // using (MemoryStream ms = new MemoryStream())
+            // {
+            MemoryStream ms = new MemoryStream();
+
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
+            return ms.ToArray();
+            //  }
+        }
+
+
+        public ActionResult DownloadDocument()
+        {
+            string filePath = Path.GetFullPath("./wwwroot/images/200.png");
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/force-download", "200.png");
+        }
+        public async Task<IActionResult> DownloadImage(string filename)
+        {
+            var path = Path.GetFullPath("./wwwroot/images/200.png");
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = "200.png",
+                Inline = false
+            };
+            Response.Headers.Add("Content-Disposition", cd.ToString());
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+            // return File(memory, "application/octet-stream", Path.GetFileName(path));
+            return File(memory.ToArray(), "image/png", Path.GetFileName(path));
+        }
+
+        [HttpGet]
+        public FileResult DownloadTel(string path)
+        {
+            var filePath = Path.GetFullPath("./wwwroot/images/200.png");
+            FileInfo file = new FileInfo(filePath);
+
+            System.Net.Mime.ContentDisposition cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = file.Name,
+                Inline = false
+            };
+            Response.Headers.Add("Content-Disposition", cd.ToString());
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+            string contentType;
+            new FileExtensionContentTypeProvider().TryGetContentType(file.Name, out contentType);
+            var readStream = System.IO.File.ReadAllBytes(filePath);
+            return File(readStream, contentType);
+        }
+
+        [HttpPost]
+        public IActionResult DownloadZipStatic(filesModel _filesModel)
+        {
+            string token = _filesModel.token;
+            string files = _filesModel.files;
+            var currUser = _IUserService.Where(x => x.UserDocToken == token && x.IsDeleted == null && x.IsActive == true).Result.FirstOrDefault();
+            if (currUser != null)
+            {
+                _IHttpContextAccessor.HttpContext.Session.Set("_docuser", currUser);
+                if (files != "")
+                {
+                    List<int> fileArr = new List<int>();
+                    if (files.IndexOf(",") > -1)
+                    {
+                        fileArr = files.Split(',').Select(Int32.Parse).ToList();
+                    }
+                    else
+                    {
+                        fileArr.Add(Convert.ToInt32(files));
+                    }
+                    List<Documents> docsToDown = _IDocumentsService.Where(x => fileArr.Contains(x.Id) && x.IsDeleted == null).Result.ToList();
+                    List<ZipDocs> myZipFile = new List<ZipDocs>();
+                    List<InMemoryFile> myZipFile2 = new List<InMemoryFile>();
+
+                    string fileNamePure = "";
+                    string myPathStr = Directory.GetCurrentDirectory();
+                    List<string> myArr = new List<string>();
+                    myArr.Add(Directory.GetCurrentDirectory());
+                    myArr.Add("\\wwwroot\\fileupload\\UserFiles\\Folders");
+                    myPathStr += "\\wwwroot\\fileupload\\UserFiles\\Folders";
+                    //{ Directory.GetCurrentDirectory(),, "fileupload", "UserFiles", "Folders" };
+                    string[] myArrTemp;
+                    string rootPath = "";
+                    foreach (var item in docsToDown)
+                    {
+                        if (item.Link.Contains('/'))
+                        {
+                            myArrTemp = item.Link.Split('/');
+                            for (int i = 0; i < myArrTemp.Length; i++)
+                            {
+                                myArr.Add(myArrTemp[i]);
+                                myPathStr += "\\" + myArrTemp[i];
+                            }
+                        }
+                        else
+                        {
+                            myArr.Add(item.Link);
+                            myPathStr += "\\" + item.Link;
+                        }
+
+                        if (myArr.Count() > 2)
+                        {
+                            var path2 = Path.Combine(myArr.ToArray());
+                            var path = myPathStr;
+                            var memory = new MemoryStream();
+
+                            var str = path;
+
+                            if (System.IO.File.Exists(path))
+                            {
+                                using (var stream = new FileStream(path, FileMode.Open,
+                FileAccess.ReadWrite))
+                                {
+                                    stream.CopyToAsync(memory);
+                                }
+
+                                memory.Position = 0;
+
+                                ZipDocs myFile = new ZipDocs(item.Name, memory);
+                                myZipFile.Add(myFile);
+
+                                InMemoryFile myFile2 = new InMemoryFile();
+                                myFile2.FileName = item.Name;
+                                // myFile2.Content = ReadFully(memory);
+                                myFile2.Content = memory.ToArray();
+                                myZipFile2.Add(myFile2);
+                                myArr.RemoveRange(2, myArr.Count() - 2);
+                            }
+                        }
+
+                    }
+                    var xxx = Helpers.Zipper.Zip(myZipFile);
+                    //return File(memory, GetContentType(path), Path.GetFileName(path));
+                    // return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+                    // return File(Helpers.GetZipArchive(myZipFile2), "application/octet-stream", "myZipFile.zip");
+                    //  return File(Helpers.GetZipArchive(myZipFile2), "application/zip", "myZipFile.zip");
+
+                    //return File(Helpers.Zipper.Zip(myZipFile), "application/octet-stream", "myZipFile.zip");
+
+
+                    // return File(Helpers.GetZipArchive2(myZipFile2), "application/zip", "myZipFile.zip");
+
+
+                    return File(myZipFile2.FirstOrDefault().Content, "image/jpeg", "surme.jpg");
                 }
                 else
                 {
@@ -230,6 +519,7 @@ namespace CMS.Controllers
 
 
         }
+
         //[HttpPost]
         //public async Task<IActionResult> DownloadZip(filesModel _filesModel)
         //{

@@ -152,18 +152,18 @@ namespace CMS
 
             var provider = new FileExtensionContentTypeProvider();
             // Add new mappings
-            provider.Mappings[".dwg"] = "application/application/acad";
+            provider.Mappings[".dwg"] = "application/acad";
             var provider2 = new FileExtensionContentTypeProvider();
             // Add new mappings
-            provider2.Mappings[".dwg"] = "application/application/acad";
+            provider2.Mappings[".dwg"] = "application/acad";
 
             var provider3 = new FileExtensionContentTypeProvider();
             // Add new mappings
-            provider3.Mappings[".dwg"] = "application/application/acad";
+            provider3.Mappings[".dwg"] = "application/acad";
 
             var provider4 = new FileExtensionContentTypeProvider();
             // Add new mappings
-            provider4.Mappings[".dwg"] = "application/application/acad";
+            provider4.Mappings[".dwg"] = "application/acad";
 
 
             //TODO belirtilen folderlarda tanımlama

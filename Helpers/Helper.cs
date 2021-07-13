@@ -62,11 +62,50 @@ public class ZipDocs
         this.Content = memoryStream;
     }
 }
+
+public class InMemoryFile
+{
+    public string FileName { get; set; }
+    public byte[] Content { get; set; }
+}
 public static class Helpers
 {
+    public static byte[] GetZipArchive(List<InMemoryFile> files)
+    {
+        byte[] archiveFile;
+        using (var archiveStream = new MemoryStream())
+        {
+            using (var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true))
+            {
+                foreach (var file in files)
+                {
+                    var zipArchiveEntry = archive.CreateEntry(file.FileName, CompressionLevel.NoCompression);
+                    using (var zipStream = zipArchiveEntry.Open())
+                        zipStream.Write(file.Content, 0, file.Content.Length);
+                }
+            }
 
+            archiveFile = archiveStream.ToArray();
+        }
+        return archiveFile;
+    }
 
-  
+    public static byte[] GetZipArchive2(List<InMemoryFile> files)
+    {
+        byte[] archiveFile;
+        MemoryStream archiveStream = new MemoryStream(); 
+        ZipArchive archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true); 
+        foreach (var file in files)
+        {
+            var zipArchiveEntry = archive.CreateEntry(file.FileName, CompressionLevel.NoCompression);
+            using (var zipStream = zipArchiveEntry.Open())
+                zipStream.Write(file.Content, 0, file.Content.Length);
+        } 
+        archive.Dispose();
+        archiveFile = archiveStream.ToArray(); 
+        return archiveFile;
+    }
+     
     public static class Zipper
     {
         public static Stream Zip(List<ZipDocs> zipItems)
@@ -86,8 +125,9 @@ public static class Helpers
             }
             myZipFile.Position = 0;
             return myZipFile;
-        }
+        } 
     }
+
     public static string strSqlColumn(this DataTable table)
     {
         string sql = "";
@@ -98,11 +138,7 @@ public static class Helpers
             sql += column.ColumnName;
         }
         return sql;
-    }
-
-
-
-
+    } 
 
     public static string toSqlInsertInto<T>(this List<T> _list)
     {
@@ -287,7 +323,7 @@ public static class Helpers
     }
 
     public static string DynamicInput(this object model, string controllerName, string nonProp, string orderby, string titleName,
-    string PageType, string labelClass, string inputClass, string colClass, string btn,string InsertMethodName)
+    string PageType, string labelClass, string inputClass, string colClass, string btn, string InsertMethodName)
     {
         string str = "";
         string strScript = "";

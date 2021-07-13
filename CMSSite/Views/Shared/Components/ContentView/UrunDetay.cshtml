@@ -654,10 +654,9 @@
 
             }
             else {
-
-
                     var mFiles = "";
-            if (mToken != "NOK" && mToken!="NOK1") {
+                    if (mToken != "NOK" && mToken != "NOK1") {
+
                 checked.each(function (i, e) {
                     console.log($(e).val());
                     docs.push(parseInt($(e).val()));
@@ -668,17 +667,19 @@
                 if (mFiles.substr(mFiles.length - 1, 1) == ",") {
                     mFiles = mFiles.substr(0, mFiles.length - 1);
                 }
+                        var recursiveDecoded = decodeURIComponent(docs);
 
-                var recursiveDecoded = decodeURIComponent(docs);
+                        window.open(
+                            "https://cms.interal.com.tr/Base/DownloadZipFile?token=" + mToken + "&files=" + recursiveDecoded,
+                            '_blank'
+                        );
+
                 console.log(recursiveDecoded);
                 console.log("DOCS HERE INT------------");
                 console.log(docs);
                 var _filesModelTest = { token: mToken, files: recursiveDecoded };
                 console.log(_filesModelTest);
                 console.log("DOCS HERE------------");
-
-
-
                 var _filesModel = { token: "49145a23-467f-4fef-9a0b-d9ddb562478a", files: [2200, 2201] };
                 console.log("Orj HERE------------");
                 console.log(_filesModel);
@@ -688,8 +689,8 @@
                     const a = document.createElement('a');
                     a.style = 'display: none';
                     document.body.appendChild(a);
-                    //return (data, fileName, type = 'application/zip') => { 
-                    return (data, fileName, type = 'octet/stream') => { 
+                    //return (data, fileName, type = 'application/zip') => {
+                    return (data, fileName, type = 'octet/stream') => {
                         const blob = new Blob([data], { type });
                         if (navigator.msSaveBlob) {
                             return navigator.msSaveBlob(blob, fileName);
@@ -702,7 +703,7 @@
                         return true;
                     };
                 })();
-               
+
                 var postArray = [];
                 $.ajx = function (url, data, successMethod, error) {
                     //if (typeof data != "string" && data != null) {
@@ -722,13 +723,9 @@
                         });
                     postArray.push(post);
                 };
-
                 var _filesModel = { token: mToken, files: decodeURIComponent(mFiles) };
+              //  $.ajx("https://cms.interal.com.tr/Base/DownloadZip", _filesModel,null,null);
 
-
-
-
-                $.ajx("https://cms.interal.com.tr/Base/DownloadZip", _filesModel,null,null);
 
            //    $.ajax({
            //        method: "POST",
