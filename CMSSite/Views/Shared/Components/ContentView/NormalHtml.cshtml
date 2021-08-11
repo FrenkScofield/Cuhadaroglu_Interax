@@ -8,6 +8,8 @@
 
 @await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
 <div class="section-full p-t80 p-b50 inner-page-padding">
     <div class="container">
 
@@ -46,7 +48,8 @@
             </div>
         </div>
 
-        @if (content.FormType != null)
+
+        @if (content.FormTypeId == 4)
         {
             <div class="section-content">
                 <!-- CONTACT FORM-->
@@ -60,13 +63,40 @@
                                     <div class="sx-separator-outer separator-left">
                                         <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
                                             <h3 class="sep-line-one">
-                                                @Html.Raw(content.FormType.Name)  Formu
+                                                @Html.Raw(content.FormType.DescName)
                                             </h3>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- TITLE END -->
                                 <input name="headLine" type="hidden" required="" value="@Html.Raw(content.FormType?.Name)">
+                                <div class="services_Result_Form_Dropdown">
+
+                                    <div style=" margin-bottom: 20px; display:block ">
+                                        <select style="color: #1f1f23; font-weight: 400; font-family: inherit;" id="RequestForm" class="form-control">
+                                            <option value="0">Talep formu seçiniz</option>
+                                            <option value="1">Servis Talebi</option>
+                                            <option value="2">Bakım Talebi</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div id="CareRequestForm" style=" margin-bottom: 20px; display: none">
+                                        <select style="color: #1f1f23; font-weight: 400; font-family: inherit;" class="form-control">
+                                            <option value="0">Bakım Talepi seçiniz</option>
+                                            <option value="1">Otomatik Kayar Kapılar - S110</option>
+                                            <option value="2">Otomatik Teleskopik Kayar Kapılar - TeleS110</option>
+                                            <option value="3">Otomatik Eğrisel Kayar Kapılar - Arc</option>
+                                            <option value="4">Otomatik Antipanik Kayar Kapılar - Antipanic</option>
+                                            <option value="5">Otomatik Döner Kapı - Arcus</option>
+                                            <option value="6">Manuel Döner Kapı - Arcus M</option>
+                                            <option value="7">Kayar Toplanır Sistem - KTS</option>
+
+
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <input name="NameSurname" type="text" required="" class="form-control" placeholder="Ad Soyad">
                                 </div>
@@ -79,8 +109,18 @@
                                     <input name="Phone" type="text" class="form-control" required="" placeholder="Telefon">
                                 </div>
 
+
+
                                 <div class="form-group">
-                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu">
+                                    <input name="address" type="text" required="" class="form-control" placeholder="Address">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Company" type="text" required="" class="form-control" placeholder="Firma">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu" value="@(content.Name+" hakkında detaylı bilgi talebi")">
                                 </div>
 
                                 <div class="form-group">
@@ -88,9 +128,9 @@
                                 </div>
 
                                 <div class="text-right">
-                                    <div class="html-code" style="display: inline-block;">
-                                        <input type="checkbox" name="Custom3" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
 
+                                    <div class="text-right">
+                                        <input type="checkbox" name="Custom3" required="" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
                                         <div id="test-modal" class="white-popup mfp-hide">
                                             <h3>Kullanım Koşulları</h3>
                                             <p>KİŞİSEL VERİLERİN İŞLENMESİ VE GÜVENLİĞİ FORMU Bu dokumanı onaylayarak 6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 5. Maddesi kapsamında Şirketimize iletmiş olduğunuz kişisel verilerinizin, hizmetlerimiz hakkında bilgi vermek ve sizlerle iletişime geçmek için kullanımına açıkça rıza göstermektesiniz.</p>
@@ -156,6 +196,7 @@
                                             opacity: 0;
                                         }
                                     </style>
+
                                     <button name="submit" type="submit" value="Submit" class="site-button btn-half">
                                         <span> Gönder</span>
                                     </button>
@@ -167,14 +208,24 @@
                     </div>
 
 
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="contact-info block-shadow bg-white bg-center p-a40" style="background-image:url(images/background/bg-map.png)">
 
-                            <div>
+                </div>
+            </div>
+
+        }
+        else if (content.FormTypeId == 5)
+        {
+            <div class="section-content">
+                <!-- CONTACT FORM-->
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
+                            <div class="contact-one">
+
                                 <!-- TITLE START -->
                                 <div class="section-head">
                                     <div class="sx-separator-outer separator-left">
-                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -646px 0px;">
+                                        <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image: url(&quot;images/background/cross-line2.png&quot;); background-position: -647px 0px;">
                                             <h3 class="sep-line-one">
                                                 @Html.Raw(content.FormType.DescName)
                                             </h3>
@@ -182,40 +233,157 @@
                                     </div>
                                 </div>
                                 <!-- TITLE END -->
-                                <div class="sx-icon-box-wraper left p-b30">
-                                    <div class="icon-xs"><i class="fa fa-phone"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Telefon</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Phone)</p>
-                                    </div>
+                                <input name="headLine" type="hidden" required="" value="@Html.Raw(content.FormType?.Name)">
+
+                                <div class="form-group">
+                                    <input name="projectName" type="text" required="" class="form-control" placeholder="Proje Adı">
                                 </div>
 
-                                <div class="sx-icon-box-wraper left p-b30">
-                                    <div class="icon-xs"><i class="fa fa-envelope"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Mail</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Mail)</p>
-                                    </div>
+                                <div class="form-group">
+                                    <input name="projectLocation" type="text" class="form-control" required="" placeholder="Proje Yeri">
                                 </div>
 
-                                <div class="sx-icon-box-wraper left">
-                                    <div class="icon-xs"><i class="fa fa-map-marker"></i></div>
-                                    <div class="icon-content">
-                                        <h5 class="m-t0">Adres</h5>
-                                        <p>@Html.Raw(SessionRequest.config.Adress)</p>
-                                    </div>
+                                <div style=" margin-bottom: 20px; display:block ">
+                                    <select style="color: #1f1f23; font-weight: 400; font-family: inherit;" class="form-control">
+                                        <option value="0"> Seçiniz</option>
+                                        <option value="1"> Kamu</option>
+                                        <option value="2"> Özel</option>
+
+                                    </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <textarea maxlength="500" name="scopeOfWork" rows="4" class="form-control " required="" placeholder="İşin Kapsamı "></textarea>
+                                    <span style=" font-size: 14px; font-weight: 400; color: #424242;">Maksimum 500 karakter giriniz</span>
+                                </div>
+
+                                <div style=" margin-bottom: 20px; display:block ">
+                                    <select style="color: #1f1f23; font-weight: 400; font-family: inherit;" class="form-control">
+                                        <option value="0">Talep edilen iş</option>
+                                        <option value="1"> Teklif</option>
+                                        <option value="2"> Şantiye Ziyareti</option>
+                                        <option value="3"> Ziyaret Talebi</option>
+                                        <option value="4"> Bilgi Edinme</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Subject" type="text" required="" class="form-control" placeholder="Konu" value="@(content.Name+" hakkında detaylı bilgi talebi")">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Proje teslim tarihi</label>
+                                    <input name="projectDeliveryDate" type="datetime-local" required="" class="form-control" placeholder="Proje teslim tarihi">
+                                </div>
+
+
+
+                                <div class="text-right">
+
+                                    <div class="text-right">
+                                        <input type="checkbox" name="Custom3" required="" />&nbsp;<a class="popup-modal" href="#test-modal">Kullanım Koşullarını</a> kabul ediyorum.&nbsp;&nbsp;&nbsp;
+                                        <div id="test-modal" class="white-popup mfp-hide">
+                                            <h3>Kullanım Koşulları</h3>
+                                            <p>KİŞİSEL VERİLERİN İŞLENMESİ VE GÜVENLİĞİ FORMU Bu dokumanı onaylayarak 6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 5. Maddesi kapsamında Şirketimize iletmiş olduğunuz kişisel verilerinizin, hizmetlerimiz hakkında bilgi vermek ve sizlerle iletişime geçmek için kullanımına açıkça rıza göstermektesiniz.</p>
+                                            <p>Kişisel verileriniz kanuni düzenlemelere uygun olarak ticari teamüllerde öngörülen sürelerde işlenecektir.</p>
+                                            <p>Kanun kapsamında Veri Sorumlusu Şirketimiz; CUHADAROĞLU olup Kanun’daki tüm sorumluluk ve yükümlülüklerine uymayı kabul etmektedir. Kişisel Verilerinizin, Veri Sorumlusu Şirketimizin belirleyeceği yurtiçi veya yurtdışında bulunan 3. kişilere işbu verilerin saklanması, depolanması ve açık rıza gösterilen amaçlarla işlenmesi için aktarılmasına açıkça onay vermektesiniz. Kanuni haklarınız kapsamında; dilediğiniz zaman Veri Sorumlusu Şirketimize başvurarak tarafınıza ait kişisel verilerin işlenip işlenmediğini öğrenme, işlenen kişisel verileri varsa bunlara ilişkin bilgi talep etme, kişisel verilerin işlenme amacını ve bu verilerin amaca uygun kullanılıp kullanılmadığını öğrenme, kişisel verilerinin aktarıldığı üçüncü kişileri bilme, kişisel verilerindeki hataların düzeltilmesini ve eğer aktarım yapılmışsa ilgili üçüncü kişiden bu düzeltmenin istenmesini talep etme, kişisel verilerin işlenmesini gerektiren sebeplerin ortadan kalkması halinde bu verilerin silinmesini, yok edilmesini ya da anonim hale getirilmesini isteme ve eğer aktarım yapılmışsa bu talebin aktarılan üçüncü kişiye iletilmesini isteme, işlenen verilerin neticesinde kişi ile ilintili olumsuz bir sonuç çıkmasına itiraz etme, Kanun’a aykırı veri işleme nedeniyle zararının ortaya çıkması halinde zararını yasalar çerçevesinde talep etme hakkınız mevcuttur.</p>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('.popup-modal').magnificPopup({
+                                                type: 'inline',
+                                                midClick: true,
+                                                mainClass: 'mfp-fade'
+                                            });
+                                        })
+                                    </script>
+                                    <style>
+
+                                        .white-popup {
+                                            position: relative;
+                                            background: #FFF;
+                                            padding: 40px;
+                                            width: auto;
+                                            max-width: 500px;
+                                            margin: 20px auto;
+                                            transition: 1s all;
+                                        }
+
+                                        .mfp-bg {
+                                        }
+
+                                        .mfp-fade.mfp-bg {
+                                            opacity: 0;
+                                            -webkit-transition: all 0.15s ease-out;
+                                            -moz-transition: all 0.15s ease-out;
+                                            transition: all 0.15s ease-out;
+                                        }
+
+
+                                            /* overlay animate in */
+
+                                            .mfp-fade.mfp-bg.mfp-ready {
+                                                opacity: 0.8;
+                                            }
+
+
+                                            /* overlay animate out */
+
+                                            .mfp-fade.mfp-bg.mfp-removing {
+                                                opacity: 0;
+                                            }
+
+                                        .mfp-fade.mfp-wrap .mfp-content {
+                                            opacity: 0;
+                                            transition: all 0.4s ease-out;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+                                            opacity: 1;
+                                        }
+
+                                        .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+                                            opacity: 0;
+                                        }
+                                    </style>
+
+                                    <button name="submit" type="submit" value="Submit" class="site-button btn-half">
+                                        <span> Gönder</span>
+                                    </button>
+                                </div>
+
                             </div>
-                        </div>
+                        </form>
+
                     </div>
+
                 </div>
             </div>
-
         }
+
+
 
 
     </div>
     <!-- GALLERY CONTENT END -->
 </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#RequestForm").change(function () {
+            if ($(this).val() == "2") {
+                $("#CareRequestForm").show();
+            } else {
+                $("#CareRequestForm").hide();
+            }
+        });
+    });
+</script>
+
+
+
 
 

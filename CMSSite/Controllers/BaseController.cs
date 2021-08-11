@@ -71,7 +71,7 @@ namespace CMSSite.Controllers
 
 
             ) &&
-            x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false,
+            x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInterax == true, true, false,
                 o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
 
             ViewBag.contentData = contentPages;
@@ -612,8 +612,11 @@ namespace CMSSite.Controllers
 
 
 
-            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInteral == true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
+            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsPublish == true && x.IsInterax == true, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Picture, o => o.BannerImage).Result.ToList();
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
+
+            ViewBag.contentPages = contentPages.ToList();
+
             //if (_httpContextAccessor.HttpContext.Session.Get("contentPages") == null)
             //{
             //    contentPages = _IContentPageService.Where(null, true, false, o => o.ContentPageChilds, o => o.Parent, o => o.Gallery, o => o.Documents, o => o.ThumbImage, o => o.Image, o => o.BannerImage).Result.ToList();
@@ -625,34 +628,34 @@ namespace CMSSite.Controllers
             //    _httpContextAccessor.HttpContext.Session.Get<List<ContentPage>>("contentPages");
             //    _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages);
             //}
-            // ViewBag.IsHeaderMenu = contentPages.Where(o => o.IsHeaderMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
-            // ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
-            switch (currState)
-            {
-                case "Uygulayıcı":
-                    isBayi = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
-                    break;
-                case "Endüstriyel":
-                    isEndustri = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
-                    break;
-                case "Mimarlar":
-                    isMimar = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
-                    break;
-                case "Bireysel":
-                    isBireysel = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
-                    break;
-                case "-":
-                    isMimar = true;
-                    ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
-                    break;
-                default:
-                    isMimar = true;
-                    break;
-            }
+            //ViewBag.IsHeaderMenu = contentPages.Where(o => o.IsHeaderMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
+            //ViewBag.IsFooterMenu = contentPages.Where(o => o.IsFooterMenu == true).OrderBy(o => o.ContentOrderNo).ThenBy(o => o.Name).ToList();
+            //switch (currState)
+            //{
+            //    case "Uygulayıcı":
+            //        isBayi = true;
+            //        ViewBag.contentPages = contentPages.Where(x => x.IsBayi == isBayi).ToList();
+            //        break;
+            //    case "Endüstriyel":
+            //        isEndustri = true;
+            //        ViewBag.contentPages = contentPages.Where(x => x.IsEndustri == isEndustri).ToList();
+            //        break;
+            //    case "Mimarlar":
+            //        isMimar = true;
+            //        ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+            //        break;
+            //    case "Bireysel":
+            //        isBireysel = true;
+            //        ViewBag.contentPages = contentPages.Where(x => x.IsBireysel == isBireysel).ToList();
+            //        break;
+            //    case "-":
+            //        isMimar = true;
+            //        ViewBag.contentPages = contentPages.Where(x => x.IsMimar == isMimar).ToList();
+            //        break;
+            //    default:
+            //        isMimar = true;
+            //        break;
+            //}
 
 
             ViewBag.Pages = contentPages.ToList();

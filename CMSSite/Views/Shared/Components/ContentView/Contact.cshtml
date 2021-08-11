@@ -11,6 +11,7 @@
 <div class="section-full p-tb80 inner-page-padding">
     <!-- LOCATION BLOCK-->
     <div class="container">
+
         @if (content.FormType != null)
         {
             <div class="section-content">
@@ -18,7 +19,7 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12">
                         <form FormTypeId="@content.FormTypeId" id="myform" class="contact-form cons-contact-form bg-gray p-a30" method="post">
-              
+
                             <div class="contact-one">
                                 <!-- TITLE START -->
                                 <div class="section-head">
@@ -42,6 +43,14 @@
 
                                 <div class="form-group">
                                     <input name="Phone" type="text" class="form-control" required="" placeholder="Telefon">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="Address" type="text" required="" class="form-control" placeholder="Adres">
+                                </div>
+
+                                <div class="form-group">
+                                    <input name="company" type="text" required="" class="form-control" placeholder="Firma">
                                 </div>
 
                                 <div class="form-group">

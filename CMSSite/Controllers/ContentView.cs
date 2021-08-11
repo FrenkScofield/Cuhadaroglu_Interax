@@ -96,14 +96,15 @@ namespace CMSSite.Components
             bool isMimar = false;
             bool isBireysel = false;
 
-            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsActive == true && x.IsInteral == true, true, false,
-                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent,  o => o.ThumbImage).Result.ToList();
+            contentPages = _IContentPageService.Where(x => x.LangId == langID && x.IsDeleted == null && x.IsActive == true && x.IsInterax == true, true, false,
+                o => o.ContentPageChilds, o => o.SpecContentValue, o => o.Parent, o => o.ThumbImage).Result.ToList();
             _httpContextAccessor.HttpContext.Session.Set("contentPages", contentPages.Where(o => o.LangId == langID));
             ViewBag.contentPages = contentPages;
 
             List<ContentPage> FilteredCP = new List<ContentPage>();
             ViewBag.LanguageID = langID;
             ViewBag.Pages = contentPages.ToList();
+            currState = "Uygulayıcı";
             switch (currState)
             {
                 case "Uygulayıcı":

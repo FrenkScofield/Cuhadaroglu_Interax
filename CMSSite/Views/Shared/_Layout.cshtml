@@ -30,7 +30,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
 
     <!-- PAGE TITLE HERE -->
-    <title>Interal - Cuhadaroğlu</title>
+    <title>Interax - Cuhadaroğlu</title>
 
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +52,7 @@
     <link rel="stylesheet" type="text/css" href="/assets-site/css/style.css">
 
     <!-- Color Theme Change Css -->
-    <link rel="stylesheet" class="skin" type="text/css" href="/assets-site/css/skin/skin-2.css">
+    <link rel="stylesheet" class="skin" type="text/css" href="/assets-site/css/skin/skin-8.css">
 
 
     <!-- REVOLUTION SLIDER CSS -->
@@ -111,7 +111,7 @@
                         <div class="logo-header">
                             <div class="logo-header-inner logo-header-one">
                                 <a href="/">
-                                    <img src="/assets-site/images/logo-1.png" alt="" />
+                                    <img src="/assets-site/images/Interax-Main-Logo.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                                 </a>
                             </div>
                             <div class="extra-cell">
-                                <div class="contact-slide-show-deleted"><a href="javascript:void(0)" class="get-in-touch-btn-custom ">@currState.Replace("\"", "")</a></div>
+                                <div class="contact-slide-show-deleted"><a href="javascript:void(0)" class="get-in-touch-btn-custom ">@currState.Replace("\"", "")*</a></div>
                             </div>
                         </div>
                         <!-- EXTRA Nav -->
@@ -145,7 +145,7 @@
                                         <li>
                                             @if (string.IsNullOrEmpty(item.ExternalLink))
                                             {
-                                                <a href="@(item.IsClick == false ? "javascript:void(0)":(item.TemplateType==TemplateType.Sayfa?item.ContentPageChilds.FirstOrDefault(b=>b.IsDeleted==null).Link: item.Link))">@item.Name</a>
+                                                <a href="@(item.IsClick == false ? "javascript:void(0)":(item.TemplateType==TemplateType.Sayfa?item.ContentPageChilds?.FirstOrDefault(b=>b.IsDeleted==null)?.Link: item.Link))">@item.Name</a>
                                             }
                                             else
                                             {
@@ -186,56 +186,10 @@
                         <script src="~/assets-site/js/jquery.waitforimages.min.js"></script>
                         <link href="~/assets-site/css/accordion.css" rel="stylesheet" />
 
-                        <div class="flex-container" style="display:none">
-                            <div class="spinner">
-                                <p>
-                                    <div class="cube1"></div>
-                                    <div class="cube2"></div>
-
-                                </p>
-                            </div>
-                            @*<div class="closeC">x</div>*@
-
-                            <div class="flex-slide contentTypes" data-id="Bireysel" style="background-image: url(/assets-site/images/pic3.jpg); background-size: cover;background-position: center center;background-attachment: fixed;">
-                                <div class="logo-footer clearfix p-b15" style="position: absolute;margin-top: -18%;margin-left: 1%;">
-                                    <a href="/">
-                                        <img src="/assets-site/images/logo-2.png" alt="Cuhadaroğlu interal">
-                                    </a>
-                                </div>
-                                <div class="flex-title">Bireysel</div>
-                                <div class="flex-about">
-                                    <p>Evinize mimari estetik ve konfor katın</p>
-                                </div>
-                            </div>
-
-
-                            <div class="flex-slide contentTypes" id="Mimarlar" data-id="Mimarlar" style="background-image: url(/assets-site/images/pic5.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
-                                <div class="flex-title">Mimar</div>
-                                <div class="flex-about">
-                                    <p>Projelerinizi hayata geçirin</p>
-                                </div>
-                            </div>
-
-                            <div class="flex-slide contentTypes" data-id="Uygulayıcı" style="background-image: url(/assets-site/images/pic2.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
-                                <div class="flex-title">Uygulayıcı</div>
-                                <div class="flex-about">
-                                    <p>Yeni sistemler ve uygulamalar ile tanışın</p>
-                                </div>
-                            </div>
-
-                            <div class="flex-slide contentTypes" data-id="Endüstriyel" style="background-image: url(/assets-site/images/pic4.jpg)" background-size: cover;background-position: center center;background-attachment: fixed;">
-                                <div class="flex-title">Endüstri</div>
-                                <div class="flex-about">
-                                    <p>Alüminyuma şekil veriyoruz</p>
-                                </div>
-                            </div>
-
-
-                        </div>
                         <script>
                             $(".contentTypes").click(function () {
                                 $.post("/Base/ChangeType", { ID: $(this).data("id") }, function (data) {
-                                    window.location.href="/";
+                                    window.location.href = "/";
                                 });
                                 return false;
                             });
@@ -320,7 +274,7 @@
                                 <!--<h4 class="widget-title">About Company</h4>-->
                                 <div class="logo-footer clearfix p-b15">
                                     <a href="/">
-                                        <img src="/assets-site/images/logo-2.png" alt="Cuhadaroğlu interal">
+                                        <img src="/assets-site/images/Interax-Main-Logo.png" alt="Cuhadaroğlu interal">
                                     </a>
                                 </div>
                                 <p>
@@ -479,16 +433,6 @@
                 <div class="cssload-cube cssload-cube13"></div>
                 <div class="cssload-cube cssload-cube14"></div>
                 <div class="cssload-cube cssload-cube15"></div>
-                <div class="cssload-cube cssload-cube16"></div>
-                <div class="cssload-cube cssload-cube17"></div>
-                <div class="cssload-cube cssload-cube18"></div>
-                <div class="cssload-cube cssload-cube19"></div>
-                <div class="cssload-cube cssload-cube20"></div>
-                <div class="cssload-cube cssload-cube21"></div>
-                <div class="cssload-cube cssload-cube22"></div>
-                <div class="cssload-cube cssload-cube23"></div>
-                <div class="cssload-cube cssload-cube24"></div>
-                <div class="cssload-cube cssload-cube25"></div>
             </div>
         </div>
     </div>

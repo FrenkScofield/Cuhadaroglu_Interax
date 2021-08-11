@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -115,7 +117,13 @@ namespace CMSSite
             app.UseAuthenticationMiddleware();
 
             app.UseMiddleware<ErrorMid>();
-
+            
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //                Path.Combine(Directory.GetCurrentDirectory(), @"/wwwroot/HTML")),
+            //    RequestPath = new PathString("/HTML")
+            //});
             //app.InitializeDatabase(); 
             SessionRequest.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>()); 
             app.UseMvc(routes =>
