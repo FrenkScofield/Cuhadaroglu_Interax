@@ -163,7 +163,8 @@ namespace CMSSite.Components
                    o => o.CadDatas,
                    o => o.BIMFiles,
                 o => o.Gallery,
-                o => o.Documents
+                o => o.Documents,
+                 o => o.FormType
                    )
                    .Result.FirstOrDefault();
 
